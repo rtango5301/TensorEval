@@ -6,6 +6,7 @@ if (process.env.NODE_ENV === 'production') {
     'NEXT_PUBLIC_SUPABASE_URL',
     'NEXT_PUBLIC_SUPABASE_ANON_KEY',
     'NEXT_PUBLIC_SITE_URL',
+    'NEXT_PUBLIC_API_URL',
   ];
 
   const missing = requiredEnvVars.filter((key) => !process.env[key]);
