@@ -257,6 +257,11 @@ export async function updatePassword(newPassword: string) {
     return { error: SUPABASE_NOT_CONFIGURED_ERROR };
   }
 
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) {
+    return { success: false, error: 'You must be signed in to update your password.' };
+  }
+
   const { error } = await supabase.auth.updateUser({
     password: newPassword,
   });
