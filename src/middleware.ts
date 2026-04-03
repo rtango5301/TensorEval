@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-const PROTECTED_ROUTES = ['/dashboard', '/datasets', '/evaluations'];
+const PROTECTED_ROUTES = ['/dashboard', '/datasets', '/evaluations', '/api/'];
 
 export async function middleware(request: NextRequest) {
   const safePath = request.nextUrl.pathname.replace(/[\x00-\x1f\x7f]/g, '');
