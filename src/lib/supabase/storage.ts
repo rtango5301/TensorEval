@@ -26,9 +26,12 @@ export async function uploadDatasetFile(file: File): Promise<string> {
   const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
   const fileName = `${crypto.randomUUID()}-${sanitizedName}`;
 
+  // Determine content type from validated extension, not user-controlled file.type
+  const contentType = file.name.endsWith('.csv') ? 'text/csv' : 'application/json';
+
   const { data, error } = await supabase.storage
     .from('datasets')
-    .upload(fileName, file, { contentType: file.type });
+    .upload(fileName, file, { contentType });
 
   if (error) {
     throw new StorageError(`Upload failed: ${error.message}`);
