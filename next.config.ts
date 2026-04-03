@@ -26,6 +26,8 @@ if (process.env.NODE_ENV === 'production') {
 
 const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
+  poweredByHeader: false,
+  reactStrictMode: true,
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
@@ -74,7 +76,18 @@ const nextConfig: NextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://lh3.googleusercontent.com https://secure.gravatar.com https://avatars.githubusercontent.com; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.hf.space; frame-src https://calendly.com;",
+              "default-src 'self'; " +
+              "script-src 'self' 'unsafe-inline' https://assets.calendly.com; " +
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com; " +
+              "font-src 'self' https://fonts.gstatic.com; " +
+              "img-src 'self' data: https://*.googleusercontent.com https://lh3.googleusercontent.com https://secure.gravatar.com https://avatars.githubusercontent.com; " +
+              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.hf.space; " +
+              "frame-src https://calendly.com; " +
+              "frame-ancestors 'none'; " +
+              "base-uri 'self'; " +
+              "form-action 'self' https://*.supabase.co; " +
+              "object-src 'none'; " +
+              "upgrade-insecure-requests;",
           },
         ],
       },
