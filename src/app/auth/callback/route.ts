@@ -9,6 +9,10 @@ function getRedirectOrigin(request: NextRequest, fallbackOrigin: string) {
   }
   const forwardedHost = request.headers.get('x-forwarded-host');
   if (forwardedHost && process.env.NODE_ENV !== 'development') {
+    if (!process.env.NEXT_PUBLIC_SITE_URL) {
+      // In production without SITE_URL, don't trust forwarded headers
+      return fallbackOrigin;
+    }
     const proto = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim() || 'https';
     return `${proto}://${forwardedHost}`;
   }
@@ -25,7 +29,7 @@ export async function GET(request: NextRequest) {
   // Handle OAuth errors from provider
   if (error) {
     const errorUrl = new URL('/login', redirectOrigin);
-    errorUrl.searchParams.set('error', error_description || error);
+    errorUrl.searchParams.set('error', 'auth_failed');
     return NextResponse.redirect(errorUrl);
   }
 
@@ -70,11 +74,8 @@ export async function GET(request: NextRequest) {
     console.error('[auth/callback] Code exchange failed:', {
       message: exchangeError.message,
       code: exchangeError.code,
-      redirectOrigin,
       siteUrlSet: !!process.env.NEXT_PUBLIC_SITE_URL,
-      forwardedHost: request.headers.get('x-forwarded-host'),
       hasCodeVerifierCookie: !!codeVerifierCookie,
-      cookieNames: allCookies.map((c) => c.name),
     });
   }
 

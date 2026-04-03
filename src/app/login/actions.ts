@@ -8,6 +8,15 @@ import { cookies, headers } from 'next/headers';
 
 import { z } from 'zod';
 
+function logSecurityEvent(event: string, details: Record<string, unknown>) {
+  console.warn(JSON.stringify({
+    type: 'SECURITY_EVENT',
+    event,
+    timestamp: new Date().toISOString(),
+    ...details,
+  }));
+}
+
 const SUPABASE_NOT_CONFIGURED_ERROR =
   'Authentication is not configured. Please set up Supabase credentials.';
 
@@ -75,11 +84,9 @@ async function getOrigin() {
     return siteUrl;
   }
 
-  // Fallback: construct from host headers (needed for local dev)
+  // Fallback: construct from host headers (needed for local dev only)
   if (process.env.NODE_ENV === 'production') {
-    console.warn(
-      '[auth] NEXT_PUBLIC_SITE_URL is not set in production — falling back to request headers'
-    );
+    throw new Error('[auth] NEXT_PUBLIC_SITE_URL is required in production');
   }
   const h = await headers();
   const host = h.get('x-forwarded-host') || h.get('host') || 'localhost:3000';
@@ -108,6 +115,10 @@ export async function signInWithEmail(formData: FormData) {
   });
 
   if (error) {
+    logSecurityEvent('SIGN_IN_FAILED', {
+      email: parsed.data.email,
+      reason: error.message.includes('Invalid login credentials') ? 'invalid_credentials' : 'unknown',
+    });
     if (error.message.includes('Invalid login credentials')) {
       return { error: 'Invalid email or password.' };
     }
@@ -149,7 +160,8 @@ export async function signUpWithEmail(formData: FormData) {
 
   if (error) {
     if (error.message.includes('User already registered')) {
-      return { error: 'An account with this email already exists.' };
+      logSecurityEvent('SIGN_UP_FAILED', { email: parsed.data.email, reason: 'duplicate_email' });
+      return { success: 'Check your email to confirm your account' };
     }
     return { error: 'An unexpected error occurred. Please try again.' };
   }
@@ -178,7 +190,8 @@ export async function signInWithOAuth(provider: 'github' | 'google') {
   });
 
   if (error) {
-    return { error: error.message };
+    logSecurityEvent('OAUTH_FAILED', { provider, reason: error.message });
+    return { error: 'An unexpected error occurred. Please try again.' };
   }
 
   return { url: data.url };
@@ -196,6 +209,14 @@ export async function signOut() {
 }
 
 export async function requestPasswordReset(email: string) {
+  const emailSchema = z.string().email().max(254);
+  const emailResult = emailSchema.safeParse(email);
+  if (!emailResult.success) {
+    return {
+      success: 'If an account exists with this email, you will receive a password reset link.',
+    };
+  }
+
   const supabase = await createClient();
 
   if (!supabase) {
@@ -204,7 +225,7 @@ export async function requestPasswordReset(email: string) {
 
   const origin = await getOrigin();
 
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+  const { error } = await supabase.auth.resetPasswordForEmail(emailResult.data, {
     redirectTo: `${origin}/auth/reset-password`,
   });
 
@@ -234,6 +255,11 @@ export async function updatePassword(newPassword: string) {
 
   if (!supabase) {
     return { error: SUPABASE_NOT_CONFIGURED_ERROR };
+  }
+
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) {
+    return { success: false, error: 'You must be signed in to update your password.' };
   }
 
   const { error } = await supabase.auth.updateUser({
