@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import Script from 'next/script';
+import { useRef } from 'react';
 
 declare global {
   interface Window {
@@ -12,9 +13,6 @@ declare global {
     };
   }
 }
-
-const CALENDLY_CSS = 'https://assets.calendly.com/assets/external/widget.css';
-const CALENDLY_JS = 'https://assets.calendly.com/assets/external/widget.js';
 
 const pricingPlans = [
   {
@@ -56,32 +54,6 @@ export function Pricing() {
   const router = useRouter();
   const scriptLoaded = useRef(false);
 
-  // Load Calendly widget CSS + JS on mount
-  useEffect(() => {
-    // CSS
-    const link = document.createElement('link');
-    link.href = CALENDLY_CSS;
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-
-    // JS - only inject once
-    if (!scriptLoaded.current && !window.Calendly) {
-      const script = document.createElement('script');
-      script.src = CALENDLY_JS;
-      script.async = true;
-      script.onload = () => {
-        scriptLoaded.current = true;
-      };
-      document.head.appendChild(script);
-    } else {
-      scriptLoaded.current = true;
-    }
-
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, []);
-
   const openCalendly = () => {
     if (window.Calendly) {
       window.Calendly.initPopupWidget({
@@ -95,6 +67,17 @@ export function Pricing() {
       id="pricing"
       className="py-16 lg:py-[100px] px-4 lg:px-6 bg-[var(--background)] scroll-mt-20"
     >
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="lazyOnload"
+        onLoad={() => {
+          scriptLoaded.current = true;
+        }}
+      />
+      <link
+        rel="stylesheet"
+        href="https://assets.calendly.com/assets/external/widget.css"
+      />
       <div className="max-w-[1200px] mx-auto">
         {/* Section Header */}
         <motion.div
