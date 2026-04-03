@@ -719,9 +719,9 @@ BASE=https://shivam274-tensorevalengine.hf.space
 
 | Field    | Value                                  |
 | -------- | -------------------------------------- |
-| Email    | `test@tensorevalengine.dev`            |
-| Password | `TestPassword1234`                     |
-| User ID  | `7e2b79e3-1608-49d0-9a3a-37bc02859103` |
+| Email    | `<YOUR_TEST_EMAIL>`                    |
+| Password | `<YOUR_TEST_PASSWORD>`                 |
+| User ID  | `<YOUR_TEST_USER_ID>`                  |
 
 ### Step 1: Get an access token
 
@@ -729,10 +729,10 @@ Tokens expire after **1 hour**. Re-run this to get a fresh one.
 
 ```bash
 curl -s -X POST \
-  "https://gbepfnnhuuvghkirkxfz.supabase.co/auth/v1/token?grant_type=password" \
-  -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiZXBmbm5odXV2Z2hraXJreGZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk4NDk1MjUsImV4cCI6MjA4NTQyNTUyNX0.H7R50i58tnqrkmNctpPtPWUlrIsoukLkkpwdknK44b0" \
+  "https://<YOUR_SUPABASE_PROJECT>.supabase.co/auth/v1/token?grant_type=password" \
+  -H "apikey: <YOUR_SUPABASE_ANON_KEY>" \
   -H "Content-Type: application/json" \
-  -d '{"email":"test@tensorevalengine.dev","password":"TestPassword1234"}'
+  -d '{"email":"<YOUR_TEST_EMAIL>","password":"<YOUR_TEST_PASSWORD>"}'
 ```
 
 Copy the `access_token` from the response and set it:
