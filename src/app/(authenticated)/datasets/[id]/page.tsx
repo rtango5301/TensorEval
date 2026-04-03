@@ -155,7 +155,6 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
 
   const handleRetry = () => {
     // Handle retry logic - in a real app this would trigger dataset regeneration
-    console.log('Retrying dataset generation...');
   };
 
   // Error state
