@@ -106,16 +106,27 @@ async function buildHeaders(includeAuth: boolean = true): Promise<Record<string,
  */
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    let message = `API Error: ${response.status} ${response.statusText}`;
-    let code: string | undefined;
+    const genericMessages: Record<number, string> = {
+      400: 'Invalid request. Please check your input.',
+      401: 'Your session has expired. Please sign in again.',
+      403: 'You do not have permission to perform this action.',
+      404: 'The requested resource was not found.',
+      429: 'Too many requests. Please try again later.',
+    };
 
+    let code: string | undefined;
     try {
       const errorData = await response.json();
-      message = errorData.message || errorData.error || message;
       code = errorData.code;
     } catch {
-      // Response body is not JSON, use default message
+      // Response body is not JSON
     }
+
+    const message =
+      genericMessages[response.status] ||
+      (response.status >= 500
+        ? 'A server error occurred. Please try again later.'
+        : `Request failed (${response.status}).`);
 
     throw new ApiError(message, response.status, code);
   }
