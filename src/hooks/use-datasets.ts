@@ -225,6 +225,14 @@ export function useDeleteDataset(): UseDeleteDataset {
     setError(null);
     try {
       await deleteDataset(id);
+      console.warn(
+        JSON.stringify({
+          type: 'AUDIT',
+          action: 'DELETE_DATASET',
+          resourceId: id,
+          timestamp: new Date().toISOString(),
+        })
+      );
       setIsDeleting(false);
       return true;
     } catch (err) {
