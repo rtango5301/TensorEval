@@ -9,6 +9,10 @@ function getRedirectOrigin(request: NextRequest, fallbackOrigin: string) {
   }
   const forwardedHost = request.headers.get('x-forwarded-host');
   if (forwardedHost && process.env.NODE_ENV !== 'development') {
+    if (!process.env.NEXT_PUBLIC_SITE_URL) {
+      // In production without SITE_URL, don't trust forwarded headers
+      return fallbackOrigin;
+    }
     const proto = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim() || 'https';
     return `${proto}://${forwardedHost}`;
   }

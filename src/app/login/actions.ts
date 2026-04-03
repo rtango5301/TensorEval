@@ -84,11 +84,9 @@ async function getOrigin() {
     return siteUrl;
   }
 
-  // Fallback: construct from host headers (needed for local dev)
+  // Fallback: construct from host headers (needed for local dev only)
   if (process.env.NODE_ENV === 'production') {
-    console.warn(
-      '[auth] NEXT_PUBLIC_SITE_URL is not set in production — falling back to request headers'
-    );
+    throw new Error('[auth] NEXT_PUBLIC_SITE_URL is required in production');
   }
   const h = await headers();
   const host = h.get('x-forwarded-host') || h.get('host') || 'localhost:3000';
