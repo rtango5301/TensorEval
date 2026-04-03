@@ -237,6 +237,14 @@ export function useDeleteEvaluation(): UseDeleteEvaluation {
     setError(null);
     try {
       await deleteEvaluation(id);
+      console.warn(
+        JSON.stringify({
+          type: 'AUDIT',
+          action: 'DELETE_EVALUATION',
+          resourceId: id,
+          timestamp: new Date().toISOString(),
+        })
+      );
       setIsDeleting(false);
       return true;
     } catch (err) {

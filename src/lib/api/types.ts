@@ -110,7 +110,7 @@ export interface AgentConfig {
   name: string;
   url: string;
   model?: string;
-  api_key?: string;
+  api_key_masked?: string;
   system_prompt?: string;
   description?: string;
   mcp_servers?: MCPServer[];
@@ -171,10 +171,20 @@ export interface EvaluationsListResponse {
   evaluations: Evaluation[];
 }
 
+export interface AgentConfigRequest {
+  name: string;
+  url: string;
+  model?: string;
+  api_key?: string;
+  system_prompt?: string;
+  description?: string;
+  mcp_servers?: MCPServer[];
+}
+
 export interface CreateEvaluationRequest {
   name: string;
   description?: string;
   dataset_id: string;
-  agent_config: AgentConfig;
+  agent_config: AgentConfigRequest;
   concurrency?: number;
 }
