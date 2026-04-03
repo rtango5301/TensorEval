@@ -158,7 +158,7 @@ function ConfigureEvaluationContent() {
   // Handle start evaluation
   const handleStartEvaluation = () => {
     try {
-      const evalId = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+      const evalId = crypto.randomUUID();
       router.push(`/evaluations/${evalId}`);
     } catch (error) {
       console.error('Failed to start evaluation:', error);
