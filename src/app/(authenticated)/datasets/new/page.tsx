@@ -10,6 +10,7 @@ import { MCP_SERVERS } from '@/components/ui/mcp-marketplace-modal';
 import { TestConnectionButton } from '@/components/ui/test-connection-button';
 import { useCreateDataset } from '@/hooks/use-datasets';
 import { uploadDatasetFile, StorageError } from '@/lib/supabase/storage';
+import { isValidExternalUrl } from '@/lib/validation/url';
 import { useUsageQuota } from '@/hooks/use-usage-quota';
 import { UsageQuotaBanner } from '@/components/ui/usage-quota-banner';
 import type {
@@ -202,6 +203,12 @@ export default function NewDatasetPage() {
         });
       }
     });
+
+    // Validate custom MCP URL against SSRF blocklist
+    if (customMcpServer.url && !isValidExternalUrl(customMcpServer.url)) {
+      // show error toast or set error state
+      return;
+    }
 
     // Add custom MCP server if provided
     if (customMcpServer.name && customMcpServer.url) {

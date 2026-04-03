@@ -130,7 +130,11 @@ function NewEvaluationWizardContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { showToast } = useToast();
-  const stepParam = searchParams.get('step') as WizardStep | null;
+  const rawStep = searchParams.get('step');
+  const validSteps: WizardStep[] = ['agent', 'dataset', 'review'];
+  const stepParam = rawStep && validSteps.includes(rawStep as WizardStep)
+    ? (rawStep as WizardStep)
+    : null;
   const preselectedDataset = searchParams.get('dataset');
 
   // Fetch datasets from API
@@ -313,6 +317,12 @@ function NewEvaluationWizardContent() {
         });
       }
     });
+
+    // Validate custom MCP URL against SSRF blocklist
+    if (agentConfig.customMcp.url && !isValidExternalUrl(agentConfig.customMcp.url)) {
+      showToast('Custom MCP server URL must be a valid external HTTP(S) URL', 'error');
+      return;
+    }
 
     // Add custom MCP server if provided
     if (agentConfig.customMcp.name && agentConfig.customMcp.url) {
