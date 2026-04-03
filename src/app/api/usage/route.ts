@@ -30,7 +30,8 @@ export async function GET() {
   const { data, error } = await supabase.rpc('get_usage_quota');
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('[usage] RPC error:', error.message);
+    return NextResponse.json({ error: 'Failed to fetch usage data' }, { status: 500 });
   }
 
   return NextResponse.json(data as UsageQuota);
