@@ -16,6 +16,12 @@ if (process.env.NODE_ENV === 'production') {
         'Set these in your deployment environment or .env.production file.'
     );
   }
+
+  if (process.env.DEV_AUTH_BYPASS === 'true') {
+    throw new Error(
+      '[BUILD ERROR] DEV_AUTH_BYPASS must not be set in production builds.'
+    );
+  }
 }
 
 const nextConfig: NextConfig = {

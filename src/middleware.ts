@@ -4,9 +4,11 @@ import { NextResponse, type NextRequest } from 'next/server';
 const PROTECTED_ROUTES = ['/dashboard', '/datasets', '/evaluations'];
 
 export async function middleware(request: NextRequest) {
+  const safePath = request.nextUrl.pathname.replace(/[\x00-\x1f\x7f]/g, '');
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  const devAuthBypass = process.env.DEV_AUTH_BYPASS === 'true';
+  const devAuthBypass =
+    process.env.NODE_ENV !== 'production' && process.env.DEV_AUTH_BYPASS === 'true';
 
   // Handle missing Supabase configuration
   if (!supabaseUrl || !supabaseAnonKey) {
@@ -18,7 +20,7 @@ export async function middleware(request: NextRequest) {
       // Explicit dev bypass: allow access only when DEV_AUTH_BYPASS=true and Supabase is not configured
       if (isProtectedRoute) {
         console.warn(
-          `[DEV_AUTH_BYPASS] Supabase not configured and DEV_AUTH_BYPASS=true - auth bypassed for: ${request.nextUrl.pathname}`
+          `[DEV_AUTH_BYPASS] Supabase not configured and DEV_AUTH_BYPASS=true - auth bypassed for: ${safePath}`
         );
       }
       return NextResponse.next({ request });
@@ -27,7 +29,7 @@ export async function middleware(request: NextRequest) {
     // Production: fail closed - block protected routes
     if (isProtectedRoute) {
       console.error(
-        `[SECURITY] Supabase credentials missing - blocking access to: ${request.nextUrl.pathname}`
+        `[SECURITY] Supabase credentials missing - blocking access to: ${safePath}`
       );
       return new NextResponse('Authentication service unavailable', { status: 503 });
     }
