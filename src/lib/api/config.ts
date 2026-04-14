@@ -1,16 +1,16 @@
 /**
  * API Configuration
- * Environment-based API URL configuration for TensorEvalEngine backend
+ * Routes all backend requests through the server-side load balancer gateway.
  */
 
 export const API_CONFIG = {
-  baseUrl: process.env.NEXT_PUBLIC_API_URL || 'https://shivam274-tensorevalengine.hf.space',
+  baseUrl: '/api/gateway',
 } as const;
 
 /**
  * Constructs the full API URL for a given path
  * @param path - API endpoint path (e.g., '/api/datasets')
- * @returns Full URL with base URL prepended
+ * @returns Full URL routed through the gateway (e.g., '/api/gateway/api/datasets')
  */
 export function getApiUrl(path: string): string {
   return `${API_CONFIG.baseUrl}${path}`;
