@@ -40,6 +40,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/browseros',
+        destination: 'https://pub-602b789021664e5f8da3d80de3ff5bc5.r2.dev/report.html',
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {
