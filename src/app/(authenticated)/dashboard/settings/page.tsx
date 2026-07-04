@@ -7,13 +7,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/user-context';
-import {
-  listApiKeys,
-  createApiKey,
-  revokeApiKey,
-  type ApiKey,
-  type CreatedApiKey,
-} from '@/lib/api/api-keys';
+import { listApiKeys, createApiKey, type ApiKey, type CreatedApiKey } from '@/lib/api/api-keys';
 import { ApiError } from '@/lib/api/client';
 
 // ============================================================================
@@ -119,17 +113,6 @@ export default function SettingsPage() {
       refreshKeys();
     } catch (err) {
       setKeyError(err instanceof ApiError ? err.message : 'Failed to create key');
-    }
-  };
-
-  const handleRevoke = async (id: string) => {
-    if (!confirm('Revoke this API key? The SDK will stop working immediately.')) return;
-    setKeyError('');
-    try {
-      await revokeApiKey(id);
-      refreshKeys();
-    } catch (err) {
-      setKeyError(err instanceof ApiError ? err.message : 'Failed to revoke key');
     }
   };
 
@@ -295,8 +278,8 @@ export default function SettingsPage() {
       <div>
         <h3 className="text-base font-bold text-slate-900 mb-1">Generate API Key</h3>
         <p className="text-sm text-slate-500 mb-4">
-          Use this key to authenticate the Python SDK. It links your local evals and traces to this
-          dashboard.
+          Use this key to authenticate the Python SDK. You can create more than one key for local
+          development, CI, or separate machines.
         </p>
 
         {/* Show plaintext once after creation */}
@@ -372,27 +355,16 @@ export default function SettingsPage() {
             {apiKeys.map((key) => (
               <div
                 key={key.id}
-                className={cn(
-                  'flex items-center gap-4 rounded-lg border px-4 py-3 transition-colors',
-                  key.active
-                    ? 'border-slate-200 bg-white'
-                    : 'border-slate-200 bg-slate-50 opacity-60'
-                )}
+                className="flex items-center gap-4 rounded-lg border border-slate-200 bg-white px-4 py-3 transition-colors"
               >
                 <span className="material-symbols-outlined text-slate-400">key</span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <p className="text-sm font-medium text-slate-900 truncate">{key.name}</p>
                     <code className="text-xs text-slate-400 font-mono">{key.key_prefix}...</code>
-                    {key.active ? (
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">
-                        Active
-                      </span>
-                    ) : (
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-slate-200 text-slate-500 font-medium">
-                        Revoked
-                      </span>
-                    )}
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">
+                      Active
+                    </span>
                   </div>
                   <p className="text-xs text-slate-400 mt-0.5">
                     Created {new Date(key.created_at).toLocaleDateString()}
@@ -400,15 +372,6 @@ export default function SettingsPage() {
                       ` · Last used ${new Date(key.last_used_at).toLocaleDateString()}`}
                   </p>
                 </div>
-                {key.active && (
-                  <button
-                    type="button"
-                    onClick={() => handleRevoke(key.id)}
-                    className="shrink-0 text-xs font-medium text-red-600 hover:text-red-700 hover:underline"
-                  >
-                    Revoke
-                  </button>
-                )}
               </div>
             ))}
           </div>
