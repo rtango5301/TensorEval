@@ -3,6 +3,7 @@ import { Inter, IBM_Plex_Mono, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { ToastProvider } from '@/components/ui/toast-context';
 import { Toast } from '@/components/ui/toast';
+import { PostHogProvider } from '@/lib/posthog/provider';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -93,10 +94,12 @@ export default function RootLayout({
         className={`${inter.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
-        <ToastProvider>
-          {children}
-          <Toast />
-        </ToastProvider>
+        <PostHogProvider>
+          <ToastProvider>
+            {children}
+            <Toast />
+          </ToastProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

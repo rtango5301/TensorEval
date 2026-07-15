@@ -1,15 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useCalendly } from '@/hooks/use-calendly';
 
 export function CTA() {
-  const openCalendly = () => {
-    if (window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/evaltensor',
-      });
-    }
-  };
+  const { openCalendly } = useCalendly();
 
   return (
     <section className="py-14 lg:py-[90px] px-4 sm:px-6 lg:px-8 bg-[var(--bg-subtle)]">

@@ -18,10 +18,36 @@ if (process.env.NODE_ENV === 'production') {
   }
 }
 
+// PostHog reverse-proxy targets. Client talks to same-origin /ingest (see
+// src/lib/posthog/provider.tsx) which is rewritten to PostHog here — this keeps
+// the CSP tight and survives ad-blockers.
+const POSTHOG_HOST = (process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com').replace(
+  /\/$/,
+  ''
+);
+const POSTHOG_ASSET_HOST = POSTHOG_HOST.replace(
+  /:\/\/([^.]+)\.i\.posthog\.com/,
+  '://$1-assets.i.posthog.com'
+);
+
 const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
+  // Required so PostHog's trailing-slash API paths proxy correctly.
+  skipTrailingSlashRedirect: true,
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/ingest/static/:path*',
+        destination: `${POSTHOG_ASSET_HOST}/static/:path*`,
+      },
+      {
+        source: '/ingest/:path*',
+        destination: `${POSTHOG_HOST}/:path*`,
+      },
+    ];
   },
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -77,7 +103,7 @@ const nextConfig: NextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://lh3.googleusercontent.com https://secure.gravatar.com https://avatars.githubusercontent.com; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.hf.space; frame-src https://calendly.com;",
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com https://*.posthog.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://lh3.googleusercontent.com https://secure.gravatar.com https://avatars.githubusercontent.com; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.hf.space https://*.posthog.com; frame-src https://calendly.com;",
           },
         ],
       },

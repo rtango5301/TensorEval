@@ -1,6 +1,8 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
+import { logAuthEvent, contextFromHeaders } from '@/lib/telemetry/auth';
+import { logger } from '@/lib/logger';
 
 function getRedirectOrigin(request: NextRequest, fallbackOrigin: string) {
   // In production on Vercel, use x-forwarded-host to get the real domain
@@ -54,6 +56,18 @@ export async function GET(request: NextRequest) {
     const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!exchangeError) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      await logAuthEvent({
+        event: 'oauth_callback_succeeded',
+        status: 'success',
+        provider: 'google',
+        userId: user?.id ?? null,
+        email: user?.email ?? null,
+        ...contextFromHeaders(request.headers),
+      });
+
       const next = searchParams.get('next') ?? '/dashboard';
       // Validate redirect target to prevent open redirect attacks
       const safeNext = next.startsWith('/') && !next.startsWith('//') ? next : '/dashboard';
@@ -67,7 +81,15 @@ export async function GET(request: NextRequest) {
     const allCookies = cookieStore.getAll();
     const codeVerifierCookie = allCookies.find((c) => c.name.includes('code-verifier'));
 
-    console.error('[auth/callback] Code exchange failed:', {
+    await logAuthEvent({
+      event: 'oauth_callback_failed',
+      status: 'failure',
+      provider: 'google',
+      reason: exchangeError.code || 'exchange_failed',
+      ...contextFromHeaders(request.headers),
+    });
+
+    logger.error('auth/callback', 'Code exchange failed', {
       message: exchangeError.message,
       code: exchangeError.code,
       redirectOrigin,

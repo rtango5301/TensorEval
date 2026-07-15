@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { logger } from '@/lib/logger';
 
 const PROTECTED_ROUTES = ['/dashboard', '/datasets', '/evaluations'];
 
@@ -17,18 +18,18 @@ export async function middleware(request: NextRequest) {
     if (devAuthBypass) {
       // Explicit dev bypass: allow access only when DEV_AUTH_BYPASS=true and Supabase is not configured
       if (isProtectedRoute) {
-        console.warn(
-          `[DEV_AUTH_BYPASS] Supabase not configured and DEV_AUTH_BYPASS=true - auth bypassed for: ${request.nextUrl.pathname}`
-        );
+        logger.warn('middleware', 'DEV_AUTH_BYPASS active — auth bypassed', {
+          path: request.nextUrl.pathname,
+        });
       }
       return NextResponse.next({ request });
     }
 
     // Production: fail closed - block protected routes
     if (isProtectedRoute) {
-      console.error(
-        `[SECURITY] Supabase credentials missing - blocking access to: ${request.nextUrl.pathname}`
-      );
+      logger.error('middleware', 'Supabase credentials missing — blocking protected route', {
+        path: request.nextUrl.pathname,
+      });
       return new NextResponse('Authentication service unavailable', { status: 503 });
     }
 

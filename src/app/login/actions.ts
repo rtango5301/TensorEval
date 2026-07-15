@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { createServerClient } from '@supabase/ssr';
 import { cookies, headers } from 'next/headers';
+import { logAuthEvent, checkLoginThrottle, getAuthRequestContext } from '@/lib/telemetry/auth';
 
 import { z } from 'zod';
 
@@ -102,17 +103,50 @@ export async function signInWithEmail(formData: FormData) {
     return { error: parsed.error.issues[0].message };
   }
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const ctx = await getAuthRequestContext();
+
+  // Brute-force protection: block after too many recent failures for this (email, network).
+  const throttle = await checkLoginThrottle(parsed.data.email, ctx.ip);
+  if (throttle.blocked) {
+    await logAuthEvent({
+      event: 'login_blocked',
+      status: 'failure',
+      provider: 'email',
+      reason: 'too_many_attempts',
+      email: parsed.data.email,
+      ...ctx,
+    });
+    return { error: 'Too many failed attempts. Please try again in a few minutes.' };
+  }
+
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: parsed.data.email,
     password: parsed.data.password,
   });
 
   if (error) {
+    await logAuthEvent({
+      event: 'sign_in_failed',
+      status: 'failure',
+      provider: 'email',
+      reason: error.message.includes('Invalid login credentials') ? 'invalid_credentials' : 'error',
+      email: parsed.data.email,
+      ...ctx,
+    });
     if (error.message.includes('Invalid login credentials')) {
       return { error: 'Invalid email or password.' };
     }
     return { error: 'An unexpected error occurred. Please try again.' };
   }
+
+  await logAuthEvent({
+    event: 'sign_in_succeeded',
+    status: 'success',
+    provider: 'email',
+    userId: data.user?.id ?? null,
+    email: parsed.data.email,
+    ...ctx,
+  });
 
   revalidatePath('/', 'layout');
   redirect('/dashboard');
@@ -135,8 +169,9 @@ export async function signUpWithEmail(formData: FormData) {
   }
 
   const origin = await getOrigin();
+  const ctx = await getAuthRequestContext();
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
@@ -148,11 +183,28 @@ export async function signUpWithEmail(formData: FormData) {
   });
 
   if (error) {
+    await logAuthEvent({
+      event: 'sign_up_failed',
+      status: 'failure',
+      provider: 'email',
+      reason: error.message.includes('User already registered') ? 'already_registered' : 'error',
+      email: parsed.data.email,
+      ...ctx,
+    });
     if (error.message.includes('User already registered')) {
       return { error: 'An account with this email already exists.' };
     }
     return { error: 'An unexpected error occurred. Please try again.' };
   }
+
+  await logAuthEvent({
+    event: 'sign_up_succeeded',
+    status: 'success',
+    provider: 'email',
+    userId: data.user?.id ?? null,
+    email: parsed.data.email,
+    ...ctx,
+  });
 
   return { success: 'Check your email to confirm your account' };
 }
@@ -181,6 +233,13 @@ export async function signInWithOAuth(provider: 'github' | 'google') {
     return { error: error.message };
   }
 
+  await logAuthEvent({
+    event: 'oauth_initiated',
+    status: 'success',
+    provider: 'google',
+    ...(await getAuthRequestContext()),
+  });
+
   return { url: data.url };
 }
 
@@ -188,7 +247,17 @@ export async function signOut() {
   const supabase = await createClient();
 
   if (supabase) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     await supabase.auth.signOut({ scope: 'global' });
+    await logAuthEvent({
+      event: 'sign_out',
+      status: 'success',
+      userId: user?.id ?? null,
+      email: user?.email ?? null,
+      ...(await getAuthRequestContext()),
+    });
   }
   revalidatePath('/', 'layout');
   // Don't redirect here - let client handle navigation with router.refresh()
@@ -206,6 +275,15 @@ export async function requestPasswordReset(email: string) {
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: `${origin}/auth/reset-password`,
+  });
+
+  await logAuthEvent({
+    event: 'password_reset_requested',
+    status: error ? 'failure' : 'success',
+    provider: 'email',
+    reason: error ? 'error' : undefined,
+    email,
+    ...(await getAuthRequestContext()),
   });
 
   if (error && error.message.includes('rate limit')) {
@@ -236,13 +314,32 @@ export async function updatePassword(newPassword: string) {
     return { error: SUPABASE_NOT_CONFIGURED_ERROR };
   }
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { error } = await supabase.auth.updateUser({
     password: newPassword,
   });
 
   if (error) {
+    await logAuthEvent({
+      event: 'password_updated',
+      status: 'failure',
+      userId: user?.id ?? null,
+      reason: 'error',
+      ...(await getAuthRequestContext()),
+    });
     return { success: false, error: 'Failed to update password. Please try again.' };
   }
+
+  await logAuthEvent({
+    event: 'password_updated',
+    status: 'success',
+    userId: user?.id ?? null,
+    email: user?.email ?? null,
+    ...(await getAuthRequestContext()),
+  });
 
   return { success: 'Password updated successfully! Redirecting to dashboard...' };
 }
