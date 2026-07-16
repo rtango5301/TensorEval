@@ -11,6 +11,7 @@ import { createClient } from '@/lib/supabase/client';
 import { LandingProfileDropdown } from '@/components/ui/landing-profile-dropdown';
 import { signOut } from '@/app/login/actions';
 import { clearTokenCache } from '@/lib/api/client';
+import { useCalendly } from '@/hooks/use-calendly';
 
 const navLinks = [
   { href: '#', label: 'Docs' },
@@ -54,6 +55,7 @@ export function Navigation({ user: initialUser }: NavigationProps) {
   const [isSigningOut, setIsSigningOut] = useState(false);
 
   const router = useRouter();
+  const { openCalendly } = useCalendly();
 
   const handleSignOut = async () => {
     if (isSigningOut) return;
@@ -181,6 +183,14 @@ export function Navigation({ user: initialUser }: NavigationProps) {
 
         {/* Desktop Actions */}
         <div className="hidden lg:flex items-center gap-3">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={openCalendly}
+            className="px-5 py-2.5 bg-white border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)]/5 rounded-lg text-[15px] font-semibold transition-all"
+          >
+            Schedule a call
+          </motion.button>
           {user ? (
             <>
               <Link href="/dashboard">
@@ -255,6 +265,15 @@ export function Navigation({ user: initialUser }: NavigationProps) {
             </motion.div>
           ))}
           <div className="flex flex-col gap-2 pt-4 mt-2 border-t border-[var(--border-light)]">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                openCalendly();
+              }}
+              className="w-full py-3 bg-white border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)]/5 text-base font-semibold rounded-lg transition-colors"
+            >
+              Schedule a call
+            </button>
             {user ? (
               <>
                 {/* User Info Header */}

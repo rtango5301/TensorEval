@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import posthog from 'posthog-js';
 import { cn } from '@/lib/utils';
 import { signOut } from '@/app/login/actions';
 import { clearTokenCache } from '@/lib/api/client';
@@ -57,6 +58,10 @@ export function AuthProfileDropdown({ user }: AuthProfileDropdownProps) {
     setIsLoggingOut(true);
     setIsOpen(false);
     clearTokenCache();
+    // Detach the PostHog distinct id from this user before the session ends.
+    if (process.env.NEXT_PUBLIC_POSTHOG_KEY) {
+      posthog.reset();
+    }
     await signOut();
     router.push('/');
     router.refresh();
