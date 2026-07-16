@@ -4,7 +4,6 @@ import { useState, use, useMemo } from 'react';
 import Link from 'next/link';
 import { cn, getScoreColor, getScoreBarColor, getScoreHexColor } from '@/lib/utils';
 import { DebugViewPanel } from '@/components/debug-view-panel';
-import { EvaluationExportMenu } from '@/components/evaluation-export-menu';
 import { useEvaluationWithPolling } from '@/hooks/use-evaluations';
 import type { EvaluationResult as ApiEvaluationResult } from '@/lib/api/types';
 
@@ -121,6 +120,7 @@ export default function EvaluationResultsPage({ params }: { params: Promise<{ id
 
   const [resultFilter, setResultFilter] = useState<'all' | 'pass' | 'fail'>('all');
   const [selectedResult, setSelectedResult] = useState<ApiEvaluationResult | null>(null);
+  const [showExportTooltip, setShowExportTooltip] = useState(false);
 
   // Calculate category scores from results
   const categoryScores = useMemo(() => {
@@ -288,7 +288,25 @@ export default function EvaluationResultsPage({ params }: { params: Promise<{ id
           <div className="flex items-center gap-2">
             {isCompleted && (
               <>
-                <EvaluationExportMenu evaluation={evaluation} />
+                <div
+                  className="relative"
+                  onMouseEnter={() => setShowExportTooltip(true)}
+                  onMouseLeave={() => setShowExportTooltip(false)}
+                >
+                  <button
+                    disabled
+                    className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-slate-400 bg-slate-50 border border-slate-200 rounded-lg cursor-not-allowed"
+                  >
+                    <span className="material-symbols-outlined text-lg">lock</span>
+                    Export
+                  </button>
+                  {showExportTooltip && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-2 bg-slate-900 text-white text-xs font-medium rounded-lg whitespace-nowrap z-10 shadow-lg">
+                      Upgrade your membership
+                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 rotate-45" />
+                    </div>
+                  )}
+                </div>
                 <Link
                   href={`/evaluations/new?dataset=${evaluation.dataset_id}`}
                   className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-[#135bec] rounded-lg hover:bg-[#135bec]/90 transition-colors"
