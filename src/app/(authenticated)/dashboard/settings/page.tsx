@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/contexts/user-context';
+import { listApiKeys, createApiKey, type ApiKey, type CreatedApiKey } from '@/lib/api/api-keys';
+import { ApiError } from '@/lib/api/client';
 
 // ============================================================================
 // TOGGLE COMPONENT
@@ -46,10 +48,11 @@ function Toggle({ checked, onChange, disabled = false }: ToggleProps) {
 // TAB DEFINITIONS
 // ============================================================================
 
-type TabId = 'profile' | 'appearance' | 'danger';
+type TabId = 'profile' | 'apiKeys' | 'appearance' | 'danger';
 
 const tabs: { id: TabId; label: string; icon: string }[] = [
   { id: 'profile', label: 'Profile', icon: 'person' },
+  { id: 'apiKeys', label: 'API Keys', icon: 'key' },
   { id: 'appearance', label: 'Appearance', icon: 'palette' },
   { id: 'danger', label: 'Danger Zone', icon: 'warning' },
 ];
@@ -75,6 +78,51 @@ export default function SettingsPage() {
   // Appearance state
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('light');
   const [compactMode, setCompactMode] = useState(false);
+
+  // API Keys state
+  const [apiKeys, setApiKeys] = useState<ApiKey[]>([]);
+  const [newKeyName, setNewKeyName] = useState('');
+  const [createdKey, setCreatedKey] = useState<CreatedApiKey | null>(null);
+  const [loadingKeys, setLoadingKeys] = useState(false);
+  const [keyError, setKeyError] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const refreshKeys = async () => {
+    setLoadingKeys(true);
+    setKeyError('');
+    try {
+      setApiKeys(await listApiKeys());
+    } catch (err) {
+      setKeyError(err instanceof ApiError ? err.message : 'Failed to load keys');
+    } finally {
+      setLoadingKeys(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === 'apiKeys') refreshKeys();
+  }, [activeTab]);
+
+  const handleCreateKey = async () => {
+    if (!newKeyName.trim()) return;
+    setKeyError('');
+    try {
+      const created = await createApiKey(newKeyName.trim());
+      setCreatedKey(created);
+      setNewKeyName('');
+      refreshKeys();
+    } catch (err) {
+      setKeyError(err instanceof ApiError ? err.message : 'Failed to create key');
+    }
+  };
+
+  const copyKey = () => {
+    if (createdKey) {
+      navigator.clipboard.writeText(createdKey.plaintext_key);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   // ============================================================================
   // RENDER FUNCTIONS
@@ -224,6 +272,114 @@ export default function SettingsPage() {
     </div>
   );
 
+  const renderApiKeysTab = () => (
+    <div className="space-y-6">
+      {/* New key creation */}
+      <div>
+        <h3 className="text-base font-bold text-slate-900 mb-1">Generate API Key</h3>
+        <p className="text-sm text-slate-500 mb-4">
+          Use this key to authenticate the Python SDK. You can create more than one key for local
+          development, CI, or separate machines.
+        </p>
+
+        {/* Show plaintext once after creation */}
+        {createdKey && (
+          <div className="mb-4 rounded-xl border-2 border-amber-300 bg-amber-50 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="material-symbols-outlined text-amber-600">warning</span>
+              <p className="text-sm font-bold text-amber-900">
+                Copy your key now — it won&apos;t be shown again.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <code className="flex-1 rounded-lg bg-white border border-amber-200 px-3 py-2 text-sm font-mono text-slate-800 break-all">
+                {createdKey.plaintext_key}
+              </code>
+              <button
+                type="button"
+                onClick={copyKey}
+                className="shrink-0 px-3 py-2 rounded-lg text-sm font-medium bg-amber-600 text-white hover:bg-amber-700 transition-colors"
+              >
+                {copied ? 'Copied!' : 'Copy'}
+              </button>
+            </div>
+            <button
+              type="button"
+              onClick={() => setCreatedKey(null)}
+              className="mt-2 text-xs text-amber-700 hover:underline"
+            >
+              Dismiss
+            </button>
+          </div>
+        )}
+
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={newKeyName}
+            onChange={(e) => setNewKeyName(e.target.value)}
+            placeholder="Key name (e.g. local-dev, ci-pipeline)"
+            className="flex-1 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+            onKeyDown={(e) => e.key === 'Enter' && handleCreateKey()}
+          />
+          <button
+            type="button"
+            onClick={handleCreateKey}
+            disabled={!newKeyName.trim()}
+            className="shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-lg font-bold text-sm bg-[#135bec] hover:bg-[#135bec]/90 disabled:opacity-40 disabled:cursor-not-allowed text-white shadow-sm transition-all"
+          >
+            <span className="material-symbols-outlined text-lg">add</span>
+            Generate
+          </button>
+        </div>
+      </div>
+
+      {keyError && (
+        <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+          {keyError}
+        </div>
+      )}
+
+      {/* Existing keys list */}
+      <div>
+        <h3 className="text-base font-bold text-slate-900 mb-4">Your API Keys</h3>
+        {loadingKeys ? (
+          <p className="text-sm text-slate-400">Loading...</p>
+        ) : apiKeys.length === 0 ? (
+          <div className="rounded-xl border border-dashed border-slate-200 p-8 text-center">
+            <span className="material-symbols-outlined text-4xl text-slate-300">vpn_key_off</span>
+            <p className="text-sm text-slate-400 mt-2">No API keys yet. Generate one above.</p>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {apiKeys.map((key) => (
+              <div
+                key={key.id}
+                className="flex items-center gap-4 rounded-lg border border-slate-200 bg-white px-4 py-3 transition-colors"
+              >
+                <span className="material-symbols-outlined text-slate-400">key</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-medium text-slate-900 truncate">{key.name}</p>
+                    <code className="text-xs text-slate-400 font-mono">{key.key_prefix}...</code>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">
+                      Active
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Created {new Date(key.created_at).toLocaleDateString()}
+                    {key.last_used_at &&
+                      ` · Last used ${new Date(key.last_used_at).toLocaleDateString()}`}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
   const renderDangerZoneTab = () => (
     <div className="space-y-6">
       {/* Export Data */}
@@ -276,6 +432,8 @@ export default function SettingsPage() {
     switch (activeTab) {
       case 'profile':
         return renderProfileTab();
+      case 'apiKeys':
+        return renderApiKeysTab();
       case 'appearance':
         return renderAppearanceTab();
       case 'danger':
