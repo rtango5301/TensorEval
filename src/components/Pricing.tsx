@@ -3,18 +3,7 @@
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
-
-declare global {
-  interface Window {
-    Calendly?: {
-      initPopupWidget: (opts: { url: string }) => void;
-    };
-  }
-}
-
-const CALENDLY_CSS = 'https://assets.calendly.com/assets/external/widget.css';
-const CALENDLY_JS = 'https://assets.calendly.com/assets/external/widget.js';
+import { useCalendly } from '@/hooks/use-calendly';
 
 const pricingPlans = [
   {
@@ -54,41 +43,7 @@ const pricingPlans = [
 
 export function Pricing() {
   const router = useRouter();
-  const scriptLoaded = useRef(false);
-
-  // Load Calendly widget CSS + JS on mount
-  useEffect(() => {
-    // CSS
-    const link = document.createElement('link');
-    link.href = CALENDLY_CSS;
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-
-    // JS - only inject once
-    if (!scriptLoaded.current && !window.Calendly) {
-      const script = document.createElement('script');
-      script.src = CALENDLY_JS;
-      script.async = true;
-      script.onload = () => {
-        scriptLoaded.current = true;
-      };
-      document.head.appendChild(script);
-    } else {
-      scriptLoaded.current = true;
-    }
-
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, []);
-
-  const openCalendly = () => {
-    if (window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/evaltensor',
-      });
-    }
-  };
+  const { openCalendly } = useCalendly();
 
   return (
     <section

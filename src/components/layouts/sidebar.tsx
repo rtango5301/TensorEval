@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Logo } from '@/components/logo';
+import { useUser } from '@/contexts/user-context';
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
@@ -13,6 +14,10 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const user = useUser();
+  const items = user.isAdmin
+    ? [...navItems, { href: '/admin', label: 'Admin', icon: 'shield_person' }]
+    : navItems;
 
   return (
     <aside className="hidden md:flex w-56 flex-col border-r border-slate-200 bg-white h-screen sticky top-0 flex-shrink-0">
@@ -34,13 +39,15 @@ export function Sidebar() {
 
         {/* Primary Navigation */}
         <nav className="flex flex-col gap-1 flex-1">
-          {navItems.map((item) => {
+          {items.map((item) => {
             const isActive =
               item.href === '/datasets'
                 ? pathname.startsWith('/datasets')
                 : item.href === '/evaluations'
                   ? pathname.startsWith('/evaluations')
-                  : pathname === item.href || pathname.startsWith('/dashboard');
+                  : item.href === '/admin'
+                    ? pathname.startsWith('/admin')
+                    : pathname === item.href || pathname.startsWith('/dashboard');
             return (
               <Link
                 key={item.href}

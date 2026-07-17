@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
+import { isAdminUser } from '@/lib/auth/admin-ids';
 import type { AuthUser } from '@/contexts/user-context';
 
 /**
@@ -42,5 +43,6 @@ export async function getAuthenticatedUser(): Promise<AuthUser> {
     email: user.email || '',
     name,
     avatarUrl,
+    isAdmin: isAdminUser(user.id),
   };
 }

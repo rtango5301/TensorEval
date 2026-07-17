@@ -1,4 +1,5 @@
 import { createBrowserClient } from '@supabase/ssr';
+import { logger } from '@/lib/logger';
 
 let clientInstance: ReturnType<typeof createBrowserClient> | null = null;
 
@@ -8,7 +9,7 @@ export function createClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn('Missing Supabase environment variables — auth features will be unavailable');
+    logger.warn('supabase/client', 'Missing Supabase env vars — auth features unavailable');
     return null;
   }
 
