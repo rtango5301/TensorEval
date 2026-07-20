@@ -35,25 +35,25 @@ function getStatusStyles(status: EvaluationResult['status']) {
   switch (status) {
     case 'passed':
       return {
-        bg: 'bg-emerald-100',
-        text: 'text-emerald-700',
-        border: 'border-emerald-200',
+        bg: 'bg-[var(--success)]/10',
+        text: 'text-[var(--success-foreground)]',
+        border: 'border-[var(--success)]/20',
         label: 'PASSED',
         icon: 'check_circle',
       };
     case 'failed':
       return {
-        bg: 'bg-red-100',
-        text: 'text-red-700',
-        border: 'border-red-200',
+        bg: 'bg-[var(--error)]/10',
+        text: 'text-[var(--error-foreground)]',
+        border: 'border-[var(--error)]/20',
         label: 'FAILED',
         icon: 'cancel',
       };
     case 'warning':
       return {
-        bg: 'bg-amber-100',
-        text: 'text-amber-700',
-        border: 'border-amber-200',
+        bg: 'bg-[var(--warning)]/10',
+        text: 'text-[var(--warning-foreground)]',
+        border: 'border-[var(--warning)]/20',
         label: 'WARNING',
         icon: 'warning',
       };
@@ -72,18 +72,18 @@ function getStatusStyles(status: EvaluationResult['status']) {
  * Get score color based on percentage value
  */
 function getScoreColor(score: number): string {
-  if (score >= 80) return 'text-emerald-600';
-  if (score >= 60) return 'text-amber-600';
-  return 'text-red-600';
+  if (score >= 80) return 'text-[var(--success-foreground)]';
+  if (score >= 60) return 'text-[var(--warning-foreground)]';
+  return 'text-[var(--error-foreground)]';
 }
 
 /**
  * Get progress bar color based on score
  */
 function getProgressBarColor(score: number): string {
-  if (score >= 80) return 'bg-emerald-500';
-  if (score >= 60) return 'bg-amber-500';
-  return 'bg-red-500';
+  if (score >= 80) return 'bg-[var(--success)]';
+  if (score >= 60) return 'bg-[var(--warning)]';
+  return 'bg-[var(--error)]';
 }
 
 /**

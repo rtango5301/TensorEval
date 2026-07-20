@@ -10,8 +10,8 @@ type ToastType = 'success' | 'info' | 'error';
 const toastConfig: Record<ToastType, { icon: string; iconColor: string; borderColor: string }> = {
   success: {
     icon: 'check_circle',
-    iconColor: 'text-green-500',
-    borderColor: 'border-green-500',
+    iconColor: 'text-[var(--success)]',
+    borderColor: 'border-[var(--success)]',
   },
   info: {
     icon: 'info',
@@ -20,8 +20,8 @@ const toastConfig: Record<ToastType, { icon: string; iconColor: string; borderCo
   },
   error: {
     icon: 'error',
-    iconColor: 'text-red-500',
-    borderColor: 'border-red-500',
+    iconColor: 'text-[var(--error)]',
+    borderColor: 'border-[var(--error)]',
   },
 };
 

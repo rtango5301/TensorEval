@@ -14,7 +14,7 @@ export function AuthenticatedShell({ children }: AuthenticatedShellProps) {
       <Sidebar />
 
       {/* Main Content Area */}
-      <main className="relative flex min-h-screen flex-1 flex-col">
+      <main className="relative flex min-h-screen min-w-0 flex-1 flex-col">
         <AuthenticatedHeader />
 
         {/* Page Content */}

@@ -29,20 +29,20 @@ export function AuthenticatedHeader() {
   const { openCalendly } = useCalendly();
 
   return (
-    <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center justify-between border-b border-[var(--outline-variant)] bg-white px-4 sm:px-6">
-      <div className="flex items-center gap-4">
+    <header className="sticky top-0 z-20 flex h-14 min-w-0 shrink-0 items-center justify-between gap-2 border-b border-[var(--outline-variant)] bg-white px-4 sm:px-6">
+      <div className="flex min-w-0 items-center gap-2 sm:gap-4">
         <button className="text-[var(--on-surface-variant)] hover:text-[var(--on-surface)] md:hidden">
           <span className="material-symbols-outlined">menu</span>
         </button>
-        <h2 className="font-display text-base font-bold leading-tight text-[var(--on-surface)]">
+        <h2 className="truncate font-display text-base font-bold leading-tight text-[var(--on-surface)]">
           {pageTitle}
         </h2>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex shrink-0 items-center gap-2 sm:gap-3">
         <button
           onClick={openCalendly}
-          className="rounded-[4px] border border-[var(--primary)] bg-white px-4 py-2 text-sm font-bold text-[var(--primary)] transition-colors hover:bg-[var(--surface-container-low)]"
+          className="hidden rounded-[4px] border border-[var(--primary)] bg-white px-4 py-2 text-sm font-bold text-[var(--primary)] transition-colors hover:bg-[var(--surface-container-low)] sm:block"
         >
           Schedule a call
         </button>

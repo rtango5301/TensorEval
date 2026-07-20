@@ -148,7 +148,8 @@ export function Navigation({ user: initialUser }: NavigationProps) {
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 lg:px-10">
         {/* Logo */}
         <Link href="/" className="flex items-center text-[var(--foreground)] no-underline">
-          <Logo size="sm" />
+          <Logo size="sm" showText={false} className="lg:hidden" />
+          <Logo size="sm" lockup className="hidden lg:block" />
         </Link>
 
         {/* Desktop Nav Links */}

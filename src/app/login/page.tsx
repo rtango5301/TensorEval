@@ -147,7 +147,10 @@ function AuthPageContent() {
         <div className="col-span-4 flex flex-col justify-center bg-[var(--inverse-surface)] p-10 text-[var(--inverse-on-surface)] lg:col-span-5 lg:p-14">
           {/* Logo */}
           <Link href="/" className="flex items-center mb-10">
-            <Logo variant="light" size="md" />
+            <Logo variant="light" size="md" className="lg:hidden" />
+            <span className="hidden rounded-[8px] bg-white p-3 lg:block">
+              <Logo lockup size="md" />
+            </span>
           </Link>
 
           {/* Heading */}
@@ -155,7 +158,7 @@ function AuthPageContent() {
             Ship AI Agents
             <br />
             with{' '}
-            <span className="inline-block pr-2 italic text-[var(--brand-highlight)]">
+            <span className="inline-block pr-2 italic text-[var(--inverse-on-surface)]">
               Confidence
             </span>
           </h1>

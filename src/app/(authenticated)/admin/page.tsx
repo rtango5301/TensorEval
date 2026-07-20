@@ -75,9 +75,9 @@ function StatCard({
 }) {
   const toneStyles = {
     default: 'text-[var(--on-surface)]',
-    good: 'text-[var(--success)]',
-    warn: 'text-[var(--warning)]',
-    bad: 'text-[var(--error)]',
+    good: 'text-[var(--success-foreground)]',
+    warn: 'text-[var(--warning-foreground)]',
+    bad: 'text-[var(--error-foreground)]',
   }[tone];
 
   return (
