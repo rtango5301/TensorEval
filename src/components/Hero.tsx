@@ -33,15 +33,20 @@ const itemVariants = {
 
 export function Hero() {
   return (
-    <section className="pt-[72px] pb-[54px] px-6 sm:px-8 lg:px-12 bg-gradient-to-b from-[var(--bg-subtle)] to-[var(--background)]">
-      <div className="max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 lg:gap-8 items-center">
+    <section className="bg-[var(--background)] px-4 pb-16 pt-32 lg:px-10 lg:pb-20 lg:pt-36">
+      <div className="mx-auto max-w-[1440px]">
+        <div className="grid grid-cols-4 items-center gap-4 lg:grid-cols-12 lg:gap-6">
           {/* Left Content */}
-          <motion.div variants={containerVariants} initial="hidden" animate="visible">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="col-span-4 lg:col-span-6"
+          >
             {/* Pill Badge */}
             <motion.div
               variants={itemVariants}
-              className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#f0f0f5] border border-[#e4e4eb] rounded-full mb-6 w-fit"
+              className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-4 py-1.5"
             >
               <span className="w-2 h-2 rounded-full bg-[var(--accent-green)] flex-shrink-0" />
               <span className="text-xs font-semibold text-[var(--primary)] uppercase tracking-[0.1em] whitespace-nowrap">
@@ -52,7 +57,7 @@ export function Hero() {
             {/* Headline - Big, Clean, Confident */}
             <motion.h1
               variants={itemVariants}
-              className="text-[2.75rem] md:text-[3.5rem] lg:text-[4rem] font-extrabold leading-[1.1] mb-4 tracking-tight"
+              className="mb-4 font-display text-[2.75rem] font-extrabold leading-[1.1] tracking-tight md:text-[3.5rem] lg:text-[4rem]"
             >
               <span className="block">CI/CD for</span>
               <span className="block text-[var(--primary)]">Agentic</span>
@@ -62,11 +67,11 @@ export function Hero() {
             {/* Subheadline */}
             <motion.div
               variants={itemVariants}
-              className="mb-5 max-w-[500px] px-5 py-3 rounded-lg bg-[#f0f0f5] border-l-[3px] border-l-[var(--primary)]"
+              className="mb-5 max-w-[500px] rounded-[8px] border border-[var(--outline-variant)] border-l-[3px] border-l-[var(--primary)] bg-[var(--surface-container-low)] px-5 py-3"
             >
-              <p className="text-base text-[#6b7280] leading-relaxed">
+              <p className="text-base leading-relaxed text-[var(--on-surface-variant)]">
                 Ship agent improvements in hours, not weeks. Automated evals. Instant feedback.{' '}
-                <span className="font-semibold text-[#1f2937]">Zero guesswork.</span>
+                <span className="font-semibold text-[var(--on-surface)]">Zero guesswork.</span>
               </p>
             </motion.div>
 
@@ -92,7 +97,7 @@ export function Hero() {
                 },
               ].map((feature, i) => (
                 <div key={i} className="flex items-start gap-3 group">
-                  <div className="w-8 h-8 rounded-lg bg-[var(--primary)]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[4px] bg-[var(--surface-container)]">
                     <feature.icon className="w-4 h-4 text-[var(--primary)]" />
                   </div>
                   <div className="space-y-0.5">
@@ -116,7 +121,7 @@ export function Hero() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="w-full"
+            className="col-span-4 w-full lg:col-span-6"
           >
             {/* Mobile - Same Dashboard Scaled */}
             <div className="block lg:hidden relative w-full overflow-x-auto pb-4 -mx-4 px-4">
@@ -156,7 +161,7 @@ function EvaluationDashboard() {
         }}
       >
         {/* Window */}
-        <div className="rounded-2xl overflow-hidden bg-white shadow-[0_60px_120px_-20px_rgba(0,0,0,0.12),0_30px_60px_-30px_rgba(0,0,0,0.15)] border border-gray-200/80">
+        <div className="overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
           {/* Window Header */}
           <div className="bg-[#f8f8fa] px-5 py-3.5 flex items-center border-b border-gray-200/60">
             <div className="flex items-center gap-2">
@@ -175,18 +180,18 @@ function EvaluationDashboard() {
             {/* Header */}
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-3">
-                <h3 className="text-lg font-bold text-gray-900">Evaluation Results</h3>
+                <h3 className="font-display text-lg font-bold text-gray-900">Evaluation Results</h3>
                 <span className="px-2.5 py-1 bg-[var(--accent-green)]/10 text-[var(--accent-green)] text-[11px] font-semibold rounded-full">
                   Completed
                 </span>
                 <span className="text-xs text-gray-400">3m 12s</span>
               </div>
               <div className="flex gap-2">
-                <button className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 rounded-lg text-xs font-medium bg-white hover:bg-gray-50 text-gray-600">
+                <button className="flex items-center gap-1.5 rounded-[4px] border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50">
                   <Download className="w-3.5 h-3.5" />
                   Export
                 </button>
-                <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--primary)] text-white rounded-lg text-xs font-medium">
+                <button className="flex items-center gap-1.5 rounded-[4px] bg-[var(--primary)] px-3 py-1.5 text-xs font-medium text-white">
                   <RefreshCw className="w-3.5 h-3.5" />
                   Re-run
                 </button>
@@ -196,7 +201,7 @@ function EvaluationDashboard() {
             {/* Metrics Row - HORIZONTAL */}
             <div className="grid grid-cols-4 gap-3 mb-4">
               {/* Overall Score */}
-              <div className="bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 rounded-xl p-4 border border-[var(--primary)]/20 shadow-sm relative overflow-hidden">
+              <div className="relative overflow-hidden rounded-[8px] border border-[var(--primary)]/20 bg-[var(--surface-container-low)] p-4">
                 <div className="absolute top-0 right-0 w-16 h-16 bg-[var(--primary)]/5 rounded-full -translate-y-1/2 translate-x-1/2" />
                 <div className="flex items-center gap-2 mb-2 relative">
                   <div className="w-9 h-9 bg-[var(--primary)]/15 rounded-lg flex items-center justify-center">
@@ -211,7 +216,7 @@ function EvaluationDashboard() {
               </div>
 
               {/* Pass Rate */}
-              <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <div className="rounded-[8px] border border-gray-100 bg-white p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-9 h-9 bg-[var(--accent-green)]/10 rounded-lg flex items-center justify-center">
                     <CheckCircle className="w-4 h-4 text-[var(--accent-green)]" />
@@ -232,7 +237,7 @@ function EvaluationDashboard() {
               </div>
 
               {/* Avg Latency */}
-              <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <div className="rounded-[8px] border border-gray-100 bg-white p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-9 h-9 bg-amber-50 rounded-lg flex items-center justify-center">
                     <Clock className="w-4 h-4 text-amber-600" />
@@ -246,7 +251,7 @@ function EvaluationDashboard() {
               </div>
 
               {/* Tests Run */}
-              <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <div className="rounded-[8px] border border-gray-100 bg-white p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center">
                     <Check className="w-4 h-4 text-blue-600" />
@@ -259,9 +264,11 @@ function EvaluationDashboard() {
             </div>
 
             {/* Performance Chart - Full Width */}
-            <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm mb-4 hover:shadow-md transition-shadow">
+            <div className="mb-4 rounded-[8px] border border-gray-100 bg-white p-4">
               <div className="flex items-center justify-between mb-4">
-                <h4 className="text-sm font-semibold text-gray-900">Performance Comparison</h4>
+                <h4 className="font-display text-sm font-semibold text-gray-900">
+                  Performance Comparison
+                </h4>
                 <div className="flex items-center gap-4 text-xs">
                   <span className="flex items-center gap-1.5 text-gray-500">
                     <span className="w-2.5 h-2.5 bg-gray-300 rounded-full" /> Baseline
@@ -317,9 +324,11 @@ function EvaluationDashboard() {
             </div>
 
             {/* Test Cases - Compact */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+            <div className="overflow-hidden rounded-[8px] border border-gray-100 bg-white">
               <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-gray-50/50 to-transparent">
-                <h4 className="text-sm font-semibold text-gray-900">Recent Test Cases</h4>
+                <h4 className="font-display text-sm font-semibold text-gray-900">
+                  Recent Test Cases
+                </h4>
                 <span className="text-xs text-gray-500 font-medium">150 total</span>
               </div>
               <div className="divide-y divide-gray-50">
@@ -506,7 +515,6 @@ function RadarChart() {
             cy={point.y}
             r={isSafety ? 4 : 3}
             fill={isSafety ? '#ef4444' : 'var(--primary)'}
-            className="drop-shadow-sm"
           />
         );
       })}

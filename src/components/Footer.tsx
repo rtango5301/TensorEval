@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Layers, Linkedin, CheckCircle } from 'lucide-react';
+import { Linkedin, CheckCircle } from 'lucide-react';
+import { Logo } from '@/components/logo';
 
 const footerLinks = {
   Product: [
@@ -25,24 +26,19 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="bg-[var(--background)] border-t border-[var(--border-light)] pt-10 lg:pt-16 pb-8 lg:pb-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-[1080px] mx-auto">
+    <footer className="border-t border-[var(--outline-variant)] bg-[var(--background)] px-4 py-16 lg:px-10 lg:py-20">
+      <div className="mx-auto max-w-[1440px]">
         {/* Footer Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-6 lg:gap-12 mb-8 lg:mb-12">
+        <div className="mb-8 grid grid-cols-4 gap-6 lg:mb-12 lg:grid-cols-12">
           {/* Brand */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            className="col-span-4 lg:col-span-6"
           >
-            <Link
-              href="/"
-              className="flex items-center gap-2.5 text-[var(--foreground)] no-underline mb-4"
-            >
-              <div className="w-8 h-8 bg-gradient-to-br from-[var(--primary)] to-[var(--primary-light)] rounded-lg flex items-center justify-center text-white">
-                <Layers className="w-4 h-4" />
-              </div>
-              <span className="font-bold text-lg">TensorEval</span>
+            <Link href="/" className="mb-4 flex items-center text-[var(--foreground)] no-underline">
+              <Logo size="sm" />
             </Link>
             <p className="text-sm text-[var(--text-secondary)] max-w-[280px] mb-4">
               Where AI agents go from experimental to enterprise-grade.
@@ -61,8 +57,9 @@ export function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: catIndex * 0.05 }}
+              className="col-span-2"
             >
-              <h4 className="text-sm font-semibold mb-5">{category}</h4>
+              <h4 className="mb-5 font-display text-sm font-semibold">{category}</h4>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.label}>

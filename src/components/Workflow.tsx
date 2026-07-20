@@ -65,9 +65,9 @@ export function Workflow() {
   return (
     <section
       id="workflow"
-      className="py-14 lg:py-[90px] px-4 sm:px-6 lg:px-8 bg-[var(--bg-subtle)] scroll-mt-20"
+      className="scroll-mt-20 bg-[var(--surface-container-low)] px-4 py-16 lg:px-10 lg:py-20"
     >
-      <div className="max-w-[1080px] mx-auto">
+      <div className="mx-auto max-w-[1440px]">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -79,7 +79,7 @@ export function Workflow() {
           <p className="text-base uppercase tracking-[0.2em] text-[var(--primary)] font-bold mb-4">
             Workflow
           </p>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 lg:mb-4 tracking-tight">
+          <h2 className="mb-3 font-display text-2xl font-bold tracking-tight md:text-3xl lg:mb-4 lg:text-4xl">
             Evaluate, compare, deploy
           </h2>
           <p className="text-base lg:text-lg text-[var(--text-secondary)]">
@@ -88,9 +88,9 @@ export function Workflow() {
         </motion.div>
 
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-6 lg:gap-12">
+        <div className="grid grid-cols-4 gap-6 lg:grid-cols-12">
           {/* Steps List */}
-          <div className="flex flex-col gap-2">
+          <div className="col-span-4 flex flex-col gap-2 lg:col-span-4">
             {workflowSteps.map((step, index) => (
               <motion.div
                 key={step.number}
@@ -100,14 +100,14 @@ export function Workflow() {
                 transition={{ delay: index * 0.05 }}
                 onMouseEnter={() => setActiveStep(index)}
                 onClick={() => setActiveStep(index)}
-                className={`flex items-start gap-3 lg:gap-4 p-3 lg:p-4 rounded-lg cursor-pointer transition-all border ${
+                className={`flex cursor-pointer items-start gap-3 rounded-[8px] border p-3 transition-colors lg:gap-4 lg:p-4 ${
                   activeStep === index
-                    ? 'bg-white border-[var(--primary)] shadow-sm'
-                    : 'border-transparent hover:bg-white hover:border-[var(--border)] hover:shadow-sm'
+                    ? 'border-[var(--primary)] bg-white'
+                    : 'border-transparent hover:border-[var(--outline-variant)] hover:bg-white'
                 }`}
               >
                 <div
-                  className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm flex-shrink-0 transition-colors ${
+                  className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[4px] text-sm font-bold transition-colors ${
                     activeStep === index
                       ? 'bg-[var(--primary)] text-white'
                       : 'bg-[var(--bg-muted)] text-[var(--text-muted)]'
@@ -116,7 +116,7 @@ export function Workflow() {
                   {step.number}
                 </div>
                 <div>
-                  <h4 className="font-semibold text-[0.95rem] mb-1">{step.title}</h4>
+                  <h4 className="mb-1 font-display text-[0.95rem] font-semibold">{step.title}</h4>
                   <p className="text-sm text-[var(--text-secondary)]">{step.description}</p>
                 </div>
               </motion.div>
@@ -124,12 +124,12 @@ export function Workflow() {
           </div>
 
           {/* Screen Display with Navigation Arrows */}
-          <div className="relative">
+          <div className="relative col-span-4 lg:col-span-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white border border-[var(--ui-border)] rounded-xl overflow-hidden shadow-lg h-[400px] lg:h-[500px]"
+              className="h-[400px] overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white lg:h-[500px]"
             >
               <AnimatePresence mode="wait">
                 <motion.div
@@ -162,7 +162,7 @@ export function Workflow() {
               className={`absolute left-2 lg:-left-5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 flex items-center justify-center transition-all ${
                 activeStep === 0
                   ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-white/80'
-                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white shadow-md hover:shadow-lg'
+                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white'
               }`}
               aria-label="Previous step"
             >
@@ -180,7 +180,7 @@ export function Workflow() {
               className={`absolute right-2 lg:-right-5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 flex items-center justify-center transition-all ${
                 activeStep === workflowSteps.length - 1
                   ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-white/80'
-                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white shadow-md hover:shadow-lg'
+                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white'
               }`}
               aria-label="Next step"
             >
@@ -265,7 +265,7 @@ function ConfigureScreen() {
           {/* Right - Integration Map */}
           <div className="bg-[var(--bg-subtle)] rounded-lg p-3 flex flex-col min-h-0">
             <div className="mb-3">
-              <h4 className="font-semibold text-sm">Integration Map</h4>
+              <h4 className="font-display text-sm font-semibold">Integration Map</h4>
               <p className="text-xs text-[var(--text-muted)]">Select source to bridge connection</p>
             </div>
 
@@ -276,7 +276,7 @@ function ConfigureScreen() {
                 <motion.div
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="w-14 h-14 bg-[var(--primary)] rounded-xl flex items-center justify-center shadow-lg shadow-[var(--primary)]/20"
+                  className="flex h-14 w-14 items-center justify-center rounded-[8px] bg-[var(--primary)]"
                 >
                   <svg
                     className="w-7 h-7 text-white"
@@ -509,7 +509,7 @@ function QueryGeneratorScreen() {
     },
     {
       category: 'Code Review',
-      categoryColor: '#8b5cf6',
+      categoryColor: 'var(--brand-secondary)',
       query: 'Analyze function for security vulnerabilities',
     },
     {
@@ -532,9 +532,9 @@ function QueryGeneratorScreen() {
                 key={agent.name}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.02, boxShadow: '0 8px 25px rgba(0,0,0,0.08)' }}
+                whileHover={{ scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 300, delay: agentIdx * 0.1 }}
-                className="bg-white rounded-lg border border-gray-100 p-1.5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+                className="rounded-[8px] border border-gray-100 bg-white p-1.5"
               >
                 {/* Agent Header */}
                 <div className="flex items-center gap-1.5 mb-1">
@@ -552,7 +552,9 @@ function QueryGeneratorScreen() {
                     <span style={{ color: agent.iconColor }}>{agent.icon}</span>
                   </motion.div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-[9px] font-bold text-gray-900 truncate">{agent.name}</h4>
+                    <h4 className="truncate font-display text-[9px] font-bold text-gray-900">
+                      {agent.name}
+                    </h4>
                     <div className="flex items-center gap-0.5">
                       <motion.span
                         animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
@@ -590,7 +592,8 @@ function QueryGeneratorScreen() {
               <motion.path
                 d="M 0 5 Q 8 5, 16 22 L 24 58"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -601,7 +604,8 @@ function QueryGeneratorScreen() {
               <motion.path
                 d="M 0 72 L 24 72"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -612,7 +616,8 @@ function QueryGeneratorScreen() {
               <motion.path
                 d="M 0 139 Q 8 139, 16 122 L 24 86"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -622,7 +627,7 @@ function QueryGeneratorScreen() {
               {/* Animated dot for top line */}
               <motion.circle
                 r="2.5"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [0, 12, 24],
@@ -634,14 +639,14 @@ function QueryGeneratorScreen() {
               {/* Animated dot for middle line */}
               <motion.circle
                 r="2.5"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 animate={{ cx: [0, 24], cy: [72, 72] }}
                 transition={{ duration: 1.5, repeat: Infinity, delay: 0.5, ease: 'easeInOut' }}
               />
               {/* Animated dot for bottom line */}
               <motion.circle
                 r="2.5"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [0, 12, 24],
@@ -658,7 +663,8 @@ function QueryGeneratorScreen() {
               <motion.path
                 d="M 0 30 Q 10 30, 18 12 L 24 4"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -669,7 +675,8 @@ function QueryGeneratorScreen() {
               <motion.path
                 d="M 0 72 L 24 72"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -680,7 +687,8 @@ function QueryGeneratorScreen() {
               <motion.path
                 d="M 0 114 Q 10 114, 18 132 L 24 140"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -690,7 +698,7 @@ function QueryGeneratorScreen() {
               {/* Animated dots on lines */}
               <motion.circle
                 r="2"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [0, 12, 24],
@@ -701,7 +709,7 @@ function QueryGeneratorScreen() {
               />
               <motion.circle
                 r="2"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [0, 12, 24],
@@ -712,7 +720,7 @@ function QueryGeneratorScreen() {
               />
               <motion.circle
                 r="2"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [0, 12, 24],
@@ -726,21 +734,12 @@ function QueryGeneratorScreen() {
             {/* Processing Engine Badge with glow */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                boxShadow: [
-                  '0 0 0 0 rgba(124, 58, 237, 0.4)',
-                  '0 0 0 6px rgba(124, 58, 237, 0)',
-                  '0 0 0 0 rgba(124, 58, 237, 0.4)',
-                ],
-              }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{
                 opacity: { duration: 0.3 },
                 y: { duration: 0.3 },
-                boxShadow: { duration: 2, repeat: Infinity },
               }}
-              className="px-2 py-0.5 bg-[#7c3aed] text-white text-[8px] font-bold uppercase tracking-wider rounded-full mb-1.5 z-20"
+              className="z-20 mb-1.5 rounded-full bg-[var(--brand-secondary)] px-2 py-0.5 text-[8px] font-bold uppercase tracking-wider text-white"
             >
               Processing Engine
             </motion.div>
@@ -757,10 +756,10 @@ function QueryGeneratorScreen() {
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-                  className="w-10 h-10 rounded-full border-2 border-[#c7d2fe] flex items-center justify-center bg-[#f5f3ff]"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-[var(--brand-highlight)]/30 bg-[var(--surface-container-low)]"
                 >
                   <svg
-                    className="w-5 h-5 text-[#7c3aed]"
+                    className="h-5 w-5 text-[var(--brand-secondary)]"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -785,7 +784,7 @@ function QueryGeneratorScreen() {
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[9px] font-medium text-gray-600">Synthesis Pipeline</span>
                   <span className="text-[8px] font-semibold">
-                    <span className="text-[#7c3aed]">STEP</span>{' '}
+                    <span className="text-[var(--brand-secondary)]">STEP</span>{' '}
                     <span className="text-gray-400">03/04</span>
                   </span>
                 </div>
@@ -794,7 +793,7 @@ function QueryGeneratorScreen() {
                     initial={{ width: 0 }}
                     animate={{ width: '75%' }}
                     transition={{ duration: 1.5, ease: 'easeOut' }}
-                    className="h-full bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] rounded-full relative"
+                    className="relative h-full rounded-full bg-[var(--brand-highlight)]"
                   >
                     {/* Shimmer effect */}
                     <motion.div
@@ -840,11 +839,10 @@ function QueryGeneratorScreen() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 whileHover={{
                   scale: 1.02,
-                  boxShadow: '0 6px 20px rgba(0,0,0,0.08)',
                   x: -3,
                 }}
                 transition={{ delay: 0.4 + idx * 0.15, type: 'spring', stiffness: 300 }}
-                className="bg-white rounded-lg border border-gray-100 p-2 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative cursor-pointer"
+                className="relative cursor-pointer rounded-[8px] border border-gray-100 bg-white p-2"
               >
                 {/* Category Badge */}
                 <motion.div
@@ -866,7 +864,7 @@ function QueryGeneratorScreen() {
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ delay: 0.8 + idx * 0.15, type: 'spring', stiffness: 500 }}
-                  className="absolute top-2 right-2 w-3.5 h-3.5 rounded-full bg-[#22c55e] flex items-center justify-center shadow-sm"
+                  className="absolute right-2 top-2 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#22c55e]"
                 >
                   <Check className="w-2 h-2 text-white" strokeWidth={3} />
                 </motion.div>
@@ -940,7 +938,7 @@ function RunningScreen() {
               className="w-5 h-5 border-2 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full"
             />
             <div>
-              <h3 className="text-sm font-bold">Running Parallel Tests</h3>
+              <h3 className="font-display text-sm font-bold">Running Parallel Tests</h3>
               <p className="text-[10px] text-[var(--text-muted)]">
                 Scraping agent with MCP tools • Capturing tool calls
               </p>
@@ -1252,7 +1250,7 @@ function MetricsScreen() {
       change: '+2.1%',
       status: 'PASSED',
       statusColor: 'var(--accent-green)',
-      trendColor: '#8b5cf6',
+      trendColor: 'var(--brand-secondary)',
     },
     {
       icon: '⏱',
@@ -1294,7 +1292,7 @@ function MetricsScreen() {
       value: '89%',
       status: 'STABLE',
       statusColor: '#6b7280',
-      trendColor: '#6366f1',
+      trendColor: 'var(--brand-highlight)',
     },
   ];
 
@@ -1306,7 +1304,7 @@ function MetricsScreen() {
         <div className="flex justify-between items-start mb-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="text-lg font-bold">Support Bot v2.4</h3>
+              <h3 className="font-display text-lg font-bold">Support Bot v2.4</h3>
               <span className="px-2 py-0.5 bg-[var(--accent-green)]/10 text-[var(--accent-green)] rounded text-[10px] font-semibold uppercase">
                 Passed
               </span>
@@ -1317,7 +1315,7 @@ function MetricsScreen() {
             <motion.button
               whileHover={{ scale: 1.05, backgroundColor: '#f9fafb' }}
               whileTap={{ scale: 0.95 }}
-              className="px-3 py-1.5 bg-white border border-[var(--border)] rounded-lg text-xs font-medium flex items-center gap-1.5 shadow-sm hover:shadow transition-all"
+              className="flex items-center gap-1.5 rounded-[4px] border border-[var(--outline-variant)] bg-white px-3 py-1.5 text-xs font-medium transition-colors hover:bg-[var(--surface-container-low)]"
             >
               <motion.span whileHover={{ y: [0, -2, 0] }} transition={{ duration: 0.3 }}>
                 📥
@@ -1325,9 +1323,9 @@ function MetricsScreen() {
               Export PDF Report
             </motion.button>
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 6px 16px rgba(99, 102, 241, 0.35)' }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-3 py-1.5 bg-[var(--primary)] text-white rounded-lg text-xs font-medium flex items-center gap-1 shadow-md shadow-[var(--primary)]/25 transition-all"
+              className="flex items-center gap-1 rounded-[4px] bg-[var(--primary)] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--primary-dark)]"
             >
               Compare Versions
               <motion.span
@@ -1460,7 +1458,7 @@ function ABComparisonScreen() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4 }}
             whileHover={{ scale: 1.02 }}
-            className="border border-[var(--border-light)] rounded-lg p-3 bg-white transition-shadow hover:shadow-md flex flex-col min-h-0"
+            className="flex min-h-0 flex-col rounded-[8px] border border-[var(--outline-variant)] bg-white p-3"
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-lg font-bold">v2.3</span>
@@ -1490,7 +1488,7 @@ function ABComparisonScreen() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
             whileHover={{ scale: 1.02 }}
-            className="border-2 border-[var(--accent-green)] rounded-lg p-3 bg-[var(--accent-green)]/5 transition-shadow hover:shadow-lg hover:shadow-[var(--accent-green)]/10 flex flex-col min-h-0"
+            className="flex min-h-0 flex-col rounded-[8px] border-2 border-[var(--accent-green)] bg-[var(--accent-green)]/5 p-3"
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-lg font-bold">v2.4</span>
@@ -1498,7 +1496,7 @@ function ABComparisonScreen() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', delay: 0.3 }}
-                className="px-2.5 py-1 bg-[var(--accent-green)] text-white rounded text-xs font-semibold shadow-md shadow-[var(--accent-green)]/30"
+                className="rounded-[4px] bg-[var(--accent-green)] px-2.5 py-1 text-xs font-semibold text-white"
               >
                 <motion.span
                   animate={{ scale: [1, 1.1, 1] }}
@@ -1600,7 +1598,7 @@ function ABComparisonScreen() {
           <motion.span
             animate={{ scale: [1, 1.3, 1] }}
             transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-3 h-3 rounded-full bg-[var(--accent-green)] shadow-md shadow-[var(--accent-green)]/40"
+            className="h-3 w-3 rounded-full bg-[var(--accent-green)]"
           />
           <span className="text-sm font-medium">
             Statistical significance:
@@ -1677,7 +1675,7 @@ function ShipScreen() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 + idx * 0.1 }}
-              whileHover={{ scale: 1.02, boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
+              whileHover={{ scale: 1.02 }}
               className="bg-white border border-[var(--border-light)] rounded-lg p-3 relative overflow-hidden"
             >
               <div className="flex items-start justify-between mb-1">
@@ -1716,15 +1714,14 @@ function ShipScreen() {
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="px-5 py-2.5 bg-white border border-[var(--border)] rounded-xl text-sm font-semibold shadow-sm hover:shadow transition-shadow"
+            className="rounded-[4px] border border-[var(--outline-variant)] bg-white px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-[var(--surface-container-low)]"
           >
             View Full Report
           </motion.button>
           <motion.button
-            whileHover={{ scale: 1.03, boxShadow: '0 8px 24px rgba(34, 197, 94, 0.35)' }}
+            whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            initial={{ boxShadow: '0 4px 12px rgba(34, 197, 94, 0.25)' }}
-            className="px-5 py-2.5 bg-[var(--accent-green)] text-white rounded-xl text-sm font-semibold flex items-center gap-2 shadow-lg"
+            className="flex items-center gap-2 rounded-[4px] bg-[var(--accent-green)] px-5 py-2.5 text-sm font-semibold text-white"
           >
             <motion.span
               animate={{ rotate: [0, -10, 10, 0] }}
