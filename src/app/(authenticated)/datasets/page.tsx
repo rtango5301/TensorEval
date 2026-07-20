@@ -272,7 +272,7 @@ const DatasetRow = React.memo(function DatasetRow({
               </div>
               <div className="mx-2 my-2 border-t border-[var(--outline-variant)]"></div>
               <button
-                className="mx-2 flex w-full items-center gap-3 rounded-[4px] px-4 py-2.5 text-left text-sm font-medium text-red-600 transition-colors hover:bg-red-50 hover:text-red-700"
+                className="mx-2 flex w-full items-center gap-3 rounded-[4px] px-4 py-2.5 text-left text-sm font-medium text-[var(--error)] transition-colors hover:bg-[var(--error)]/10 hover:text-[var(--error-foreground)]"
                 onClick={() => onDelete(dataset)}
               >
                 <span className="material-symbols-outlined text-lg">delete</span>
@@ -452,15 +452,17 @@ export default function DatasetsPage() {
 
       {/* Error State */}
       {error && (
-        <div className="flex items-center gap-3 rounded-[8px] border border-red-200 bg-red-50 p-4">
-          <span className="material-symbols-outlined text-red-500">error</span>
+        <div className="flex items-center gap-3 rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-4">
+          <span className="material-symbols-outlined text-[var(--error)]">error</span>
           <div className="flex-1">
-            <p className="text-sm font-medium text-red-800">Failed to load datasets</p>
-            <p className="text-sm text-red-600">{error.message}</p>
+            <p className="text-sm font-medium text-[var(--error-foreground)]">
+              Failed to load datasets
+            </p>
+            <p className="text-sm text-[var(--error-foreground)]">{error.message}</p>
           </div>
           <button
             onClick={() => refetch()}
-            className="rounded-[4px] bg-red-100 px-3 py-1.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-200"
+            className="rounded-[4px] bg-[var(--error)]/10 px-3 py-1.5 text-sm font-medium text-[var(--error-foreground)] transition-colors hover:bg-[var(--error)]/20"
           >
             Retry
           </button>
@@ -578,8 +580,10 @@ export default function DatasetsPage() {
             onClick={() => !isDeleting && setDeletingDataset(null)}
           />
           <div className="relative mx-4 flex w-full max-w-sm flex-col items-center gap-4 rounded-[8px] bg-white p-6 shadow-xl">
-            <div className="flex h-12 w-12 items-center justify-center rounded-[8px] bg-red-100">
-              <span className="material-symbols-outlined text-red-600 text-2xl">warning</span>
+            <div className="flex h-12 w-12 items-center justify-center rounded-[8px] bg-[var(--error)]/10">
+              <span className="material-symbols-outlined text-[var(--error)] text-2xl">
+                warning
+              </span>
             </div>
             <div className="text-center">
               <h3 className="font-display text-lg font-semibold text-[var(--on-surface)]">
@@ -604,7 +608,7 @@ export default function DatasetsPage() {
               <button
                 onClick={handleDelete}
                 disabled={isDeleting}
-                className="flex flex-1 items-center justify-center gap-2 rounded-[4px] bg-red-600 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
+                className="flex flex-1 items-center justify-center gap-2 rounded-[4px] bg-[var(--error)] px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[var(--error-foreground)] disabled:opacity-50"
               >
                 {isDeleting ? (
                   <>

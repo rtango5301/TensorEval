@@ -179,9 +179,9 @@ export default async function AdminPage() {
       </div>
 
       {loadError && (
-        <div className="flex items-start gap-3 rounded-[8px] border border-amber-200 bg-amber-50 p-4">
-          <span className="material-symbols-outlined text-amber-500">info</span>
-          <p className="text-amber-800 text-sm">{loadError}</p>
+        <div className="flex items-start gap-3 rounded-[8px] border border-[var(--warning)]/20 bg-[var(--warning)]/10 p-4">
+          <span className="material-symbols-outlined text-[var(--warning)]">info</span>
+          <p className="text-[var(--warning-foreground)] text-sm">{loadError}</p>
         </div>
       )}
 

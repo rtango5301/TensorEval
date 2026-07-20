@@ -27,7 +27,7 @@ export default function DatasetDetailLoading() {
       </div>
       <div className="overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
         <div className="animate-pulse">
-          <div className="flex h-14 items-center justify-between gap-4 border-b border-[var(--outline-variant)] px-6 py-4">
+          <div className="flex flex-col gap-4 border-b border-[var(--outline-variant)] px-6 py-4 md:flex-row md:items-center md:justify-between">
             <div className="h-5 w-20 rounded-[4px] bg-[var(--surface-container)]" />
             <div className="flex items-center gap-3">
               <div className="h-9 w-64 rounded-[4px] bg-[var(--surface-container)]" />

@@ -264,11 +264,13 @@ export default function NewDatasetPage() {
 
       {/* API Error Banner */}
       {createError && (
-        <div className="flex items-center gap-3 rounded-[8px] border border-red-200 bg-red-50 p-4">
-          <span className="material-symbols-outlined text-red-500">error</span>
+        <div className="flex items-center gap-3 rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-4">
+          <span className="material-symbols-outlined text-[var(--error)]">error</span>
           <div className="flex-1">
-            <p className="text-sm font-medium text-red-800">Failed to create dataset</p>
-            <p className="text-sm text-red-600">{createError.message}</p>
+            <p className="text-sm font-medium text-[var(--error-foreground)]">
+              Failed to create dataset
+            </p>
+            <p className="text-sm text-[var(--error-foreground)]">{createError.message}</p>
           </div>
         </div>
       )}
@@ -332,14 +334,14 @@ export default function NewDatasetPage() {
                 isDragging
                   ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
                   : uploadFile
-                    ? 'border-emerald-300 bg-emerald-50'
+                    ? 'border-[var(--success)]/20 bg-[var(--success)]/10'
                     : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
               )}
             >
               {uploadFile ? (
                 <div className="flex flex-col items-center gap-3">
-                  <div className="flex size-12 items-center justify-center rounded-[8px] bg-emerald-100">
-                    <span className="material-symbols-outlined text-emerald-600 text-2xl">
+                  <div className="flex size-12 items-center justify-center rounded-[8px] bg-[var(--success)]/10">
+                    <span className="material-symbols-outlined text-[var(--success)] text-2xl">
                       check_circle
                     </span>
                   </div>
@@ -353,7 +355,7 @@ export default function NewDatasetPage() {
                   </div>
                   <button
                     onClick={() => setUploadFile(null)}
-                    className="text-sm text-[var(--on-surface-variant)] transition-colors hover:text-red-600"
+                    className="text-sm text-[var(--on-surface-variant)] transition-colors hover:text-[var(--error)]"
                   >
                     Remove file
                   </button>
@@ -389,9 +391,9 @@ export default function NewDatasetPage() {
 
             {/* Upload Error */}
             {uploadError && (
-              <div className="flex items-center gap-2 rounded-[8px] border border-red-200 bg-red-50 p-3">
-                <span className="material-symbols-outlined text-red-500 text-lg">error</span>
-                <p className="text-sm text-red-600">{uploadError}</p>
+              <div className="flex items-center gap-2 rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-3">
+                <span className="material-symbols-outlined text-[var(--error)] text-lg">error</span>
+                <p className="text-sm text-[var(--error-foreground)]">{uploadError}</p>
               </div>
             )}
 
@@ -740,7 +742,7 @@ export default function NewDatasetPage() {
                 />
               </div>
               {showQueryCapMessage ? (
-                <p className="text-xs text-amber-600 mt-1.5">
+                <p className="text-xs text-[var(--warning)] mt-1.5">
                   Free plan is limited to 20 queries per dataset. Upgrade for more.
                 </p>
               ) : (

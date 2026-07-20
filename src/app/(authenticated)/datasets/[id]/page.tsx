@@ -173,15 +173,15 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
           <span className="font-medium text-[var(--on-surface)]">Error</span>
         </div>
 
-        <div className="rounded-[8px] border border-red-200 bg-red-50 p-8 text-center">
-          <span className="material-symbols-outlined text-4xl text-red-400 mb-4">error</span>
-          <h2 className="font-display mb-2 text-lg font-bold text-red-800">
+        <div className="rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-8 text-center">
+          <span className="material-symbols-outlined text-4xl text-[var(--error)] mb-4">error</span>
+          <h2 className="font-display mb-2 text-lg font-bold text-[var(--error-foreground)]">
             Failed to load dataset
           </h2>
-          <p className="text-sm text-red-600 mb-4">{error.message}</p>
+          <p className="text-sm text-[var(--error-foreground)] mb-4">{error.message}</p>
           <Link
             href="/datasets"
-            className="inline-flex items-center gap-2 rounded-[4px] bg-red-100 px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-200"
+            className="inline-flex items-center gap-2 rounded-[4px] bg-[var(--error)]/10 px-4 py-2 text-sm font-medium text-[var(--error-foreground)] transition-colors hover:bg-[var(--error)]/20"
           >
             <span className="material-symbols-outlined text-lg">arrow_back</span>
             Back to Datasets
@@ -195,18 +195,18 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
     <div className="flex flex-col gap-6">
       {/* Processing Status Banner */}
       {uiStatus === 'processing' && (
-        <div className="rounded-[8px] border border-amber-200 bg-amber-50 p-4">
+        <div className="rounded-[8px] border border-[var(--warning)]/20 bg-[var(--warning)]/10 p-4">
           <div className="flex items-center gap-3">
             <div className="flex-shrink-0">
-              <span className="material-symbols-outlined text-amber-600 animate-spin">
+              <span className="material-symbols-outlined text-[var(--warning)] animate-spin">
                 progress_activity
               </span>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-display text-sm font-semibold text-amber-800">
+              <h3 className="font-display text-sm font-semibold text-[var(--warning-foreground)]">
                 Dataset Generation In Progress
               </h3>
-              <p className="text-xs text-amber-600 mt-1">
+              <p className="text-xs text-[var(--warning-foreground)] mt-1">
                 Please wait while we generate your dataset. This may take a few minutes.
               </p>
             </div>
@@ -216,23 +216,23 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
 
       {/* Failed Status Banner */}
       {uiStatus === 'error' && (
-        <div className="rounded-[8px] border border-red-200 bg-red-50 p-4">
+        <div className="rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-4">
           <div className="flex items-center gap-3">
             <div className="flex-shrink-0">
-              <span className="material-symbols-outlined text-red-600">error</span>
+              <span className="material-symbols-outlined text-[var(--error)]">error</span>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-display text-sm font-semibold text-red-800">
+              <h3 className="font-display text-sm font-semibold text-[var(--error-foreground)]">
                 Dataset Generation Failed
               </h3>
-              <p className="text-xs text-red-600 mt-1">
+              <p className="text-xs text-[var(--error-foreground)] mt-1">
                 There was an error generating your dataset. Please try again or contact support if
                 the issue persists.
               </p>
             </div>
             <button
               onClick={handleRetry}
-              className="flex shrink-0 items-center gap-1.5 rounded-[4px] bg-red-100 px-3 py-1.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-200"
+              className="flex shrink-0 items-center gap-1.5 rounded-[4px] bg-[var(--error)]/10 px-3 py-1.5 text-sm font-medium text-[var(--error-foreground)] transition-colors hover:bg-[var(--error)]/20"
             >
               <span className="material-symbols-outlined text-base">refresh</span>
               Retry

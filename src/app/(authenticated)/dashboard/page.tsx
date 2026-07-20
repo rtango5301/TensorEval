@@ -200,7 +200,7 @@ function ActionsDropdown({
           <button
             onClick={handleDelete}
             disabled={isDeleting}
-            className="mx-2 flex w-full items-center gap-3 rounded-[4px] px-4 py-2.5 text-left text-sm font-medium text-red-600 transition-colors hover:bg-red-50 hover:text-red-700 disabled:opacity-50"
+            className="mx-2 flex w-full items-center gap-3 rounded-[4px] px-4 py-2.5 text-left text-sm font-medium text-[var(--error)] transition-colors hover:bg-[var(--error)]/10 hover:text-[var(--error-foreground)] disabled:opacity-50"
           >
             <span className="material-symbols-outlined text-base">delete</span>
             {isDeleting ? 'Deleting...' : 'Delete'}
@@ -309,13 +309,13 @@ export default function DashboardPage() {
             New Evaluation
           </Link>
         </div>
-        <div className="rounded-[8px] border border-red-200 bg-red-50 p-6 text-center">
-          <span className="material-symbols-outlined text-red-500 text-3xl mb-2">error</span>
-          <p className="text-red-800 font-medium">Failed to load evaluations</p>
-          <p className="text-red-600 text-sm mt-1">{error.message}</p>
+        <div className="rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-6 text-center">
+          <span className="material-symbols-outlined text-[var(--error)] text-3xl mb-2">error</span>
+          <p className="text-[var(--error-foreground)] font-medium">Failed to load evaluations</p>
+          <p className="text-[var(--error-foreground)] text-sm mt-1">{error.message}</p>
           <button
             onClick={() => refetch()}
-            className="mt-4 rounded-[4px] bg-red-100 px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-200"
+            className="mt-4 rounded-[4px] bg-[var(--error)]/10 px-4 py-2 text-sm font-medium text-[var(--error-foreground)] transition-colors hover:bg-[var(--error)]/20"
           >
             Try Again
           </button>
@@ -461,10 +461,10 @@ export default function DashboardPage() {
                           </span>
                         )}
                         {displayStatus === 'completed' && (
-                          <span className="flex h-2 w-2 rounded-full bg-[var(--success)]"></span>
+                          <span className="flex h-2 w-2 rounded-[2px] bg-[var(--success)]"></span>
                         )}
                         {displayStatus === 'failed' && (
-                          <span className="flex h-2 w-2 rounded-full bg-[var(--error)]"></span>
+                          <span className="flex h-2 w-2 rounded-[2px] bg-[var(--error)]"></span>
                         )}
                         {getStatusLabel(displayStatus)}
                       </span>
@@ -474,7 +474,7 @@ export default function DashboardPage() {
                         <div className="flex items-center gap-3">
                           <div className="h-2 w-20 overflow-hidden rounded-[4px] bg-[var(--surface-container)]">
                             <div
-                              className="h-full rounded-[4px] bg-blue-500 transition-all"
+                              className="h-full rounded-[4px] bg-[var(--primary)] transition-all"
                               style={{ width: `${progress}%` }}
                             />
                           </div>
@@ -590,13 +590,15 @@ export default function DashboardPage() {
 
         {/* Error State */}
         {!datasetsLoading && datasetsError && (
-          <div className="rounded-[8px] border border-red-200 bg-red-50 p-6 text-center">
-            <span className="material-symbols-outlined text-red-500 text-3xl mb-2">error</span>
-            <p className="text-red-800 font-medium">Failed to load datasets</p>
-            <p className="text-red-600 text-sm mt-1">{datasetsError.message}</p>
+          <div className="rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-6 text-center">
+            <span className="material-symbols-outlined text-[var(--error)] text-3xl mb-2">
+              error
+            </span>
+            <p className="text-[var(--error-foreground)] font-medium">Failed to load datasets</p>
+            <p className="text-[var(--error-foreground)] text-sm mt-1">{datasetsError.message}</p>
             <button
               onClick={() => refetchDatasets()}
-              className="mt-4 rounded-[4px] bg-red-100 px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-200"
+              className="mt-4 rounded-[4px] bg-[var(--error)]/10 px-4 py-2 text-sm font-medium text-[var(--error-foreground)] transition-colors hover:bg-[var(--error)]/20"
             >
               Try Again
             </button>
@@ -676,9 +678,9 @@ export default function DashboardPage() {
                           <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--warning)]"></span>
                         </span>
                       ) : dataset.status === 'ready' ? (
-                        <span className="flex h-1.5 w-1.5 rounded-full bg-[var(--success)]"></span>
+                        <span className="flex h-1.5 w-1.5 rounded-[2px] bg-[var(--success)]"></span>
                       ) : (
-                        <span className="flex h-1.5 w-1.5 rounded-full bg-[var(--error)]"></span>
+                        <span className="flex h-1.5 w-1.5 rounded-[2px] bg-[var(--error)]"></span>
                       )}
                       {getDatasetStatusLabel(dataset.status)}
                     </span>

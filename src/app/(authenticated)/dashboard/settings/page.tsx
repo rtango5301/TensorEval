@@ -234,21 +234,21 @@ export default function SettingsPage() {
 
         {/* Show plaintext once after creation */}
         {createdKey && (
-          <div className="mb-4 rounded-[8px] border-2 border-amber-300 bg-amber-50 p-4">
+          <div className="mb-4 rounded-[8px] border-2 border-[var(--warning)]/20 bg-[var(--warning)]/10 p-4">
             <div className="flex items-center gap-2 mb-2">
-              <span className="material-symbols-outlined text-amber-600">warning</span>
-              <p className="text-sm font-bold text-amber-900">
+              <span className="material-symbols-outlined text-[var(--warning)]">warning</span>
+              <p className="text-sm font-bold text-[var(--warning-foreground)]">
                 Copy your key now — it won&apos;t be shown again.
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <code className="flex-1 break-all rounded-[4px] border border-amber-200 bg-white px-3 py-2 font-mono text-sm text-[var(--on-surface)]">
+              <code className="flex-1 break-all rounded-[4px] border border-[var(--warning)]/20 bg-white px-3 py-2 font-mono text-sm text-[var(--on-surface)]">
                 {createdKey.plaintext_key}
               </code>
               <button
                 type="button"
                 onClick={copyKey}
-                className="shrink-0 rounded-[4px] bg-amber-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-amber-700"
+                className="shrink-0 rounded-[4px] bg-[var(--warning)] px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--warning-foreground)]"
               >
                 {copied ? 'Copied!' : 'Copy'}
               </button>
@@ -256,7 +256,7 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={() => setCreatedKey(null)}
-              className="mt-2 text-xs text-amber-700 hover:underline"
+              className="mt-2 text-xs text-[var(--warning-foreground)] hover:underline"
             >
               Dismiss
             </button>
@@ -285,7 +285,7 @@ export default function SettingsPage() {
       </div>
 
       {keyError && (
-        <div className="rounded-[8px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 px-4 py-3 text-sm text-[var(--error-foreground)]">
           {keyError}
         </div>
       )}
@@ -369,19 +369,21 @@ export default function SettingsPage() {
       </div>
 
       {/* Delete Account */}
-      <div className="rounded-[8px] border border-red-200 bg-red-50 p-6">
+      <div className="rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-6">
         <div className="flex items-start gap-4">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-[8px] bg-red-100">
-            <span className="material-symbols-outlined text-red-600">delete_forever</span>
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-[8px] bg-[var(--error)]/10">
+            <span className="material-symbols-outlined text-[var(--error)]">delete_forever</span>
           </div>
           <div className="flex-1">
-            <h3 className="font-display text-base font-bold text-red-900">Delete Account</h3>
-            <p className="text-sm text-red-700 mt-1">
+            <h3 className="font-display text-base font-bold text-[var(--error-foreground)]">
+              Delete Account
+            </h3>
+            <p className="text-sm text-[var(--error-foreground)] mt-1">
               Permanently delete your account and all associated data. This action cannot be undone.
             </p>
             <button
               type="button"
-              className="mt-4 flex items-center gap-2 rounded-[4px] bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700"
+              className="mt-4 flex items-center gap-2 rounded-[4px] bg-[var(--error)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--error-foreground)]"
             >
               <span className="material-symbols-outlined text-lg">delete</span>
               Delete Account
