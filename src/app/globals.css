@@ -105,11 +105,6 @@
   --destructive: var(--error);
   --input: var(--outline-variant);
   --ring: var(--brand-highlight);
-  /* ponytail: temporary aliases; remove after every caller migrates. */
-  --dashboard-primary: var(--brand-primary);
-  --dashboard-primary-hover: var(--brand-primary-hover);
-  --dashboard-primary-light: rgb(0 69 189 / 0.1);
-  --dashboard-primary-ring: rgb(19 91 236 / 0.3);
 }
 
 html {
