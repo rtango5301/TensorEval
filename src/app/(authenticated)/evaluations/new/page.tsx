@@ -59,12 +59,12 @@ function WizardStepIndicator({ currentStep }: { currentStep: WizardStep }) {
         <div key={step.key} className="flex items-center">
           <div
             className={cn(
-              'flex items-center gap-2 px-4 py-2 rounded-lg transition-colors',
+              'flex items-center gap-2 rounded-[4px] px-4 py-2 transition-colors',
               index === currentIndex
-                ? 'bg-[#135bec] text-white'
+                ? 'bg-[var(--primary)] text-white'
                 : index < currentIndex
-                  ? 'bg-emerald-100 text-emerald-700'
-                  : 'bg-slate-100 text-slate-400'
+                  ? 'bg-[var(--success)]/10 text-[var(--success-foreground)]'
+                  : 'bg-[var(--surface-container-low)] text-[var(--outline)]'
             )}
           >
             <span className="material-symbols-outlined text-lg">
@@ -76,7 +76,7 @@ function WizardStepIndicator({ currentStep }: { currentStep: WizardStep }) {
             <div
               className={cn(
                 'w-8 h-0.5 mx-2',
-                index < currentIndex ? 'bg-emerald-300' : 'bg-slate-200'
+                index < currentIndex ? 'bg-[var(--success)]' : 'bg-[var(--surface-container)]'
               )}
             />
           )}
@@ -91,10 +91,13 @@ function DatasetsSkeleton() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {[...Array(6)].map((_, i) => (
-        <div key={i} className="animate-pulse border border-slate-200 rounded-xl p-4">
-          <div className="h-10 w-10 bg-slate-200 rounded-lg mb-3" />
-          <div className="h-4 w-32 bg-slate-200 rounded mb-2" />
-          <div className="h-3 w-24 bg-slate-200 rounded" />
+        <div
+          key={i}
+          className="animate-pulse rounded-[8px] border border-[var(--outline-variant)] bg-white p-4"
+        >
+          <div className="mb-3 h-10 w-10 rounded-[8px] bg-[var(--surface-container)]" />
+          <div className="mb-2 h-4 w-32 rounded-[4px] bg-[var(--surface-container)]" />
+          <div className="h-3 w-24 rounded-[4px] bg-[var(--surface-container)]" />
         </div>
       ))}
     </div>
@@ -356,12 +359,12 @@ function NewEvaluationWizardContent() {
   return (
     <div className="flex flex-col gap-6">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-slate-500">
-        <Link href="/evaluations" className="hover:text-[#135bec] transition-colors">
+      <div className="flex items-center gap-2 text-sm text-[var(--on-surface-variant)]">
+        <Link href="/evaluations" className="transition-colors hover:text-[var(--primary)]">
           Evaluations
         </Link>
         <span className="material-symbols-outlined text-base">chevron_right</span>
-        <span className="text-slate-900 font-medium">New Evaluation</span>
+        <span className="font-medium text-[var(--on-surface)]">New Evaluation</span>
       </div>
 
       {/* Usage Quota Banner */}
@@ -392,26 +395,26 @@ function NewEvaluationWizardContent() {
                 }
               }}
               placeholder="Eval-123"
-              className="text-3xl font-bold text-slate-900 tracking-tight bg-slate-100 px-3 py-1 -mx-3 -my-1 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-[#135bec]/30 focus:border-[#135bec] transition-all w-full max-w-md placeholder:text-slate-400 placeholder:font-normal"
+              className="-mx-3 -my-1 w-full max-w-md rounded-[4px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-3 py-1 font-display text-3xl font-bold tracking-tight text-[var(--on-surface)] outline-none transition-colors placeholder:font-normal placeholder:text-[var(--outline)] focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--brand-highlight)]/30"
               aria-label="Evaluation name"
             />
           ) : (
             <button
               onClick={() => setIsEditingTitle(true)}
-              className="group flex items-center gap-2 text-left px-3 py-1 -mx-3 -my-1 rounded-lg hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-2 transition-colors"
+              className="group -mx-3 -my-1 flex items-center gap-2 rounded-[4px] px-3 py-1 text-left transition-colors hover:bg-[var(--surface-container-low)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2"
               aria-label="Edit evaluation name"
             >
-              <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+              <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--on-surface)]">
                 {agentConfig.evaluationName || (
-                  <span className="text-slate-400 font-normal">Eval-123</span>
+                  <span className="font-normal text-[var(--outline)]">Eval-123</span>
                 )}
               </h1>
-              <span className="material-symbols-outlined text-xl text-slate-400 opacity-0 group-hover:opacity-100 group-hover:text-[#135bec] transition-all">
+              <span className="material-symbols-outlined text-xl text-[var(--outline)] opacity-0 transition-all group-hover:text-[var(--primary)] group-hover:opacity-100">
                 edit
               </span>
             </button>
           )}
-          <p className="text-slate-500 text-sm mt-1">
+          <p className="mt-1 text-sm text-[var(--on-surface-variant)]">
             Configure your agent and select a dataset to evaluate.
           </p>
         </div>
@@ -420,35 +423,41 @@ function NewEvaluationWizardContent() {
 
       {/* API Error Banner */}
       {createError && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
-          <span className="material-symbols-outlined text-red-500">error</span>
+        <div className="flex items-center gap-3 rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-4">
+          <span className="material-symbols-outlined text-[var(--error)]">error</span>
           <div className="flex-1">
-            <p className="text-sm font-medium text-red-800">Failed to create evaluation</p>
-            <p className="text-sm text-red-600">{createError.message}</p>
+            <p className="text-sm font-medium text-[var(--error-foreground)]">
+              Failed to create evaluation
+            </p>
+            <p className="text-sm text-[var(--error-foreground)]">{createError.message}</p>
           </div>
         </div>
       )}
 
       {/* Step Content */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm">
+      <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white">
         {/* Step 1: Configure Agent */}
         {currentStep === 'agent' && (
           <div className="p-6">
             <div className="flex items-center gap-3 mb-6">
-              <div className="size-10 rounded-lg bg-[#135bec]/10 flex items-center justify-center">
-                <span className="material-symbols-outlined text-[#135bec]">smart_toy</span>
+              <div className="flex size-10 items-center justify-center rounded-[8px] bg-[var(--surface-container-low)]">
+                <span className="material-symbols-outlined text-[var(--primary)]">smart_toy</span>
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900">Configure Agent</h2>
-                <p className="text-sm text-slate-500">Set up the agent you want to evaluate</p>
+                <h2 className="font-display text-lg font-bold text-[var(--on-surface)]">
+                  Configure Agent
+                </h2>
+                <p className="text-sm text-[var(--on-surface-variant)]">
+                  Set up the agent you want to evaluate
+                </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 gap-6">
               {/* Evaluation Name */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                  Evaluation Name <span className="text-red-500">*</span>
+                <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
+                  Evaluation Name <span className="text-[var(--error)]">*</span>
                 </label>
                 <input
                   type="text"
@@ -457,80 +466,82 @@ function NewEvaluationWizardContent() {
                     setAgentConfig({ ...agentConfig, evaluationName: e.target.value })
                   }
                   placeholder="e.g., Support Bot v2.4 - Safety Test"
-                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+                  className="w-full rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
               </div>
 
               {/* Agent Name */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                  Agent Name <span className="text-red-500">*</span>
+                <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
+                  Agent Name <span className="text-[var(--error)]">*</span>
                 </label>
                 <input
                   type="text"
                   value={agentConfig.name}
                   onChange={(e) => setAgentConfig({ ...agentConfig, name: e.target.value })}
                   placeholder="e.g., Support Bot v2.4"
-                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+                  className="w-full rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
               </div>
 
               {/* Model (Optional) */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                  Model <span className="text-slate-400 font-normal">(Optional)</span>
+                <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
+                  Model <span className="font-normal text-[var(--outline)]">(Optional)</span>
                 </label>
                 <input
                   type="text"
                   value={agentConfig.model}
                   onChange={(e) => setAgentConfig({ ...agentConfig, model: e.target.value })}
                   placeholder="e.g., gpt-4o, claude-4-sonnet"
-                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+                  className="w-full rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
               </div>
 
               {/* API Key (Optional) */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                  API Key <span className="text-slate-400 font-normal">(Optional)</span>
+                <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
+                  API Key <span className="font-normal text-[var(--outline)]">(Optional)</span>
                 </label>
                 <input
                   type="password"
                   value={agentConfig.apiKey}
                   onChange={(e) => setAgentConfig({ ...agentConfig, apiKey: e.target.value })}
                   placeholder="sk-..."
-                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+                  className="w-full rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
-                <p className="text-xs text-slate-500 mt-1.5">
+                <p className="mt-1.5 text-xs text-[var(--on-surface-variant)]">
                   Sent as Authorization: Bearer header
                 </p>
               </div>
 
               {/* System Prompt (Optional) */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                  System Prompt <span className="text-slate-400 font-normal">(Optional)</span>
+                <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
+                  System Prompt{' '}
+                  <span className="font-normal text-[var(--outline)]">(Optional)</span>
                 </label>
                 <textarea
                   value={agentConfig.systemPrompt}
                   onChange={(e) => setAgentConfig({ ...agentConfig, systemPrompt: e.target.value })}
                   placeholder="You are a helpful assistant..."
                   rows={3}
-                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all resize-none"
+                  className="w-full resize-none rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
               </div>
 
               {/* Agent Description */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                  Agent Description <span className="text-slate-400 font-normal">(Optional)</span>
+                <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
+                  Agent Description{' '}
+                  <span className="font-normal text-[var(--outline)]">(Optional)</span>
                 </label>
                 <textarea
                   value={agentConfig.description}
                   onChange={(e) => setAgentConfig({ ...agentConfig, description: e.target.value })}
                   placeholder="Describe what this agent does, its expected behavior, and any specific capabilities..."
                   rows={3}
-                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all resize-none"
+                  className="w-full resize-none rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
               </div>
 
@@ -538,9 +549,9 @@ function NewEvaluationWizardContent() {
               <div>
                 <label
                   htmlFor="agent-url"
-                  className="block text-sm font-medium text-slate-700 mb-1.5"
+                  className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]"
                 >
-                  Agent URL <span className="text-red-500">*</span>
+                  Agent URL <span className="text-[var(--error)]">*</span>
                 </label>
                 <input
                   id="agent-url"
@@ -548,15 +559,15 @@ function NewEvaluationWizardContent() {
                   value={agentConfig.agentUrl}
                   onChange={(e) => setAgentConfig({ ...agentConfig, agentUrl: e.target.value })}
                   placeholder="https://api.example.com/v1/chat/completions"
-                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+                  className="w-full rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
-                <div className="flex items-start gap-2 p-2.5 mt-1.5 bg-blue-50 border border-blue-100 rounded-lg">
-                  <span className="material-symbols-outlined text-blue-500 text-sm mt-0.5">
+                <div className="mt-1.5 flex items-start gap-2 rounded-[4px] border border-[var(--primary)]/20 bg-[var(--primary)]/10 p-2.5">
+                  <span className="material-symbols-outlined mt-0.5 text-sm text-[var(--primary)]">
                     info
                   </span>
-                  <p className="text-xs text-blue-700">
+                  <p className="text-xs text-[var(--on-surface-variant)]">
                     Agent URL should be an OpenAI-compatible chat completions endpoint (e.g.,{' '}
-                    <code className="bg-blue-100 px-1 py-0.5 rounded text-[11px]">
+                    <code className="rounded-[4px] bg-[var(--surface-container)] px-1 py-0.5 text-[11px]">
                       https://api.openai.com/v1/chat/completions
                     </code>
                     )
@@ -582,8 +593,10 @@ function NewEvaluationWizardContent() {
             {/* MCP Server Selection */}
             <div className="mt-6">
               <div className="flex items-center justify-between mb-3">
-                <label className="block text-sm font-semibold text-slate-700">MCP Servers</label>
-                <span className="text-xs text-slate-500">
+                <label className="block text-sm font-semibold text-[var(--on-surface-variant)]">
+                  MCP Servers
+                </label>
+                <span className="text-xs text-[var(--on-surface-variant)]">
                   {selectedMCPServers.length} of 3 selected
                 </span>
               </div>
@@ -593,9 +606,9 @@ function NewEvaluationWizardContent() {
                 type="button"
                 onClick={() => setIsMcpModalOpen(true)}
                 className={cn(
-                  'inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all',
-                  'border border-slate-200 bg-white text-slate-700 hover:border-[#135bec] hover:bg-[#135bec]/5 hover:text-[#135bec]',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-2'
+                  'inline-flex items-center gap-2 rounded-[4px] px-4 py-2.5 text-sm font-medium transition-colors',
+                  'border border-[var(--outline-variant)] bg-white text-[var(--on-surface-variant)] hover:border-[var(--primary)] hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)]',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2'
                 )}
               >
                 <span className="material-symbols-outlined text-lg">extension</span>
@@ -611,7 +624,7 @@ function NewEvaluationWizardContent() {
                     return (
                       <span
                         key={serverId}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border-2 border-[#135bec] bg-[#135bec]/10 text-[#135bec]"
+                        className="inline-flex items-center gap-1.5 rounded-[4px] border-2 border-[var(--primary)] bg-[var(--surface-container-low)] px-3 py-1.5 text-sm font-medium text-[var(--primary)]"
                       >
                         <span className="material-symbols-outlined text-base">{server.icon}</span>
                         {server.name}
@@ -622,7 +635,7 @@ function NewEvaluationWizardContent() {
                               selectedMCPServers.filter((id) => id !== serverId)
                             )
                           }
-                          className="ml-0.5 hover:bg-[#135bec]/20 rounded-full p-0.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec]"
+                          className="ml-0.5 rounded-[4px] p-0.5 transition-colors hover:bg-[var(--surface-container)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)]"
                           aria-label={`Remove ${server.name}`}
                         >
                           <span className="material-symbols-outlined text-sm">close</span>
@@ -635,14 +648,15 @@ function NewEvaluationWizardContent() {
 
               {/* Custom MCP Server */}
               <div className="mt-4">
-                <label className="block text-sm font-semibold text-slate-700 mb-3">
-                  Custom MCP Server <span className="font-normal text-slate-400">(optional)</span>
+                <label className="mb-3 block text-sm font-semibold text-[var(--on-surface-variant)]">
+                  Custom MCP Server{' '}
+                  <span className="font-normal text-[var(--outline)]">(optional)</span>
                 </label>
-                <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 space-y-4">
+                <div className="space-y-4 rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-4">
                   <div>
                     <label
                       htmlFor="custom-mcp-name"
-                      className="block text-sm font-medium text-slate-600 mb-1.5"
+                      className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]"
                     >
                       MCP Name
                     </label>
@@ -657,13 +671,13 @@ function NewEvaluationWizardContent() {
                         })
                       }
                       placeholder="e.g., Internal Pricing API"
-                      className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all bg-white"
+                      className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                     />
                   </div>
                   <div>
                     <label
                       htmlFor="custom-mcp-description"
-                      className="block text-sm font-medium text-slate-600 mb-1.5"
+                      className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]"
                     >
                       MCP Description
                     </label>
@@ -678,13 +692,13 @@ function NewEvaluationWizardContent() {
                         })
                       }
                       placeholder="Describe what this MCP server does..."
-                      className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all bg-white"
+                      className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                     />
                   </div>
                   <div>
                     <label
                       htmlFor="custom-mcp-url"
-                      className="block text-sm font-medium text-slate-600 mb-1.5"
+                      className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]"
                     >
                       MCP URL
                     </label>
@@ -699,7 +713,7 @@ function NewEvaluationWizardContent() {
                         })
                       }
                       placeholder="https://your-mcp-server.com"
-                      className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all bg-white"
+                      className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                     />
                     <div className="mt-2">
                       <TestConnectionButton
@@ -729,19 +743,23 @@ function NewEvaluationWizardContent() {
         {currentStep === 'dataset' && (
           <div className="p-6">
             <div className="flex items-center gap-3 mb-6">
-              <div className="size-10 rounded-lg bg-[#135bec]/10 flex items-center justify-center">
-                <span className="material-symbols-outlined text-[#135bec]">folder_open</span>
+              <div className="flex size-10 items-center justify-center rounded-[8px] bg-[var(--surface-container-low)]">
+                <span className="material-symbols-outlined text-[var(--primary)]">folder_open</span>
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900">Select Dataset</h2>
-                <p className="text-sm text-slate-500">Choose a completed dataset for evaluation</p>
+                <h2 className="font-display text-lg font-bold text-[var(--on-surface)]">
+                  Select Dataset
+                </h2>
+                <p className="text-sm text-[var(--on-surface-variant)]">
+                  Choose a completed dataset for evaluation
+                </p>
               </div>
             </div>
 
             {/* Error state */}
             {datasetsError && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-                <p className="text-sm text-red-600">{datasetsError.message}</p>
+              <div className="mb-6 rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-4">
+                <p className="text-sm text-[var(--error-foreground)]">{datasetsError.message}</p>
               </div>
             )}
 
@@ -753,21 +771,25 @@ function NewEvaluationWizardContent() {
                 {/* Available Datasets Section */}
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-sm font-semibold text-slate-700">Available Datasets</h3>
-                    <span className="text-xs text-slate-500">
+                    <h3 className="font-display text-sm font-semibold text-[var(--on-surface)]">
+                      Available Datasets
+                    </h3>
+                    <span className="text-xs text-[var(--on-surface-variant)]">
                       {readyDatasets.length} datasets ready
                     </span>
                   </div>
 
                   {readyDatasets.length === 0 ? (
-                    <div className="text-center py-12 bg-slate-50 rounded-xl border border-slate-200">
-                      <span className="material-symbols-outlined text-4xl text-slate-300 mb-2">
+                    <div className="rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] py-12 text-center">
+                      <span className="material-symbols-outlined mb-2 text-4xl text-[var(--outline)]">
                         folder_off
                       </span>
-                      <p className="text-slate-500">No completed datasets available</p>
+                      <p className="text-[var(--on-surface-variant)]">
+                        No completed datasets available
+                      </p>
                       <Link
                         href="/datasets/new"
-                        className="inline-block mt-4 text-sm text-[#135bec] hover:underline font-medium"
+                        className="mt-4 inline-block text-sm font-medium text-[var(--primary)] hover:underline"
                       >
                         Create a new dataset
                       </Link>
@@ -787,11 +809,11 @@ function NewEvaluationWizardContent() {
                               })
                             }
                             className={cn(
-                              'relative flex flex-col gap-3 rounded-xl p-4 text-left transition-all',
-                              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-2',
+                              'relative flex flex-col gap-3 rounded-[8px] p-4 text-left transition-colors',
+                              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2',
                               isSelected
-                                ? 'border-2 border-[#135bec] bg-[#135bec]/5'
-                                : 'border border-slate-200 bg-white hover:border-[#135bec]/50 hover:bg-[#135bec]/5'
+                                ? 'border-2 border-[var(--primary)] bg-[var(--surface-container-low)]'
+                                : 'border border-[var(--outline-variant)] bg-white hover:border-[var(--primary)] hover:bg-[var(--surface-container-low)]'
                             )}
                           >
                             {/* Selection indicator */}
@@ -800,8 +822,8 @@ function NewEvaluationWizardContent() {
                                 className={cn(
                                   'flex size-5 items-center justify-center rounded-full border-2 transition-all',
                                   isSelected
-                                    ? 'border-[#135bec] bg-[#135bec]'
-                                    : 'border-slate-300 bg-white'
+                                    ? 'border-[var(--primary)] bg-[var(--primary)]'
+                                    : 'border-[var(--outline)] bg-white'
                                 )}
                               >
                                 {isSelected && (
@@ -813,11 +835,13 @@ function NewEvaluationWizardContent() {
                             </div>
 
                             {/* Icon */}
-                            <div className="flex size-10 items-center justify-center rounded-lg bg-slate-100">
+                            <div className="flex size-10 items-center justify-center rounded-[8px] bg-[var(--surface-container-low)]">
                               <span
                                 className={cn(
                                   'material-symbols-outlined text-2xl transition-colors',
-                                  isSelected ? 'text-[#135bec]' : 'text-slate-500'
+                                  isSelected
+                                    ? 'text-[var(--primary)]'
+                                    : 'text-[var(--on-surface-variant)]'
                                 )}
                               >
                                 {dataset.source === 'uploaded' ? 'upload_file' : 'auto_awesome'}
@@ -826,8 +850,10 @@ function NewEvaluationWizardContent() {
 
                             {/* Content */}
                             <div className="flex flex-col gap-1 pr-6">
-                              <h4 className="font-semibold text-slate-900">{dataset.name}</h4>
-                              <p className="text-sm text-slate-500">
+                              <h4 className="font-semibold text-[var(--on-surface)]">
+                                {dataset.name}
+                              </h4>
+                              <p className="font-mono text-sm text-[var(--on-surface-variant)]">
                                 {dataset.query_count} queries
                               </p>
                             </div>
@@ -836,7 +862,7 @@ function NewEvaluationWizardContent() {
                             <div className="mt-auto pt-1">
                               <span
                                 className={cn(
-                                  'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium',
+                                  'inline-flex items-center rounded-[4px] px-2.5 py-0.5 text-xs font-medium',
                                   dataset.source === 'uploaded'
                                     ? 'bg-blue-100 text-blue-700'
                                     : 'bg-purple-100 text-purple-700'
@@ -852,11 +878,11 @@ function NewEvaluationWizardContent() {
                   )}
 
                   {/* Small text link to create dataset */}
-                  <p className="mt-6 text-sm text-slate-500">
+                  <p className="mt-6 text-sm text-[var(--on-surface-variant)]">
                     Need a new dataset?{' '}
                     <Link
                       href="/datasets/new"
-                      className="text-[#135bec] hover:text-[#135bec]/80 font-medium transition-colors"
+                      className="font-medium text-[var(--primary)] transition-colors hover:text-[var(--brand-primary-hover)]"
                     >
                       Create one now
                     </Link>
@@ -871,28 +897,34 @@ function NewEvaluationWizardContent() {
         {currentStep === 'review' && (
           <div className="p-6">
             <div className="flex items-center gap-3 mb-6">
-              <div className="size-10 rounded-lg bg-emerald-100 flex items-center justify-center">
-                <span className="material-symbols-outlined text-emerald-600">play_circle</span>
+              <div className="flex size-10 items-center justify-center rounded-[8px] bg-[var(--success)]/10">
+                <span className="material-symbols-outlined text-[var(--success)]">play_circle</span>
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900">Review & Start</h2>
-                <p className="text-sm text-slate-500">Confirm your configuration before starting</p>
+                <h2 className="font-display text-lg font-bold text-[var(--on-surface)]">
+                  Review & Start
+                </h2>
+                <p className="text-sm text-[var(--on-surface-variant)]">
+                  Confirm your configuration before starting
+                </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Agent Summary */}
-              <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+              <div className="rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-5">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-[#135bec]">smart_toy</span>
-                    <span className="text-sm font-semibold text-slate-900">
+                    <span className="material-symbols-outlined text-[var(--primary)]">
+                      smart_toy
+                    </span>
+                    <span className="text-sm font-semibold text-[var(--on-surface)]">
                       Agent Configuration
                     </span>
                   </div>
                   <button
                     onClick={() => setCurrentStep('agent')}
-                    className="text-xs font-medium text-[#135bec] hover:text-[#135bec]/80 transition-colors"
+                    className="text-xs font-medium text-[var(--primary)] transition-colors hover:text-[var(--brand-primary-hover)]"
                   >
                     Edit
                   </button>
@@ -900,50 +932,52 @@ function NewEvaluationWizardContent() {
                 <div className="space-y-4">
                   {/* Evaluation Name */}
                   <div>
-                    <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                    <label className="text-xs font-medium uppercase tracking-wide text-[var(--outline)]">
                       Evaluation Name
                     </label>
-                    <p className="text-sm font-medium text-slate-900 mt-1">
+                    <p className="mt-1 text-sm font-medium text-[var(--on-surface)]">
                       {agentConfig.evaluationName || (
-                        <span className="text-slate-400 italic">Untitled</span>
+                        <span className="italic text-[var(--outline)]">Untitled</span>
                       )}
                     </p>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                      <label className="text-xs font-medium uppercase tracking-wide text-[var(--outline)]">
                         Agent Name
                       </label>
-                      <p className="text-sm font-medium text-slate-900 mt-1">{agentConfig.name}</p>
+                      <p className="mt-1 text-sm font-medium text-[var(--on-surface)]">
+                        {agentConfig.name}
+                      </p>
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                      <label className="text-xs font-medium uppercase tracking-wide text-[var(--outline)]">
                         Model
                       </label>
-                      <p className="text-sm font-medium text-slate-900 mt-1">
+                      <p className="mt-1 text-sm font-medium text-[var(--on-surface)]">
                         {agentConfig.model || 'Default'}
                       </p>
                     </div>
                   </div>
                   <div>
-                    <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                    <label className="text-xs font-medium uppercase tracking-wide text-[var(--outline)]">
                       Agent URL
                     </label>
-                    <p className="text-sm font-mono text-slate-700 mt-1 break-all">
+                    <p className="mt-1 break-all font-mono text-sm text-[var(--on-surface-variant)]">
                       {agentConfig.agentUrl}
                     </p>
                   </div>
                   <div>
-                    <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                    <label className="text-xs font-medium uppercase tracking-wide text-[var(--outline)]">
                       Description
                     </label>
-                    <p className="text-sm text-slate-700 mt-1 line-clamp-2">
+                    <p className="mt-1 line-clamp-2 text-sm text-[var(--on-surface-variant)]">
                       {agentConfig.description}
                     </p>
                   </div>
                   {selectedMCPServers.length > 0 && (
                     <div>
-                      <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                      <label className="text-xs font-medium uppercase tracking-wide text-[var(--outline)]">
                         MCP Servers
                       </label>
                       <div className="flex flex-wrap gap-1.5 mt-1.5">
@@ -952,7 +986,7 @@ function NewEvaluationWizardContent() {
                           return (
                             <span
                               key={serverId}
-                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#135bec]/10 text-xs font-medium text-[#135bec]"
+                              className="inline-flex items-center gap-1 rounded-[4px] bg-[var(--surface-container)] px-2 py-0.5 text-xs font-medium text-[var(--primary)]"
                             >
                               <span className="material-symbols-outlined text-xs">
                                 {server?.icon || 'extension'}
@@ -968,15 +1002,17 @@ function NewEvaluationWizardContent() {
               </div>
 
               {/* Dataset Summary */}
-              <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+              <div className="rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-5">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-[#135bec]">folder_open</span>
-                    <span className="text-sm font-semibold text-slate-900">Dataset</span>
+                    <span className="material-symbols-outlined text-[var(--primary)]">
+                      folder_open
+                    </span>
+                    <span className="text-sm font-semibold text-[var(--on-surface)]">Dataset</span>
                   </div>
                   <button
                     onClick={() => setCurrentStep('dataset')}
-                    className="text-xs font-medium text-[#135bec] hover:text-[#135bec]/80 transition-colors"
+                    className="text-xs font-medium text-[var(--primary)] transition-colors hover:text-[var(--brand-primary-hover)]"
                   >
                     Edit
                   </button>
@@ -984,28 +1020,28 @@ function NewEvaluationWizardContent() {
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                      <label className="text-xs font-medium uppercase tracking-wide text-[var(--outline)]">
                         Name
                       </label>
-                      <p className="text-sm font-medium text-slate-900 mt-1">
+                      <p className="mt-1 text-sm font-medium text-[var(--on-surface)]">
                         {datasetSelection.existingName || 'No dataset selected'}
                       </p>
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                      <label className="text-xs font-medium uppercase tracking-wide text-[var(--outline)]">
                         ID
                       </label>
-                      <p className="text-sm font-mono text-slate-700 mt-1">
+                      <p className="mt-1 font-mono text-sm text-[var(--on-surface-variant)]">
                         {datasetSelection.existingId?.slice(0, 8) || '--'}
                       </p>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                      <label className="text-xs font-medium uppercase tracking-wide text-[var(--outline)]">
                         Queries
                       </label>
-                      <p className="text-sm font-medium text-slate-900 mt-1">
+                      <p className="mt-1 font-mono text-sm font-medium text-[var(--on-surface)]">
                         {datasetSelection.existingId
                           ? readyDatasets.find((d) => d.id === datasetSelection.existingId)
                               ?.query_count
@@ -1013,10 +1049,10 @@ function NewEvaluationWizardContent() {
                       </p>
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                      <label className="text-xs font-medium uppercase tracking-wide text-[var(--outline)]">
                         Type
                       </label>
-                      <p className="text-sm font-medium text-slate-900 mt-1">
+                      <p className="mt-1 text-sm font-medium text-[var(--on-surface)]">
                         {datasetSelection.existingId
                           ? readyDatasets.find((d) => d.id === datasetSelection.existingId)
                               ?.source === 'uploaded'
@@ -1031,14 +1067,14 @@ function NewEvaluationWizardContent() {
             </div>
 
             {/* Estimated Time */}
-            <div className="mt-6 bg-amber-50 rounded-xl p-4 border border-amber-100">
+            <div className="mt-6 rounded-[8px] border border-[var(--warning)]/20 bg-[var(--warning)]/10 p-4">
               <div className="flex gap-3">
-                <span className="material-symbols-outlined text-amber-600 text-lg shrink-0">
+                <span className="material-symbols-outlined shrink-0 text-lg text-[var(--warning)]">
                   schedule
                 </span>
-                <div className="text-sm text-amber-800">
+                <div className="text-sm text-[var(--warning-foreground)]">
                   <p className="font-medium">Estimated Duration</p>
-                  <p className="text-amber-700">
+                  <p className="text-[var(--warning-foreground)]">
                     Based on{' '}
                     {readyDatasets.find((d) => d.id === datasetSelection.existingId)?.query_count ||
                       0}{' '}
@@ -1052,22 +1088,22 @@ function NewEvaluationWizardContent() {
 
         {/* Agent Verification Error Banner */}
         {agentVerifyError && currentStep === 'agent' && (
-          <div className="flex items-center gap-2 mx-6 mb-0 mt-4 px-4 py-3 bg-red-50 border border-red-200 rounded-lg">
-            <span className="material-symbols-outlined text-red-500 text-lg">error</span>
-            <p className="text-sm text-red-700">{agentVerifyError}</p>
+          <div className="mx-6 mb-0 mt-4 flex items-center gap-2 rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 px-4 py-3">
+            <span className="material-symbols-outlined text-lg text-[var(--error)]">error</span>
+            <p className="text-sm text-[var(--error-foreground)]">{agentVerifyError}</p>
           </div>
         )}
 
         {/* Footer with Navigation */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-slate-200 bg-slate-50">
+        <div className="flex items-center justify-between border-t border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-6 py-4">
           <button
             onClick={handleBack}
             disabled={currentStep === 'agent'}
             className={cn(
-              'flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg transition-colors',
+              'flex items-center gap-1.5 rounded-[4px] px-4 py-2 text-sm font-medium transition-colors',
               currentStep === 'agent'
-                ? 'text-slate-300 cursor-not-allowed'
-                : 'text-slate-600 hover:bg-slate-200'
+                ? 'cursor-not-allowed text-[var(--outline)]'
+                : 'text-[var(--on-surface-variant)] hover:bg-[var(--surface-container)]'
             )}
           >
             <span className="material-symbols-outlined text-lg">arrow_back</span>
@@ -1078,7 +1114,7 @@ function NewEvaluationWizardContent() {
             <button
               onClick={handleStartEvaluation}
               disabled={!canProceedFromDataset || isCreating || !canCreateEvaluation}
-              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm disabled:bg-slate-300 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 rounded-[4px] bg-[var(--primary)] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:bg-[var(--surface-container)] disabled:text-[var(--outline)]"
             >
               {isCreating ? (
                 <>
@@ -1101,12 +1137,12 @@ function NewEvaluationWizardContent() {
                 isVerifyingAgent
               }
               className={cn(
-                'flex items-center gap-1.5 px-5 py-2.5 rounded-lg font-bold text-sm transition-all',
+                'flex items-center gap-1.5 rounded-[4px] px-5 py-2.5 text-sm font-bold transition-colors',
                 ((currentStep === 'agent' && canProceedFromAgent) ||
                   (currentStep === 'dataset' && canProceedFromDataset)) &&
                   !isVerifyingAgent
-                  ? 'bg-[#135bec] text-white hover:bg-[#135bec]/90 shadow-sm shadow-[#135bec]/30'
-                  : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                  ? 'bg-[var(--primary)] text-white hover:bg-[var(--brand-primary-hover)]'
+                  : 'cursor-not-allowed bg-[var(--surface-container)] text-[var(--outline)]'
               )}
             >
               {isVerifyingAgent ? (
@@ -1134,7 +1170,9 @@ export default function NewEvaluationPage() {
       fallback={
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="animate-spin">
-            <span className="material-symbols-outlined text-3xl text-slate-400">refresh</span>
+            <span className="material-symbols-outlined text-3xl text-[var(--outline)]">
+              refresh
+            </span>
           </div>
         </div>
       }

@@ -107,11 +107,11 @@ const statusFilters: { value: StatusFilter; label: string }[] = [
 function getStatusBadgeStyles(status: 'running' | 'completed' | 'failed') {
   switch (status) {
     case 'running':
-      return 'bg-blue-100 text-blue-700 border-blue-200';
+      return 'border-[var(--primary)]/20 bg-[var(--primary)]/10 text-[var(--primary)]';
     case 'completed':
-      return 'bg-green-100 text-green-700 border-green-200';
+      return 'border-[var(--success)]/20 bg-[var(--success)]/10 text-[var(--success-foreground)]';
     case 'failed':
-      return 'bg-red-100 text-red-700 border-red-200';
+      return 'border-[var(--error)]/20 bg-[var(--error)]/10 text-[var(--error-foreground)]';
   }
 }
 
@@ -149,10 +149,12 @@ export default function EvaluationsPage() {
     <div className="flex flex-col gap-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-slate-900 text-2xl font-bold">Evaluation Runs</h1>
+        <h1 className="font-display text-2xl font-bold text-[var(--on-surface)]">
+          Evaluation Runs
+        </h1>
         <Link
           href="/evaluations/configure"
-          className="flex items-center gap-2 px-4 py-2 bg-[#135bec] text-white text-sm font-medium rounded-lg hover:bg-[#0f4bcc] transition-colors"
+          className="flex items-center gap-2 rounded-[4px] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
         >
           <span className="material-symbols-outlined text-lg">add</span>
           New Evaluation
@@ -163,7 +165,7 @@ export default function EvaluationsPage() {
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         {/* Search */}
         <div className="relative w-full sm:w-80">
-          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
+          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-lg text-[var(--outline)]">
             search
           </span>
           <input
@@ -171,7 +173,7 @@ export default function EvaluationsPage() {
             placeholder="Search by agent name or ID..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent focus:outline-none transition-all"
+            className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white py-2 pl-10 pr-4 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)]"
           />
         </div>
 
@@ -181,10 +183,10 @@ export default function EvaluationsPage() {
             <button
               key={filter.value}
               onClick={() => setStatusFilter(filter.value)}
-              className={`px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
+              className={`rounded-[4px] px-3 py-1.5 text-sm font-medium transition-colors ${
                 statusFilter === filter.value
-                  ? 'bg-[#135bec] text-white'
-                  : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                  ? 'bg-[var(--primary)] text-white'
+                  : 'border border-[var(--outline-variant)] bg-white text-[var(--on-surface-variant)] hover:bg-[var(--surface-container-low)]'
               }`}
             >
               {filter.label}
@@ -194,44 +196,46 @@ export default function EvaluationsPage() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+      <div className="overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50">
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+              <tr className="border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   ID
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Agent Name
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Status
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Started
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Duration
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">
+                <th className="px-6 py-3 text-right text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Pass Rate
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">
+                <th className="px-6 py-3 text-right text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200">
+            <tbody className="divide-y divide-[var(--outline-variant)]">
               {filteredRuns.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="px-6 py-12 text-center">
                     <div className="flex flex-col items-center gap-2">
-                      <span className="material-symbols-outlined text-4xl text-slate-300">
+                      <span className="material-symbols-outlined text-4xl text-[var(--outline)]">
                         search_off
                       </span>
-                      <p className="text-slate-500 text-sm">No evaluation runs found</p>
-                      <p className="text-slate-400 text-xs">
+                      <p className="text-sm text-[var(--on-surface-variant)]">
+                        No evaluation runs found
+                      </p>
+                      <p className="text-xs text-[var(--outline)]">
                         Try adjusting your search or filter criteria
                       </p>
                     </div>
@@ -239,56 +243,67 @@ export default function EvaluationsPage() {
                 </tr>
               ) : (
                 filteredRuns.map((run) => (
-                  <tr key={run.id} className="hover:bg-slate-50 transition-colors">
+                  <tr
+                    key={run.id}
+                    className="transition-colors hover:bg-[var(--surface-container-low)]"
+                  >
                     <td className="px-6 py-4">
-                      <span className="text-sm font-mono text-slate-500">#{run.id}</span>
+                      <span className="font-mono text-sm text-[var(--on-surface-variant)]">
+                        #{run.id}
+                      </span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <span className="text-lg">{run.agentEmoji}</span>
-                        <span className="text-sm font-medium text-slate-900">{run.agentName}</span>
+                        <span className="text-sm font-medium text-[var(--on-surface)]">
+                          {run.agentName}
+                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeStyles(run.status)}`}
+                        className={`inline-flex items-center gap-1.5 rounded-[4px] border px-2.5 py-0.5 text-xs font-medium ${getStatusBadgeStyles(run.status)}`}
                       >
                         {run.status === 'running' && (
                           <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--primary)] opacity-75"></span>
+                            <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--primary)]"></span>
                           </span>
                         )}
                         {getStatusLabel(run.status)}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-sm text-slate-600">{run.startedAt}</span>
+                      <span className="text-sm text-[var(--on-surface-variant)]">
+                        {run.startedAt}
+                      </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-sm text-slate-600 font-mono">{run.duration}</span>
+                      <span className="font-mono text-sm text-[var(--on-surface-variant)]">
+                        {run.duration}
+                      </span>
                     </td>
                     <td className="px-6 py-4 text-right">
                       {run.status === 'running' ? (
                         <div className="flex flex-col items-end gap-1">
-                          <span className="text-sm text-slate-400">
+                          <span className="font-mono text-sm text-[var(--outline)]">
                             {run.completed}/{run.total}
                           </span>
-                          <div className="w-16 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                          <div className="h-1.5 w-16 overflow-hidden rounded-[4px] bg-[var(--surface-container)]">
                             <div
-                              className="h-full bg-blue-500 rounded-full transition-all"
+                              className="h-full rounded-[4px] bg-[var(--primary)] transition-all"
                               style={{ width: `${(run.completed / run.total) * 100}%` }}
                             />
                           </div>
                         </div>
                       ) : (
                         <span
-                          className={`text-sm font-bold ${
+                          className={`font-mono text-sm font-bold ${
                             run.passRate >= 80
-                              ? 'text-green-600'
+                              ? 'text-[var(--success-foreground)]'
                               : run.passRate >= 60
-                                ? 'text-amber-600'
-                                : 'text-red-600'
+                                ? 'text-[var(--warning-foreground)]'
+                                : 'text-[var(--error-foreground)]'
                           }`}
                         >
                           {run.passRate.toFixed(1)}%
@@ -298,7 +313,7 @@ export default function EvaluationsPage() {
                     <td className="px-6 py-4 text-right">
                       <Link
                         href={`/evaluations/${run.id}`}
-                        className="inline-flex items-center gap-1 text-sm font-medium text-[#135bec] hover:text-[#0f4bcc] transition-colors"
+                        className="inline-flex items-center gap-1 text-sm font-medium text-[var(--primary)] transition-colors hover:text-[var(--brand-primary-hover)]"
                       >
                         View Details
                         <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -314,7 +329,7 @@ export default function EvaluationsPage() {
 
       {/* Results Summary */}
       {filteredRuns.length > 0 && (
-        <div className="text-sm text-slate-500">
+        <div className="font-mono text-sm text-[var(--on-surface-variant)]">
           Showing {filteredRuns.length} of {evaluationRuns.length} evaluation runs
         </div>
       )}
