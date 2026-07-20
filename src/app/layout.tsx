@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, IBM_Plex_Mono, Space_Grotesk } from 'next/font/google';
+import { Geist_Mono, Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { ToastProvider } from '@/components/ui/toast-context';
 import { Toast } from '@/components/ui/toast';
@@ -11,8 +11,8 @@ const inter = Inter({
   display: 'swap',
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
-  variable: '--font-ibm-plex-mono',
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
   subsets: ['latin'],
   weight: ['400', '500', '600'],
   display: 'swap',
@@ -21,7 +21,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 const spaceGrotesk = Space_Grotesk({
   variable: '--font-space-grotesk',
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 });
 
@@ -98,7 +98,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        className={`${inter.variable} ${geistMono.variable} ${spaceGrotesk.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
         <PostHogProvider>
