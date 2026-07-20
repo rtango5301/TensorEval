@@ -26,7 +26,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'TensorEval - CI/CD for AI Agents',
+  title: 'TensorEval — CI/CD for Agentic Workflows',
   description:
     'The CI/CD platform built for deterministic AI evaluation. Catch regressions, latency spikes, and hallucinations before they reach production.',
   metadataBase: new URL('https://tensoreval.com'),
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'TensorEval' }],
   openGraph: {
-    title: 'TensorEval - CI/CD for AI Agents',
+    title: 'TensorEval — CI/CD for Agentic Workflows',
     description:
       'The CI/CD platform built for deterministic AI evaluation. Catch regressions, latency spikes, and hallucinations before they reach production.',
     type: 'website',
@@ -48,19 +48,26 @@ export const metadata: Metadata = {
     siteName: 'TensorEval',
     images: [
       {
-        url: '/og-image.svg',
-        width: 1200,
-        height: 630,
-        alt: 'TensorEval - CI/CD for AI Agents',
+        url: '/og-image.png',
+        width: 1376,
+        height: 768,
+        alt: 'TensorEval — CI/CD for Agentic Workflows',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TensorEval - CI/CD for AI Agents',
+    title: 'TensorEval — CI/CD for Agentic Workflows',
     description:
       'The CI/CD platform built for deterministic AI evaluation. Catch regressions, latency spikes, and hallucinations before they reach production.',
-    images: ['/og-image.svg'],
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1376,
+        height: 768,
+        alt: 'TensorEval — CI/CD for Agentic Workflows',
+      },
+    ],
   },
   icons: {
     icon: '/icon.png',
