@@ -24,9 +24,9 @@ export function UsageQuotaBanner({ used, limit, resourceName, periodEnd }: Usage
   if (remaining >= 2) {
     // Subtle informational state
     return (
-      <div className="bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 flex items-center gap-3">
-        <span className="material-symbols-outlined text-slate-400 text-lg">info</span>
-        <p className="text-sm text-slate-600">
+      <div className="flex items-center gap-3 rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-4 py-3">
+        <span className="material-symbols-outlined text-lg text-[var(--outline)]">info</span>
+        <p className="text-sm text-[var(--on-surface-variant)]">
           <span className="font-medium">{remaining}</span> of {limit} {resourceName} remaining this
           billing period.
         </p>

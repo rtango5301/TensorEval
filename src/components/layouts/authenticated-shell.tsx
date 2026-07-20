@@ -10,19 +10,16 @@ interface AuthenticatedShellProps {
 
 export function AuthenticatedShell({ children }: AuthenticatedShellProps) {
   return (
-    <div
-      className="flex min-h-screen w-full bg-[#f6f6f8]"
-      style={{ fontFamily: 'var(--font-space-grotesk), sans-serif' }}
-    >
+    <div className="flex min-h-screen w-full bg-[var(--background)] font-sans">
       <Sidebar />
 
       {/* Main Content Area */}
-      <main className="flex flex-1 flex-col min-h-screen relative">
+      <main className="relative flex min-h-screen flex-1 flex-col">
         <AuthenticatedHeader />
 
         {/* Page Content */}
-        <div className="flex-1 p-6 lg:p-10">
-          <div className="max-w-7xl mx-auto">{children}</div>
+        <div className="flex-1 px-4 py-6 sm:px-6 lg:px-10">
+          <div className="mx-auto w-full max-w-[1440px]">{children}</div>
         </div>
       </main>
     </div>

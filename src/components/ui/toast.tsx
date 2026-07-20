@@ -15,8 +15,8 @@ const toastConfig: Record<ToastType, { icon: string; iconColor: string; borderCo
   },
   info: {
     icon: 'info',
-    iconColor: 'text-[#135bec]',
-    borderColor: 'border-[#135bec]',
+    iconColor: 'text-[var(--primary)]',
+    borderColor: 'border-[var(--primary)]',
   },
   error: {
     icon: 'error',
@@ -41,7 +41,7 @@ export function Toast() {
           className={cn(
             'fixed top-4 left-1/2 z-50 -translate-x-1/2',
             'flex items-center gap-3 px-4 py-3',
-            'bg-white rounded-lg shadow-lg',
+            'rounded-[8px] bg-white',
             'border-l-4',
             config.borderColor
           )}
@@ -57,17 +57,17 @@ export function Toast() {
           </span>
 
           {/* Message */}
-          <p className="text-sm font-medium text-gray-800 pr-2">{message}</p>
+          <p className="pr-2 text-sm font-medium text-[var(--on-surface)]">{message}</p>
 
           {/* Dismiss button */}
           <button
             onClick={hideToast}
             className={cn(
               'flex items-center justify-center',
-              'w-6 h-6 rounded-full',
-              'text-gray-400 hover:text-gray-600',
-              'hover:bg-gray-100 transition-colors',
-              'focus:outline-none focus:ring-2 focus:ring-gray-300'
+              'h-6 w-6 rounded-[4px]',
+              'text-[var(--outline)] hover:text-[var(--on-surface-variant)]',
+              'transition-colors hover:bg-[var(--surface-container-low)]',
+              'focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)]'
             )}
             aria-label="Dismiss notification"
           >

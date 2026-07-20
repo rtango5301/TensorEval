@@ -59,9 +59,9 @@ function getStatusStyles(status: EvaluationResult['status']) {
       };
     default:
       return {
-        bg: 'bg-slate-100',
-        text: 'text-slate-700',
-        border: 'border-slate-200',
+        bg: 'bg-[var(--surface-container-low)]',
+        text: 'text-[var(--on-surface-variant)]',
+        border: 'border-[var(--outline-variant)]',
         label: 'UNKNOWN',
         icon: 'help',
       };
@@ -101,7 +101,7 @@ export function DebugViewPanel({ result, isOpen, onClose }: DebugViewPanelProps)
   if (!result) {
     return (
       <SlideOverPanel isOpen={isOpen} onClose={onClose} title="Debug View" width="lg">
-        <div className="flex items-center justify-center h-64 text-slate-500">
+        <div className="flex h-64 items-center justify-center text-[var(--on-surface-variant)]">
           No result selected
         </div>
       </SlideOverPanel>
@@ -120,13 +120,13 @@ export function DebugViewPanel({ result, isOpen, onClose }: DebugViewPanelProps)
     >
       <div className="flex flex-col">
         {/* Header with Status Badge */}
-        <div className="px-6 py-4 border-b border-slate-200 bg-slate-50">
+        <div className="border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-sm font-medium text-slate-500">Status</span>
+              <span className="text-sm font-medium text-[var(--on-surface-variant)]">Status</span>
               <span
                 className={cn(
-                  'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border',
+                  'inline-flex items-center gap-1.5 rounded-[4px] border px-2.5 py-1 text-xs font-semibold',
                   statusStyles.bg,
                   statusStyles.text,
                   statusStyles.border
@@ -136,90 +136,102 @@ export function DebugViewPanel({ result, isOpen, onClose }: DebugViewPanelProps)
                 {statusStyles.label}
               </span>
             </div>
-            <span className="text-sm font-mono text-slate-400">ID: {result.id}</span>
+            <span className="font-mono text-sm text-[var(--outline)]">ID: {result.id}</span>
           </div>
         </div>
 
         {/* Query Section */}
-        <div className="px-6 py-4 border-b border-slate-200">
-          <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#135bec] text-lg">help_outline</span>
+        <div className="border-b border-[var(--outline-variant)] px-6 py-4">
+          <h3 className="mb-3 flex items-center gap-2 text-sm font-bold text-[var(--on-surface)]">
+            <span className="material-symbols-outlined text-lg text-[var(--primary)]">
+              help_outline
+            </span>
             Query
           </h3>
-          <div className="bg-slate-100 rounded-lg p-4">
-            <p className="text-sm font-mono text-slate-700 whitespace-pre-wrap break-words leading-relaxed">
+          <div className="rounded-[8px] bg-[var(--surface-container-low)] p-4">
+            <p className="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-[var(--on-surface-variant)]">
               {result.query}
             </p>
           </div>
         </div>
 
         {/* Agent Response Section */}
-        <div className="px-6 py-4 border-b border-slate-200">
-          <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#135bec] text-lg">smart_toy</span>
+        <div className="border-b border-[var(--outline-variant)] px-6 py-4">
+          <h3 className="mb-3 flex items-center gap-2 text-sm font-bold text-[var(--on-surface)]">
+            <span className="material-symbols-outlined text-lg text-[var(--primary)]">
+              smart_toy
+            </span>
             Agent Response
           </h3>
-          <div className="bg-white border border-slate-200 rounded-lg p-4">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap break-words leading-relaxed">
+          <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-4">
+            <p className="whitespace-pre-wrap break-words text-sm leading-relaxed text-[var(--on-surface-variant)]">
               {result.actualOutput}
             </p>
           </div>
         </div>
 
         {/* Metric Reasoning Section */}
-        <div className="px-6 py-4 border-b border-slate-200">
-          <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#135bec] text-lg">psychology</span>
+        <div className="border-b border-[var(--outline-variant)] px-6 py-4">
+          <h3 className="mb-3 flex items-center gap-2 text-sm font-bold text-[var(--on-surface)]">
+            <span className="material-symbols-outlined text-lg text-[var(--primary)]">
+              psychology
+            </span>
             Metric Reasoning
           </h3>
-          <div className="bg-white border border-slate-200 rounded-lg p-4">
-            <p className="text-sm text-slate-700 whitespace-pre-wrap break-words leading-relaxed">
+          <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-4">
+            <p className="whitespace-pre-wrap break-words text-sm leading-relaxed text-[var(--on-surface-variant)]">
               {result.expectedOutput}
             </p>
           </div>
         </div>
 
         {/* Metrics Row */}
-        <div className="px-6 py-4 border-b border-slate-200">
-          <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#135bec] text-lg">analytics</span>
+        <div className="border-b border-[var(--outline-variant)] px-6 py-4">
+          <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-[var(--on-surface)]">
+            <span className="material-symbols-outlined text-lg text-[var(--primary)]">
+              analytics
+            </span>
             Metrics
           </h3>
           <div className="grid grid-cols-2 gap-6">
             {/* Latency Metric */}
-            <div className="bg-slate-50 rounded-lg p-4">
+            <div className="rounded-[8px] bg-[var(--surface-container-low)] p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                <span className="text-xs font-medium uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Latency
                 </span>
-                <span className="material-symbols-outlined text-slate-400 text-lg">speed</span>
+                <span className="material-symbols-outlined text-lg text-[var(--outline)]">
+                  speed
+                </span>
               </div>
-              <div className="text-2xl font-bold text-slate-900">
+              <div className="text-2xl font-bold text-[var(--on-surface)]">
                 {result.latency}
-                <span className="text-sm font-normal text-slate-500 ml-1">ms</span>
+                <span className="ml-1 text-sm font-normal text-[var(--on-surface-variant)]">
+                  ms
+                </span>
               </div>
             </div>
 
             {/* Score Metric */}
-            <div className="bg-slate-50 rounded-lg p-4">
+            <div className="rounded-[8px] bg-[var(--surface-container-low)] p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                <span className="text-xs font-medium uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Score
                 </span>
-                <span className="material-symbols-outlined text-slate-400 text-lg">
+                <span className="material-symbols-outlined text-lg text-[var(--outline)]">
                   trending_up
                 </span>
               </div>
               <div className={cn('text-2xl font-bold', getScoreColor(result.score))}>
                 {result.score}
-                <span className="text-sm font-normal text-slate-500 ml-1">%</span>
+                <span className="ml-1 text-sm font-normal text-[var(--on-surface-variant)]">%</span>
               </div>
               {/* Visual Score Bar */}
               <div className="mt-3">
-                <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div className="h-2 overflow-hidden rounded-[4px] bg-[var(--surface-container)]">
                   <div
                     className={cn(
-                      'h-full rounded-full transition-all duration-500 ease-out',
+                      'h-full rounded-[4px] transition-all duration-500 ease-out',
                       getProgressBarColor(result.score)
                     )}
                     style={{ width: `${Math.min(result.score, 100)}%` }}
@@ -231,7 +243,7 @@ export function DebugViewPanel({ result, isOpen, onClose }: DebugViewPanelProps)
         </div>
 
         {/* Close Button */}
-        <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 mt-auto">
+        <div className="mt-auto border-t border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-6 py-4">
           <Button onClick={onClose} variant="outline" className="w-full">
             Close
           </Button>
