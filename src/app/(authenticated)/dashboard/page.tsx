@@ -71,11 +71,11 @@ function formatDatasetDate(dateString: string): string {
 function getStatusBadgeStyles(status: 'running' | 'completed' | 'failed') {
   switch (status) {
     case 'running':
-      return 'bg-blue-100 text-blue-700 border-blue-200';
+      return 'border-[var(--primary)]/20 bg-[var(--surface-container)] text-[var(--primary)]';
     case 'completed':
-      return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+      return 'border-[var(--success)]/20 bg-[var(--success)]/10 text-[var(--success-foreground)]';
     case 'failed':
-      return 'bg-red-100 text-red-700 border-red-200';
+      return 'border-[var(--error)]/20 bg-[var(--error)]/10 text-[var(--error-foreground)]';
   }
 }
 
@@ -93,11 +93,11 @@ function getStatusLabel(status: 'running' | 'completed' | 'failed') {
 function getDatasetStatusStyles(status: 'ready' | 'processing' | 'error') {
   switch (status) {
     case 'ready':
-      return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+      return 'border-[var(--success)]/20 bg-[var(--success)]/10 text-[var(--success-foreground)]';
     case 'processing':
-      return 'bg-amber-100 text-amber-700 border-amber-200';
+      return 'border-[var(--warning)]/20 bg-[var(--warning)]/10 text-[var(--warning-foreground)]';
     case 'error':
-      return 'bg-red-100 text-red-700 border-red-200';
+      return 'border-[var(--error)]/20 bg-[var(--error)]/10 text-[var(--error-foreground)]';
   }
 }
 
@@ -164,15 +164,15 @@ function ActionsDropdown({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-1.5 rounded-md hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition-colors"
+        className="rounded-[4px] p-1.5 text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container-low)] hover:text-[var(--on-surface)]"
       >
         <span className="material-symbols-outlined text-lg">more_vert</span>
       </button>
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-xl shadow-xl shadow-slate-200/50 border border-slate-100 py-2 z-20 animate-dropdown">
+        <div className="animate-dropdown absolute right-0 top-full z-20 mt-2 w-52 rounded-[8px] border border-[var(--outline-variant)] bg-white py-2 shadow-xl">
           <Link
             href={`/evaluations/${evalId}`}
-            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg mx-2 transition-all"
+            className="mx-2 flex items-center gap-3 rounded-[4px] px-4 py-2.5 text-sm font-medium text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container-low)] hover:text-[var(--on-surface)]"
           >
             <span className="material-symbols-outlined text-base">visibility</span>
             View Details
@@ -184,23 +184,23 @@ function ActionsDropdown({
           >
             <button
               disabled
-              className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-400 cursor-not-allowed rounded-lg mx-2 w-full text-left"
+              className="mx-2 flex w-full cursor-not-allowed items-center gap-3 rounded-[4px] px-4 py-2.5 text-left text-sm font-medium text-[var(--outline)]"
             >
               <span className="material-symbols-outlined text-lg">lock</span>
               Export
             </button>
             {showExportTooltip && (
-              <div className="absolute right-full top-1/2 -translate-y-1/2 mr-2 px-3 py-2 bg-slate-900 text-white text-xs font-medium rounded-lg whitespace-nowrap z-10 shadow-lg">
+              <div className="absolute right-full top-1/2 z-10 mr-2 -translate-y-1/2 whitespace-nowrap rounded-[8px] bg-[var(--inverse-surface)] px-3 py-2 text-xs font-medium text-[var(--inverse-on-surface)]">
                 Upgrade your membership
-                <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45" />
+                <div className="absolute -right-1 top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 bg-[var(--inverse-surface)]" />
               </div>
             )}
           </div>
-          <div className="border-t border-slate-100 my-2 mx-2"></div>
+          <div className="mx-2 my-2 border-t border-[var(--outline-variant)]"></div>
           <button
             onClick={handleDelete}
             disabled={isDeleting}
-            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 rounded-lg mx-2 transition-all w-full text-left disabled:opacity-50"
+            className="mx-2 flex w-full items-center gap-3 rounded-[4px] px-4 py-2.5 text-left text-sm font-medium text-red-600 transition-colors hover:bg-red-50 hover:text-red-700 disabled:opacity-50"
           >
             <span className="material-symbols-outlined text-base">delete</span>
             {isDeleting ? 'Deleting...' : 'Delete'}
@@ -252,28 +252,34 @@ export default function DashboardPage() {
       <div className="flex flex-col gap-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Recent Evaluations</h1>
-            <p className="text-slate-500 text-sm mt-1">
+            <h1 className="font-display text-2xl font-bold tracking-tight text-[var(--on-surface)]">
+              Recent Evaluations
+            </h1>
+            <p className="mt-1 text-sm text-[var(--on-surface-variant)]">
               View and manage your recent evaluation runs.
             </p>
           </div>
           <Link
             href="/evaluations/new"
-            className="flex items-center gap-2 bg-[#135bec] hover:bg-[#135bec]/90 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm shadow-[#135bec]/30 w-fit"
+            className="flex w-fit items-center gap-2 rounded-[4px] bg-[var(--primary)] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
           >
             <span className="material-symbols-outlined text-xl">add</span>
             New Evaluation
           </Link>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+        <div className="overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
           <div className="animate-pulse">
-            <div className="border-b border-slate-200 bg-slate-50 h-12"></div>
+            <div className="h-12 border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)]"></div>
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="px-6 py-4 border-b border-slate-200 flex gap-4">
-                <div className="h-4 bg-slate-200 rounded w-1/3"></div>
-                <div className="h-4 bg-slate-200 rounded w-1/6"></div>
-                <div className="h-4 bg-slate-200 rounded w-1/6"></div>
-                <div className="h-4 bg-slate-200 rounded w-1/6"></div>
+              <div
+                key={i}
+                className="flex gap-4 border-b border-[var(--outline-variant)] px-6 py-4"
+              >
+                <div className="h-4 w-1/3 rounded-[4px] bg-[var(--surface-container)]"></div>
+                <div className="h-4 w-1/6 rounded-[4px] bg-[var(--surface-container)]"></div>
+                <div className="h-4 w-1/6 rounded-[4px] bg-[var(--surface-container)]"></div>
+                <div className="h-4 w-1/6 rounded-[4px] bg-[var(--surface-container)]"></div>
+                <div className="ml-auto h-4 w-8 rounded-[4px] bg-[var(--surface-container)]"></div>
               </div>
             ))}
           </div>
@@ -288,26 +294,28 @@ export default function DashboardPage() {
       <div className="flex flex-col gap-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Recent Evaluations</h1>
-            <p className="text-slate-500 text-sm mt-1">
+            <h1 className="font-display text-2xl font-bold tracking-tight text-[var(--on-surface)]">
+              Recent Evaluations
+            </h1>
+            <p className="mt-1 text-sm text-[var(--on-surface-variant)]">
               View and manage your recent evaluation runs.
             </p>
           </div>
           <Link
             href="/evaluations/new"
-            className="flex items-center gap-2 bg-[#135bec] hover:bg-[#135bec]/90 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm shadow-[#135bec]/30 w-fit"
+            className="flex w-fit items-center gap-2 rounded-[4px] bg-[var(--primary)] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
           >
             <span className="material-symbols-outlined text-xl">add</span>
             New Evaluation
           </Link>
         </div>
-        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+        <div className="rounded-[8px] border border-red-200 bg-red-50 p-6 text-center">
           <span className="material-symbols-outlined text-red-500 text-3xl mb-2">error</span>
           <p className="text-red-800 font-medium">Failed to load evaluations</p>
           <p className="text-red-600 text-sm mt-1">{error.message}</p>
           <button
             onClick={() => refetch()}
-            className="mt-4 px-4 py-2 bg-red-100 text-red-700 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors"
+            className="mt-4 rounded-[4px] bg-red-100 px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-200"
           >
             Try Again
           </button>
@@ -322,30 +330,36 @@ export default function DashboardPage() {
       <div className="flex flex-col gap-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Recent Evaluations</h1>
-            <p className="text-slate-500 text-sm mt-1">
+            <h1 className="font-display text-2xl font-bold tracking-tight text-[var(--on-surface)]">
+              Recent Evaluations
+            </h1>
+            <p className="mt-1 text-sm text-[var(--on-surface-variant)]">
               View and manage your recent evaluation runs.
             </p>
           </div>
           <Link
             href="/evaluations/new"
-            className="flex items-center gap-2 bg-[#135bec] hover:bg-[#135bec]/90 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm shadow-[#135bec]/30 w-fit"
+            className="flex w-fit items-center gap-2 rounded-[4px] bg-[var(--primary)] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
           >
             <span className="material-symbols-outlined text-xl">add</span>
             New Evaluation
           </Link>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white shadow-sm p-12 text-center">
-          <div className="size-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
-            <span className="material-symbols-outlined text-slate-400 text-3xl">analytics</span>
+        <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-12 text-center">
+          <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-[8px] bg-[var(--surface-container-low)]">
+            <span className="material-symbols-outlined text-3xl text-[var(--outline)]">
+              analytics
+            </span>
           </div>
-          <h3 className="text-lg font-bold text-slate-900 mb-2">No evaluations yet</h3>
-          <p className="text-slate-500 text-sm mb-6">
+          <h3 className="font-display mb-2 text-lg font-bold text-[var(--on-surface)]">
+            No evaluations yet
+          </h3>
+          <p className="mb-6 text-sm text-[var(--on-surface-variant)]">
             Create your first evaluation to start testing your AI agents.
           </p>
           <Link
             href="/evaluations/new"
-            className="inline-flex items-center gap-2 bg-[#135bec] hover:bg-[#135bec]/90 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all"
+            className="inline-flex items-center gap-2 rounded-[4px] bg-[var(--primary)] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
           >
             <span className="material-symbols-outlined text-xl">add</span>
             New Evaluation
@@ -360,14 +374,16 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Recent Evaluations</h1>
-          <p className="text-slate-500 text-sm mt-1">
+          <h1 className="font-display text-2xl font-bold tracking-tight text-[var(--on-surface)]">
+            Recent Evaluations
+          </h1>
+          <p className="mt-1 text-sm text-[var(--on-surface-variant)]">
             View and manage your recent evaluation runs.
           </p>
         </div>
         <Link
           href="/evaluations/new"
-          className="flex items-center gap-2 bg-[#135bec] hover:bg-[#135bec]/90 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm shadow-[#135bec]/30 w-fit"
+          className="flex w-fit items-center gap-2 rounded-[4px] bg-[var(--primary)] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
         >
           <span className="material-symbols-outlined text-xl">add</span>
           New Evaluation
@@ -384,29 +400,29 @@ export default function DashboardPage() {
       )}
 
       {/* Table */}
-      <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white">
         <div>
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50">
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+              <tr className="border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Evaluation Name
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Date/Time
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Status
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Score
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">
+                <th className="px-6 py-3 text-right text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200">
+            <tbody className="divide-y divide-[var(--outline-variant)]">
               {recentEvaluations.map((evaluation) => {
                 const displayStatus = mapStatus(evaluation.status);
                 const score = evaluation.results_summary?.overall_score ?? null;
@@ -415,40 +431,40 @@ export default function DashboardPage() {
                 return (
                   <tr
                     key={evaluation.id}
-                    className="hover:bg-slate-50 transition-colors cursor-pointer"
+                    className="cursor-pointer transition-colors hover:bg-[var(--surface-container-low)]"
                     onClick={() => router.push(`/evaluations/${evaluation.id}`)}
                   >
                     <td className="px-6 py-4">
                       <div className="flex flex-col">
-                        <span className="text-sm font-medium text-slate-900">
+                        <span className="text-sm font-medium text-[var(--on-surface)]">
                           {evaluation.name}
                         </span>
-                        <span className="text-xs text-slate-500">
+                        <span className="text-xs text-[var(--on-surface-variant)]">
                           {evaluation.dataset_name || 'Unknown Dataset'}
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-slate-600">
+                    <td className="px-6 py-4 text-sm text-[var(--on-surface-variant)]">
                       {formatRelativeTime(evaluation.created_at)}
                     </td>
                     <td className="px-6 py-4">
                       <span
                         className={cn(
-                          'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border',
+                          'inline-flex items-center gap-1.5 rounded-[4px] border px-2.5 py-0.5 text-xs font-medium',
                           getStatusBadgeStyles(displayStatus)
                         )}
                       >
                         {displayStatus === 'running' && (
                           <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--primary)] opacity-75"></span>
+                            <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--primary)]"></span>
                           </span>
                         )}
                         {displayStatus === 'completed' && (
-                          <span className="flex h-2 w-2 rounded-full bg-emerald-500"></span>
+                          <span className="flex h-2 w-2 rounded-full bg-[var(--success)]"></span>
                         )}
                         {displayStatus === 'failed' && (
-                          <span className="flex h-2 w-2 rounded-full bg-red-500"></span>
+                          <span className="flex h-2 w-2 rounded-full bg-[var(--error)]"></span>
                         )}
                         {getStatusLabel(displayStatus)}
                       </span>
@@ -456,28 +472,35 @@ export default function DashboardPage() {
                     <td className="px-6 py-4">
                       {displayStatus === 'running' ? (
                         <div className="flex items-center gap-3">
-                          <div className="w-20 h-2 bg-slate-200 rounded-full overflow-hidden">
+                          <div className="h-2 w-20 overflow-hidden rounded-[4px] bg-[var(--surface-container)]">
                             <div
-                              className="h-full bg-blue-500 rounded-full transition-all"
+                              className="h-full rounded-[4px] bg-blue-500 transition-all"
                               style={{ width: `${progress}%` }}
                             />
                           </div>
-                          <span className="text-sm text-slate-500">{progress}%</span>
+                          <span className="font-mono text-sm text-[var(--on-surface-variant)]">
+                            {progress}%
+                          </span>
                         </div>
                       ) : score !== null ? (
                         <div className="flex items-center gap-3">
-                          <span className={cn('text-sm font-bold', getScoreColor(score * 100))}>
+                          <span
+                            className={cn(
+                              'font-mono text-sm font-bold',
+                              getScoreColor(score * 100)
+                            )}
+                          >
                             {(score * 100).toFixed(1)}%
                           </span>
-                          <div className="w-16 h-2 bg-slate-200 rounded-full overflow-hidden">
+                          <div className="h-2 w-16 overflow-hidden rounded-[4px] bg-[var(--surface-container)]">
                             <div
-                              className={cn('h-full rounded-full', getScoreBarColor(score * 100))}
+                              className={cn('h-full rounded-[4px]', getScoreBarColor(score * 100))}
                               style={{ width: `${score * 100}%` }}
                             />
                           </div>
                         </div>
                       ) : (
-                        <span className="text-sm text-slate-400">--</span>
+                        <span className="font-mono text-sm text-[var(--outline)]">--</span>
                       )}
                     </td>
                     <td className="px-6 py-4 text-right" onClick={(e) => e.stopPropagation()}>
@@ -499,7 +522,7 @@ export default function DashboardPage() {
       <div className="flex justify-center">
         <Link
           href="/evaluations"
-          className="text-sm font-medium text-[#135bec] hover:underline flex items-center gap-1"
+          className="flex items-center gap-1 text-sm font-medium text-[var(--primary)] hover:underline"
         >
           View all evaluations
           <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -511,19 +534,23 @@ export default function DashboardPage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100">
-              <span className="material-symbols-outlined text-slate-600">storage</span>
+            <div className="flex h-10 w-10 items-center justify-center rounded-[8px] bg-[var(--surface-container-low)]">
+              <span className="material-symbols-outlined text-[var(--on-surface-variant)]">
+                storage
+              </span>
             </div>
             <div>
-              <h2 className="text-xl font-bold text-slate-900 tracking-tight">Your Datasets</h2>
-              <p className="text-slate-500 text-sm">
+              <h2 className="font-display text-xl font-bold tracking-tight text-[var(--on-surface)]">
+                Your Datasets
+              </h2>
+              <p className="text-sm text-[var(--on-surface-variant)]">
                 {datasetsLoading ? 'Loading...' : `${apiDatasets.length} datasets`}
               </p>
             </div>
           </div>
           <Link
             href="/datasets"
-            className="text-sm font-medium text-[#135bec] hover:underline flex items-center gap-1"
+            className="flex items-center gap-1 text-sm font-medium text-[var(--primary)] hover:underline"
           >
             View All
             <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -545,16 +572,16 @@ export default function DashboardPage() {
             {[...Array(3)].map((_, i) => (
               <div
                 key={i}
-                className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden animate-pulse"
+                className="animate-pulse overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white"
               >
                 <div className="p-4">
-                  <div className="w-10 h-10 rounded-lg bg-slate-200 mb-3"></div>
-                  <div className="h-4 bg-slate-200 rounded w-3/4 mb-2"></div>
-                  <div className="h-3 bg-slate-200 rounded w-1/3"></div>
+                  <div className="mb-3 h-10 w-10 rounded-[8px] bg-[var(--surface-container)]"></div>
+                  <div className="mb-2 h-4 w-3/4 rounded-[4px] bg-[var(--surface-container)]"></div>
+                  <div className="h-3 w-1/3 rounded-[4px] bg-[var(--surface-container)]"></div>
                 </div>
-                <div className="px-4 py-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
-                  <div className="h-5 bg-slate-200 rounded w-16"></div>
-                  <div className="h-3 bg-slate-200 rounded w-20"></div>
+                <div className="flex items-center justify-between border-t border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-4 py-3">
+                  <div className="h-5 w-16 rounded-[4px] bg-[var(--surface-container)]"></div>
+                  <div className="h-3 w-20 rounded-[4px] bg-[var(--surface-container)]"></div>
                 </div>
               </div>
             ))}
@@ -563,13 +590,13 @@ export default function DashboardPage() {
 
         {/* Error State */}
         {!datasetsLoading && datasetsError && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <div className="rounded-[8px] border border-red-200 bg-red-50 p-6 text-center">
             <span className="material-symbols-outlined text-red-500 text-3xl mb-2">error</span>
             <p className="text-red-800 font-medium">Failed to load datasets</p>
             <p className="text-red-600 text-sm mt-1">{datasetsError.message}</p>
             <button
               onClick={() => refetchDatasets()}
-              className="mt-4 px-4 py-2 bg-red-100 text-red-700 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors"
+              className="mt-4 rounded-[4px] bg-red-100 px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-200"
             >
               Try Again
             </button>
@@ -578,17 +605,21 @@ export default function DashboardPage() {
 
         {/* Empty State */}
         {!datasetsLoading && !datasetsError && recentDatasets.length === 0 && (
-          <div className="rounded-xl border border-slate-200 bg-white shadow-sm p-12 text-center">
-            <div className="size-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
-              <span className="material-symbols-outlined text-slate-400 text-3xl">storage</span>
+          <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-12 text-center">
+            <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-[8px] bg-[var(--surface-container-low)]">
+              <span className="material-symbols-outlined text-3xl text-[var(--outline)]">
+                storage
+              </span>
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">No datasets yet</h3>
-            <p className="text-slate-500 text-sm mb-6">
+            <h3 className="font-display mb-2 text-lg font-bold text-[var(--on-surface)]">
+              No datasets yet
+            </h3>
+            <p className="mb-6 text-sm text-[var(--on-surface-variant)]">
               Create your first dataset to start evaluating your AI agents.
             </p>
             <Link
               href="/datasets/new"
-              className="inline-flex items-center gap-2 bg-[#135bec] hover:bg-[#135bec]/90 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all"
+              className="inline-flex items-center gap-2 rounded-[4px] bg-[var(--primary)] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
             >
               <span className="material-symbols-outlined text-xl">add</span>
               New Dataset
@@ -605,13 +636,13 @@ export default function DashboardPage() {
                 <Link
                   key={dataset.id}
                   href={`/datasets/${dataset.id}`}
-                  className="group bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer overflow-hidden"
+                  className="group cursor-pointer overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white transition-colors hover:border-[var(--primary)]"
                 >
                   <div className="p-4">
                     {/* Icon */}
                     <div
                       className={cn(
-                        'w-10 h-10 rounded-lg flex items-center justify-center mb-3',
+                        'mb-3 flex h-10 w-10 items-center justify-center rounded-[8px]',
                         typeStyles.bg
                       )}
                     >
@@ -621,35 +652,37 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-sm font-medium text-slate-900 line-clamp-1 group-hover:text-[#135bec] transition-colors">
+                    <h3 className="font-display line-clamp-1 text-sm font-medium text-[var(--on-surface)] transition-colors group-hover:text-[var(--primary)]">
                       {dataset.name}
                     </h3>
 
                     {/* Meta */}
-                    <p className="text-xs text-slate-500 mt-1">{dataset.size} queries</p>
+                    <p className="mt-1 font-mono text-xs text-[var(--on-surface-variant)]">
+                      {dataset.size} queries
+                    </p>
                   </div>
 
                   {/* Footer */}
-                  <div className="px-4 py-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                  <div className="flex items-center justify-between border-t border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-4 py-3">
                     <span
                       className={cn(
-                        'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border',
+                        'inline-flex items-center gap-1.5 rounded-[4px] border px-2 py-0.5 text-xs font-medium',
                         getDatasetStatusStyles(dataset.status)
                       )}
                     >
                       {dataset.status === 'processing' ? (
                         <span className="relative flex h-1.5 w-1.5">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--warning)] opacity-75"></span>
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--warning)]"></span>
                         </span>
                       ) : dataset.status === 'ready' ? (
-                        <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                        <span className="flex h-1.5 w-1.5 rounded-full bg-[var(--success)]"></span>
                       ) : (
-                        <span className="flex h-1.5 w-1.5 rounded-full bg-red-500"></span>
+                        <span className="flex h-1.5 w-1.5 rounded-full bg-[var(--error)]"></span>
                       )}
                       {getDatasetStatusLabel(dataset.status)}
                     </span>
-                    <span className="text-xs text-slate-400">{dataset.createdAt}</span>
+                    <span className="text-xs text-[var(--outline)]">{dataset.createdAt}</span>
                   </div>
                 </Link>
               );
@@ -662,7 +695,7 @@ export default function DashboardPage() {
           <div className="flex justify-center">
             <Link
               href="/datasets"
-              className="text-sm font-medium text-[#135bec] hover:underline flex items-center gap-1"
+              className="flex items-center gap-1 text-sm font-medium text-[var(--primary)] hover:underline"
             >
               View all datasets
               <span className="material-symbols-outlined text-base">arrow_forward</span>
