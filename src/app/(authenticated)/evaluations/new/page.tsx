@@ -596,7 +596,7 @@ function NewEvaluationWizardContent() {
                 <label className="block text-sm font-semibold text-[var(--on-surface-variant)]">
                   MCP Servers
                 </label>
-                <span className="text-xs text-[var(--on-surface-variant)]">
+                <span className="font-mono text-xs text-[var(--on-surface-variant)]">
                   {selectedMCPServers.length} of 3 selected
                 </span>
               </div>
@@ -774,7 +774,7 @@ function NewEvaluationWizardContent() {
                     <h3 className="font-display text-sm font-semibold text-[var(--on-surface)]">
                       Available Datasets
                     </h3>
-                    <span className="text-xs text-[var(--on-surface-variant)]">
+                    <span className="font-mono text-xs text-[var(--on-surface-variant)]">
                       {readyDatasets.length} datasets ready
                     </span>
                   </div>

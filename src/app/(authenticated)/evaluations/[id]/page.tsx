@@ -639,7 +639,7 @@ export default function EvaluationResultsPage({ params }: { params: Promise<{ id
 
           {filteredResults.length > 20 && (
             <div className="border-t border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-6 py-3 text-center">
-              <button className="rounded-[4px] text-sm font-medium text-[var(--primary)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2">
+              <button className="rounded-[4px] font-mono text-sm font-medium text-[var(--primary)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2">
                 View all {filteredResults.length} results
               </button>
             </div>
