@@ -149,7 +149,7 @@ export function Navigation({ user: initialUser }: NavigationProps) {
         {/* Logo */}
         <Link href="/" className="flex items-center text-[var(--foreground)] no-underline">
           <Logo size="sm" showText={false} className="lg:hidden" />
-          <Logo size="md" lockup className="hidden lg:block" />
+          <Logo size="md" className="hidden lg:flex" />
         </Link>
 
         {/* Desktop Nav Links */}
