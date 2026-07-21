@@ -14,7 +14,7 @@ import { clearTokenCache } from '@/lib/api/client';
 import { useCalendly } from '@/hooks/use-calendly';
 
 const navLinks = [
-  { href: '#', label: 'Docs' },
+  { href: '#', label: 'About' },
   { href: '#demo', label: 'Demo' },
   { href: '#workflow', label: 'Workflow' },
   { href: '#features', label: 'Features' },
@@ -141,16 +141,15 @@ export function Navigation({ user: initialUser }: NavigationProps) {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-white/95 backdrop-blur-xl shadow-sm border-b border-[var(--border-light)]'
-          : 'bg-white/80 backdrop-blur-md'
+      className={`fixed top-0 left-0 right-0 z-50 border-b bg-white transition-colors duration-300 ${
+        scrolled ? 'border-[var(--outline-variant)]' : 'border-transparent'
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 lg:px-10">
         {/* Logo */}
         <Link href="/" className="flex items-center text-[var(--foreground)] no-underline">
-          <Logo size="sm" />
+          <Logo size="sm" showText={false} className="lg:hidden" />
+          <Logo size="md" className="hidden lg:flex" />
         </Link>
 
         {/* Desktop Nav Links */}
@@ -161,7 +160,7 @@ export function Navigation({ user: initialUser }: NavigationProps) {
               <motion.div key={link.label} whileHover={{ y: -1 }}>
                 <Link
                   href={link.href}
-                  className={`relative px-4 py-2 text-[15px] font-medium transition-colors rounded-lg ${
+                  className={`relative rounded-[4px] px-4 py-2 text-[15px] font-medium transition-colors ${
                     isActive
                       ? 'text-[var(--primary)]'
                       : 'text-[var(--text-secondary)] hover:text-[var(--foreground)] hover:bg-[var(--bg-subtle)]'
@@ -187,7 +186,7 @@ export function Navigation({ user: initialUser }: NavigationProps) {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={openCalendly}
-            className="px-5 py-2.5 bg-white border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)]/5 rounded-lg text-[15px] font-semibold transition-all"
+            className="rounded-[4px] border border-[var(--primary)] bg-white px-5 py-2.5 text-[15px] font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--surface-container-low)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2"
           >
             Schedule a call
           </motion.button>
@@ -197,7 +196,7 @@ export function Navigation({ user: initialUser }: NavigationProps) {
                 <motion.button
                   whileHover={{ scale: 1.02, y: -1 }}
                   whileTap={{ scale: 0.98 }}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white rounded-lg text-[15px] font-semibold transition-all shadow-sm hover:shadow-lg hover:shadow-[var(--primary)]/30"
+                  className="flex items-center gap-2 rounded-[4px] bg-[var(--primary)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors hover:bg-[var(--primary-dark)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2"
                   aria-label="Go to Dashboard"
                 >
                   <LayoutDashboard className="w-4 h-4" />
@@ -212,7 +211,7 @@ export function Navigation({ user: initialUser }: NavigationProps) {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-5 py-2.5 bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white rounded-lg text-[15px] font-semibold transition-all shadow-sm hover:shadow-lg hover:shadow-[var(--primary)]/30"
+                  className="rounded-[4px] bg-[var(--primary)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors hover:bg-[var(--primary-dark)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2"
                 >
                   Sign In
                 </motion.button>
@@ -224,7 +223,7 @@ export function Navigation({ user: initialUser }: NavigationProps) {
         {/* Mobile Menu Button */}
         <motion.button
           whileTap={{ scale: 0.95 }}
-          className="lg:hidden p-2 rounded-lg hover:bg-[var(--bg-subtle)] transition-colors"
+          className="rounded-[4px] p-2 transition-colors hover:bg-[var(--surface-container-low)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileMenuOpen}
@@ -241,9 +240,9 @@ export function Navigation({ user: initialUser }: NavigationProps) {
           opacity: mobileMenuOpen ? 1 : 0,
         }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="lg:hidden overflow-hidden bg-white border-t border-[var(--border-light)]"
+        className="overflow-hidden border-t border-[var(--outline-variant)] bg-white lg:hidden"
       >
-        <div className="px-6 py-4 flex flex-col gap-1">
+        <div className="flex flex-col gap-1 px-4 py-4">
           {navLinks.map((link, index) => (
             <motion.div
               key={link.label}
@@ -253,7 +252,7 @@ export function Navigation({ user: initialUser }: NavigationProps) {
             >
               <Link
                 href={link.href}
-                className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                className={`block rounded-[4px] px-4 py-3 text-base font-medium transition-colors ${
                   activeSection === link.href.slice(1)
                     ? 'text-[var(--primary)] bg-[var(--primary)]/5'
                     : 'text-[var(--text-secondary)] hover:text-[var(--foreground)] hover:bg-[var(--bg-subtle)]'
@@ -270,14 +269,14 @@ export function Navigation({ user: initialUser }: NavigationProps) {
                 setMobileMenuOpen(false);
                 openCalendly();
               }}
-              className="w-full py-3 bg-white border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)]/5 text-base font-semibold rounded-lg transition-colors"
+              className="w-full rounded-[4px] border border-[var(--primary)] bg-white py-3 text-base font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--surface-container-low)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)]"
             >
               Schedule a call
             </button>
             {user ? (
               <>
                 {/* User Info Header */}
-                <div className="flex items-center gap-3 px-4 py-3 mb-2 bg-[var(--bg-subtle)] rounded-lg">
+                <div className="mb-2 flex items-center gap-3 rounded-[8px] bg-[var(--surface-container-low)] px-4 py-3">
                   {user.avatarUrl ? (
                     <Image
                       src={user.avatarUrl}
@@ -302,14 +301,14 @@ export function Navigation({ user: initialUser }: NavigationProps) {
                 </div>
 
                 <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                  <button className="w-full py-3 bg-[var(--primary)] text-white rounded-lg text-base font-semibold hover:bg-[var(--primary-dark)] transition-colors flex items-center justify-center gap-2">
+                  <button className="flex w-full items-center justify-center gap-2 rounded-[4px] bg-[var(--primary)] py-3 text-base font-semibold text-white transition-colors hover:bg-[var(--primary-dark)]">
                     <LayoutDashboard className="w-4 h-4" />
                     Go to Dashboard
                   </button>
                 </Link>
 
                 <Link href="/dashboard/settings" onClick={() => setMobileMenuOpen(false)}>
-                  <button className="w-full py-3 text-[var(--foreground)] border border-[var(--border)] rounded-lg text-base font-medium hover:bg-[var(--bg-subtle)] transition-colors flex items-center justify-center gap-2">
+                  <button className="flex w-full items-center justify-center gap-2 rounded-[4px] border border-[var(--outline-variant)] py-3 text-base font-medium text-[var(--foreground)] transition-colors hover:bg-[var(--surface-container-low)]">
                     <Settings className="w-4 h-4" />
                     Settings
                   </button>
@@ -318,7 +317,7 @@ export function Navigation({ user: initialUser }: NavigationProps) {
                 <button
                   onClick={handleSignOut}
                   disabled={isSigningOut}
-                  className={`w-full py-3 text-red-600 border border-red-200 rounded-lg text-base font-medium hover:bg-red-50 transition-colors flex items-center justify-center gap-2 ${isSigningOut ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`flex w-full items-center justify-center gap-2 rounded-[4px] border border-red-200 py-3 text-base font-medium text-red-600 transition-colors hover:bg-red-50 ${isSigningOut ? 'cursor-not-allowed opacity-50' : ''}`}
                 >
                   <LogOut className="w-4 h-4" />
                   {isSigningOut ? 'Signing out...' : 'Sign out'}
@@ -327,7 +326,7 @@ export function Navigation({ user: initialUser }: NavigationProps) {
             ) : (
               <>
                 <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                  <button className="w-full py-3 bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white text-base font-semibold rounded-lg transition-colors">
+                  <button className="w-full rounded-[4px] bg-[var(--primary)] py-3 text-base font-semibold text-white transition-colors hover:bg-[var(--primary-dark)]">
                     Sign In
                   </button>
                 </Link>

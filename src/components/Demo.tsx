@@ -23,23 +23,20 @@ export function Demo() {
   };
 
   return (
-    <section
-      id="demo"
-      className="py-14 lg:py-[90px] px-4 sm:px-6 lg:px-8 bg-[var(--background)] scroll-mt-20"
-    >
-      <div className="max-w-[1080px] mx-auto">
+    <section id="demo" className="scroll-mt-20 bg-[var(--background)] px-4 py-16 lg:px-10 lg:py-20">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-4 gap-4 lg:grid-cols-12 lg:gap-6">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-8 lg:mb-12"
+          className="col-span-4 mb-8 text-center lg:col-span-12 lg:mb-12"
         >
           <p className="text-base uppercase tracking-[0.2em] text-[var(--primary)] font-bold mb-4">
             Demo
           </p>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 lg:mb-4 tracking-tight">
+          <h2 className="mb-3 font-display text-2xl font-bold tracking-tight md:text-3xl lg:mb-4 lg:text-4xl">
             See it in action
           </h2>
           <p className="text-base lg:text-lg text-[var(--text-secondary)] max-w-[600px] mx-auto">
@@ -53,9 +50,9 @@ export function Demo() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-[900px] mx-auto"
+          className="col-span-4 mx-auto w-full max-w-[900px] lg:col-span-10 lg:col-start-2"
         >
-          <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-black/10 bg-[#2d2d2d] cursor-pointer group">
+          <div className="group relative cursor-pointer overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-[#2d2d2d]">
             <video
               ref={videoRef}
               src="/demo/demo.mp4"

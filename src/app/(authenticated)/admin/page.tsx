@@ -74,28 +74,30 @@ function StatCard({
   icon: string;
 }) {
   const toneStyles = {
-    default: 'text-slate-900',
-    good: 'text-emerald-600',
-    warn: 'text-amber-600',
-    bad: 'text-red-600',
+    default: 'text-[var(--on-surface)]',
+    good: 'text-[var(--success-foreground)]',
+    warn: 'text-[var(--warning-foreground)]',
+    bad: 'text-[var(--error-foreground)]',
   }[tone];
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-5">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-bold uppercase tracking-wider text-slate-500">{label}</p>
-        <span className="material-symbols-outlined text-slate-400 text-xl">{icon}</span>
+        <p className="text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
+          {label}
+        </p>
+        <span className="material-symbols-outlined text-xl text-[var(--outline)]">{icon}</span>
       </div>
-      <p className={cn('mt-2 text-3xl font-bold tracking-tight', toneStyles)}>{value}</p>
-      {sub && <p className="mt-1 text-xs text-slate-500">{sub}</p>}
+      <p className={cn('mt-2 font-mono text-3xl font-bold tracking-tight', toneStyles)}>{value}</p>
+      {sub && <p className="mt-1 text-xs text-[var(--on-surface-variant)]">{sub}</p>}
     </div>
   );
 }
 
 function statusStyles(status: 'success' | 'failure') {
   return status === 'success'
-    ? 'bg-emerald-100 text-emerald-700 border-emerald-200'
-    : 'bg-red-100 text-red-700 border-red-200';
+    ? 'border-[var(--success)]/20 bg-[var(--success)]/10 text-[var(--success-foreground)]'
+    : 'border-[var(--error)]/20 bg-[var(--error)]/10 text-[var(--error-foreground)]';
 }
 
 export default async function AdminPage() {
@@ -159,14 +161,16 @@ export default async function AdminPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Login Telemetry</h1>
+          <h1 className="font-display text-2xl font-bold tracking-tight text-[var(--on-surface)]">
+            Login Telemetry
+          </h1>
         </div>
         {posthogAppUrl && (
           <a
             href={posthogAppUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm font-medium text-[#135bec] hover:underline w-fit"
+            className="flex w-fit items-center gap-2 text-sm font-medium text-[var(--primary)] hover:underline"
           >
             <span className="material-symbols-outlined text-base">open_in_new</span>
             Open PostHog dashboards
@@ -175,9 +179,9 @@ export default async function AdminPage() {
       </div>
 
       {loadError && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
-          <span className="material-symbols-outlined text-amber-500">info</span>
-          <p className="text-amber-800 text-sm">{loadError}</p>
+        <div className="flex items-start gap-3 rounded-[8px] border border-[var(--warning)]/20 bg-[var(--warning)]/10 p-4">
+          <span className="material-symbols-outlined text-[var(--warning)]">info</span>
+          <p className="text-[var(--warning-foreground)] text-sm">{loadError}</p>
         </div>
       )}
 
@@ -212,25 +216,27 @@ export default async function AdminPage() {
       </div>
 
       {/* Provider breakdown */}
-      <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-        <p className="text-sm font-bold text-slate-900 mb-3">Sign-ins by method (7d)</p>
+      <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-5">
+        <p className="font-display mb-3 text-sm font-bold text-[var(--on-surface)]">
+          Sign-ins by method (7d)
+        </p>
         <div className="flex flex-col gap-3">
           {[
             { label: 'Google', value: googleLogins, color: 'bg-[#4285F4]' },
-            { label: 'Email', value: emailLogins, color: 'bg-[#135bec]' },
+            { label: 'Email', value: emailLogins, color: 'bg-[var(--primary)]' },
           ].map((row) => {
             const total = googleLogins + emailLogins;
             const pct = total > 0 ? Math.round((row.value / total) * 100) : 0;
             return (
               <div key={row.label} className="flex items-center gap-3">
-                <span className="w-16 text-sm text-slate-600">{row.label}</span>
-                <div className="flex-1 h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                <span className="w-16 text-sm text-[var(--on-surface-variant)]">{row.label}</span>
+                <div className="h-2.5 flex-1 overflow-hidden rounded-[4px] bg-[var(--surface-container-low)]">
                   <div
-                    className={cn('h-full rounded-full', row.color)}
+                    className={cn('h-full rounded-[4px]', row.color)}
                     style={{ width: `${pct}%` }}
                   />
                 </div>
-                <span className="w-20 text-right text-sm text-slate-500">
+                <span className="w-20 text-right font-mono text-sm text-[var(--on-surface-variant)]">
                   {row.value} ({pct}%)
                 </span>
               </div>
@@ -240,63 +246,74 @@ export default async function AdminPage() {
       </div>
 
       {/* Recent events */}
-      <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-200">
-          <h2 className="text-sm font-bold text-slate-900">Recent events</h2>
+      <div className="overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
+        <div className="border-b border-[var(--outline-variant)] px-6 py-4">
+          <h2 className="font-display text-sm font-bold text-[var(--on-surface)]">Recent events</h2>
         </div>
         {recent.length === 0 ? (
           <div className="p-12 text-center">
-            <span className="material-symbols-outlined text-slate-300 text-4xl">history</span>
-            <p className="text-slate-500 text-sm mt-2">No authentication events recorded yet.</p>
+            <span className="material-symbols-outlined text-4xl text-[var(--outline)]">
+              history
+            </span>
+            <p className="mt-2 text-sm text-[var(--on-surface-variant)]">
+              No authentication events recorded yet.
+            </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50">
-                  <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <tr className="border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
+                  <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                     Event
                   </th>
-                  <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                     Method
                   </th>
-                  <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                     Network
                   </th>
-                  <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                     When
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
+              <tbody className="divide-y divide-[var(--outline-variant)]">
                 {recent.map((row) => (
-                  <tr key={row.id} className="hover:bg-slate-50 transition-colors">
+                  <tr
+                    key={row.id}
+                    className="transition-colors hover:bg-[var(--surface-container-low)]"
+                  >
                     <td className="px-6 py-3">
                       <div className="flex flex-col">
-                        <span className="text-sm font-medium text-slate-900">
+                        <span className="text-sm font-medium text-[var(--on-surface)]">
                           {EVENT_LABELS[row.event_type] ?? row.event_type}
                         </span>
-                        {row.reason && <span className="text-xs text-slate-400">{row.reason}</span>}
+                        {row.reason && (
+                          <span className="text-xs text-[var(--outline)]">{row.reason}</span>
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-3">
                       <span
                         className={cn(
-                          'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border',
+                          'inline-flex items-center rounded-[4px] border px-2.5 py-0.5 text-xs font-medium',
                           statusStyles(row.status)
                         )}
                       >
                         {row.status}
                       </span>
                     </td>
-                    <td className="px-6 py-3 text-sm text-slate-600">{row.provider ?? '--'}</td>
-                    <td className="px-6 py-3 text-sm text-slate-500 font-mono text-xs">
+                    <td className="px-6 py-3 text-sm text-[var(--on-surface-variant)]">
+                      {row.provider ?? '--'}
+                    </td>
+                    <td className="px-6 py-3 font-mono text-xs text-[var(--on-surface-variant)]">
                       {row.ip_truncated ?? '--'}
                     </td>
-                    <td className="px-6 py-3 text-sm text-slate-500">
+                    <td className="px-6 py-3 text-sm text-[var(--on-surface-variant)]">
                       {formatRelativeTime(row.created_at)}
                     </td>
                   </tr>

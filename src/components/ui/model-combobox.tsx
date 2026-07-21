@@ -113,7 +113,7 @@ export function ModelCombobox({
           onFocus={() => setOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          className="w-full px-3 py-2.5 pr-9 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+          className="w-full rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 pr-9 text-sm text-[var(--on-surface)] transition-all placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
           role="combobox"
           aria-expanded={open}
           aria-controls="model-combobox-listbox"
@@ -126,7 +126,7 @@ export function ModelCombobox({
             setOpen((prev) => !prev);
             inputRef.current?.focus();
           }}
-          className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 text-slate-400 hover:text-slate-600 transition-colors"
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 text-[var(--outline)] transition-colors hover:text-[var(--on-surface-variant)]"
           aria-label="Toggle model suggestions"
         >
           <ChevronsUpDown className="size-4" />
@@ -138,16 +138,16 @@ export function ModelCombobox({
           ref={listRef}
           id="model-combobox-listbox"
           role="listbox"
-          className="absolute z-50 mt-1 w-full max-h-72 overflow-auto rounded-lg border border-slate-200 bg-white shadow-lg"
+          className="absolute z-50 mt-1 max-h-72 w-full overflow-auto rounded-[8px] border border-[var(--outline-variant)] bg-white shadow-lg"
         >
           {filteredGroups.length === 0 ? (
-            <div className="px-3 py-4 text-center text-sm text-slate-500">
+            <div className="px-3 py-4 text-center text-sm text-[var(--on-surface-variant)]">
               No matching models. Custom value will be used.
             </div>
           ) : (
             filteredGroups.map((group) => (
               <div key={group.provider}>
-                <div className="sticky top-0 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wide border-b border-slate-100">
+                <div className="sticky top-0 border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-[var(--on-surface-variant)]">
                   {group.provider}
                 </div>
                 {group.models.map((model) => {
@@ -166,18 +166,18 @@ export function ModelCombobox({
                       onMouseEnter={() => setHighlightedIndex(idx)}
                       className={cn(
                         'flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors',
-                        isHighlighted && 'bg-[#135bec]/5',
-                        isSelected && 'font-medium text-[#135bec]'
+                        isHighlighted && 'bg-[var(--surface-container-low)]',
+                        isSelected && 'font-medium text-[var(--primary)]'
                       )}
                     >
                       <Check
                         className={cn(
                           'size-4 shrink-0',
-                          isSelected ? 'opacity-100 text-[#135bec]' : 'opacity-0'
+                          isSelected ? 'text-[var(--primary)] opacity-100' : 'opacity-0'
                         )}
                       />
                       <span className="flex-1">{model.name}</span>
-                      <span className="text-xs text-slate-400 font-mono">{model.id}</span>
+                      <span className="font-mono text-xs text-[var(--outline)]">{model.id}</span>
                     </button>
                   );
                 })}

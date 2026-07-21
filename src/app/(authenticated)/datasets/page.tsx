@@ -97,11 +97,11 @@ function getTypeIcon(type: UiDatasetType) {
 function getStatusBadgeStyles(status: UiDatasetStatus) {
   switch (status) {
     case 'ready':
-      return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+      return 'border-[var(--success)]/20 bg-[var(--success)]/10 text-[var(--success-foreground)]';
     case 'processing':
-      return 'bg-amber-100 text-amber-700 border-amber-200';
+      return 'border-[var(--warning)]/20 bg-[var(--warning)]/10 text-[var(--warning-foreground)]';
     case 'error':
-      return 'bg-red-100 text-red-700 border-red-200';
+      return 'border-[var(--error)]/20 bg-[var(--error)]/10 text-[var(--error-foreground)]';
   }
 }
 
@@ -133,7 +133,7 @@ function TableRowSkeleton() {
         <Skeleton className="h-4 w-40" />
       </td>
       <td className="px-6 py-4">
-        <Skeleton className="h-6 w-24 rounded-full" />
+        <Skeleton className="h-6 w-24" />
       </td>
       <td className="px-6 py-4">
         <Skeleton className="h-4 w-20" />
@@ -142,7 +142,7 @@ function TableRowSkeleton() {
         <Skeleton className="h-4 w-24" />
       </td>
       <td className="px-6 py-4">
-        <Skeleton className="h-6 w-20 rounded-full" />
+        <Skeleton className="h-6 w-20" />
       </td>
       <td className="px-6 py-4 text-right">
         <Skeleton className="h-8 w-12 ml-auto" />
@@ -175,16 +175,16 @@ const DatasetRow = React.memo(function DatasetRow({
   const [showExportTooltip, setShowExportTooltip] = useState(false);
   return (
     <tr
-      className="hover:bg-slate-50 transition-colors cursor-pointer"
+      className="cursor-pointer transition-colors hover:bg-[var(--surface-container-low)]"
       onClick={() => router.push(`/datasets/${dataset.id}`)}
     >
       <td className="px-6 py-4">
-        <span className="text-sm font-medium text-slate-900">{dataset.name}</span>
+        <span className="text-sm font-medium text-[var(--on-surface)]">{dataset.name}</span>
       </td>
       <td className="px-6 py-4">
         <span
           className={cn(
-            'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border',
+            'inline-flex items-center gap-1.5 rounded-[4px] border px-2.5 py-0.5 text-xs font-medium',
             getTypeBadgeStyles(dataset.type)
           )}
         >
@@ -193,22 +193,26 @@ const DatasetRow = React.memo(function DatasetRow({
         </span>
       </td>
       <td className="px-6 py-4">
-        <span className="text-sm text-slate-600">{dataset.size} queries</span>
+        <span className="font-mono text-sm text-[var(--on-surface-variant)]">
+          {dataset.size} queries
+        </span>
       </td>
       <td className="px-6 py-4">
-        <span className="text-sm text-slate-600">{formatDate(dataset.createdAt)}</span>
+        <span className="text-sm text-[var(--on-surface-variant)]">
+          {formatDate(dataset.createdAt)}
+        </span>
       </td>
       <td className="px-6 py-4">
         <span
           className={cn(
-            'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border',
+            'inline-flex items-center gap-1.5 rounded-[4px] border px-2.5 py-0.5 text-xs font-medium',
             getStatusBadgeStyles(dataset.status)
           )}
         >
           {dataset.status === 'processing' && (
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--warning)] opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--warning)]"></span>
             </span>
           )}
           {getStatusLabel(dataset.status)}
@@ -222,18 +226,18 @@ const DatasetRow = React.memo(function DatasetRow({
               const rect = e.currentTarget.getBoundingClientRect();
               onToggleMenu(dataset.id, rect);
             }}
-            className="p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+            className="rounded-[4px] p-1.5 text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container-low)] hover:text-[var(--on-surface)]"
           >
             <span className="material-symbols-outlined text-xl">more_vert</span>
           </button>
           {openMenuId === dataset.id && menuPosition && (
             <div
-              className="fixed w-52 bg-white rounded-xl shadow-xl shadow-slate-200/50 border border-slate-100 py-2 z-50 animate-dropdown"
+              className="animate-dropdown fixed z-50 w-52 rounded-[8px] border border-[var(--outline-variant)] bg-white py-2 shadow-xl"
               style={{ top: menuPosition.top, left: menuPosition.left }}
             >
               <Link
                 href={`/datasets/${dataset.id}`}
-                className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg mx-2 transition-all"
+                className="mx-2 flex items-center gap-3 rounded-[4px] px-4 py-2.5 text-sm font-medium text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container-low)] hover:text-[var(--on-surface)]"
                 onClick={onCloseMenu}
               >
                 <span className="material-symbols-outlined text-lg">visibility</span>
@@ -241,7 +245,7 @@ const DatasetRow = React.memo(function DatasetRow({
               </Link>
               <Link
                 href={`/evaluations/new?dataset=${dataset.id}`}
-                className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg mx-2 transition-all"
+                className="mx-2 flex items-center gap-3 rounded-[4px] px-4 py-2.5 text-sm font-medium text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container-low)] hover:text-[var(--on-surface)]"
                 onClick={onCloseMenu}
               >
                 <span className="material-symbols-outlined text-lg">science</span>
@@ -254,21 +258,21 @@ const DatasetRow = React.memo(function DatasetRow({
               >
                 <button
                   disabled
-                  className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-400 cursor-not-allowed rounded-lg mx-2 w-full text-left"
+                  className="mx-2 flex w-full cursor-not-allowed items-center gap-3 rounded-[4px] px-4 py-2.5 text-left text-sm font-medium text-[var(--outline)]"
                 >
                   <span className="material-symbols-outlined text-lg">lock</span>
                   Export
                 </button>
                 {showExportTooltip && (
-                  <div className="absolute right-full top-1/2 -translate-y-1/2 mr-2 px-3 py-2 bg-slate-900 text-white text-xs font-medium rounded-lg whitespace-nowrap z-10 shadow-lg">
+                  <div className="absolute right-full top-1/2 z-10 mr-2 -translate-y-1/2 whitespace-nowrap rounded-[8px] bg-[var(--inverse-surface)] px-3 py-2 text-xs font-medium text-[var(--inverse-on-surface)]">
                     Upgrade your membership
-                    <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45" />
+                    <div className="absolute -right-1 top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 bg-[var(--inverse-surface)]" />
                   </div>
                 )}
               </div>
-              <div className="border-t border-slate-100 my-2 mx-2"></div>
+              <div className="mx-2 my-2 border-t border-[var(--outline-variant)]"></div>
               <button
-                className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 rounded-lg mx-2 transition-all w-full text-left"
+                className="mx-2 flex w-full items-center gap-3 rounded-[4px] px-4 py-2.5 text-left text-sm font-medium text-[var(--error)] transition-colors hover:bg-[var(--error)]/10 hover:text-[var(--error-foreground)]"
                 onClick={() => onDelete(dataset)}
               >
                 <span className="material-symbols-outlined text-lg">delete</span>
@@ -378,14 +382,16 @@ export default function DatasetsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Datasets</h1>
-          <p className="text-slate-500 text-sm mt-1">
+          <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--on-surface)]">
+            Datasets
+          </h1>
+          <p className="mt-1 text-sm text-[var(--on-surface-variant)]">
             Manage your evaluation datasets and test cases.
           </p>
         </div>
         <Link
           href="/datasets/new"
-          className="flex items-center gap-2 bg-[#135bec] hover:bg-[#135bec]/90 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm shadow-[#135bec]/30 w-fit"
+          className="flex w-fit items-center gap-2 rounded-[4px] bg-[var(--primary)] px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
         >
           <span className="material-symbols-outlined text-xl">add</span>
           New Dataset
@@ -408,19 +414,21 @@ export default function DatasetsPage() {
           {/* Search */}
           <div className="relative w-full max-w-sm">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <span className="material-symbols-outlined text-slate-400 text-xl">search</span>
+              <span className="material-symbols-outlined text-xl text-[var(--outline)]">
+                search
+              </span>
             </div>
             <input
               type="text"
               placeholder="Search by name or ID..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2.5 border-none rounded-lg bg-slate-100 text-slate-900 text-sm placeholder-slate-500 focus:ring-2 focus:ring-[#135bec] focus:bg-white transition-all"
+              className="block w-full rounded-[4px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] py-2.5 pl-10 pr-3 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--on-surface-variant)] focus:bg-white focus:ring-2 focus:ring-[var(--brand-highlight)]"
             />
           </div>
 
           {/* Divider */}
-          <div className="h-8 w-px bg-slate-200 hidden md:block"></div>
+          <div className="hidden h-8 w-px bg-[var(--outline-variant)] md:block"></div>
 
           {/* Type Chips */}
           <div className="flex gap-2 overflow-x-auto py-1">
@@ -429,10 +437,10 @@ export default function DatasetsPage() {
                 key={filter.value}
                 onClick={() => setTypeFilter(filter.value)}
                 className={cn(
-                  'flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap',
+                  'flex items-center gap-2 whitespace-nowrap rounded-[4px] px-3 py-1.5 text-sm font-medium transition-colors',
                   typeFilter === filter.value
-                    ? 'bg-slate-900 text-white'
-                    : 'bg-white border border-slate-200 text-slate-500 hover:bg-slate-50'
+                    ? 'bg-[var(--inverse-surface)] text-[var(--inverse-on-surface)]'
+                    : 'border border-[var(--outline-variant)] bg-white text-[var(--on-surface-variant)] hover:bg-[var(--surface-container-low)]'
                 )}
               >
                 {filter.label}
@@ -444,15 +452,17 @@ export default function DatasetsPage() {
 
       {/* Error State */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
-          <span className="material-symbols-outlined text-red-500">error</span>
+        <div className="flex items-center gap-3 rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-4">
+          <span className="material-symbols-outlined text-[var(--error)]">error</span>
           <div className="flex-1">
-            <p className="text-sm font-medium text-red-800">Failed to load datasets</p>
-            <p className="text-sm text-red-600">{error.message}</p>
+            <p className="text-sm font-medium text-[var(--error-foreground)]">
+              Failed to load datasets
+            </p>
+            <p className="text-sm text-[var(--error-foreground)]">{error.message}</p>
           </div>
           <button
             onClick={() => refetch()}
-            className="px-3 py-1.5 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-lg transition-colors"
+            className="rounded-[4px] bg-[var(--error)]/10 px-3 py-1.5 text-sm font-medium text-[var(--error-foreground)] transition-colors hover:bg-[var(--error)]/20"
           >
             Retry
           </button>
@@ -460,32 +470,32 @@ export default function DatasetsPage() {
       )}
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm">
+      <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50">
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+              <tr className="border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Name
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Type
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Size
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Created On
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Status
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">
+                <th className="px-6 py-3 text-right text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200">
+            <tbody className="divide-y divide-[var(--outline-variant)]">
               {isLoading ? (
                 // Loading skeletons
                 <>
@@ -502,16 +512,18 @@ export default function DatasetsPage() {
                       {datasets.length === 0 ? (
                         // Empty state - no datasets at all
                         <>
-                          <span className="material-symbols-outlined text-4xl text-slate-300">
+                          <span className="material-symbols-outlined text-4xl text-[var(--outline)]">
                             folder_open
                           </span>
-                          <p className="text-slate-500 text-sm">No datasets yet</p>
-                          <p className="text-slate-400 text-xs">
+                          <p className="text-sm text-[var(--on-surface-variant)]">
+                            No datasets yet
+                          </p>
+                          <p className="text-xs text-[var(--outline)]">
                             Create your first dataset to get started
                           </p>
                           <Link
                             href="/datasets/new"
-                            className="mt-2 flex items-center gap-2 bg-[#135bec] hover:bg-[#135bec]/90 text-white px-4 py-2 rounded-lg font-medium text-sm transition-all"
+                            className="mt-2 flex items-center gap-2 rounded-[4px] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
                           >
                             <span className="material-symbols-outlined text-lg">add</span>
                             Create Dataset
@@ -520,11 +532,13 @@ export default function DatasetsPage() {
                       ) : (
                         // No results for current filter
                         <>
-                          <span className="material-symbols-outlined text-4xl text-slate-300">
+                          <span className="material-symbols-outlined text-4xl text-[var(--outline)]">
                             search_off
                           </span>
-                          <p className="text-slate-500 text-sm">No datasets found</p>
-                          <p className="text-slate-400 text-xs">
+                          <p className="text-sm text-[var(--on-surface-variant)]">
+                            No datasets found
+                          </p>
+                          <p className="text-xs text-[var(--outline)]">
                             Try adjusting your search or filter criteria
                           </p>
                         </>
@@ -553,7 +567,7 @@ export default function DatasetsPage() {
 
       {/* Results Summary */}
       {!isLoading && filteredDatasets.length > 0 && (
-        <div className="text-sm text-slate-500">
+        <div className="font-mono text-sm text-[var(--on-surface-variant)]">
           Showing {filteredDatasets.length} of {datasets.length} datasets
         </div>
       )}
@@ -565,30 +579,36 @@ export default function DatasetsPage() {
             className="absolute inset-0 bg-black/50"
             onClick={() => !isDeleting && setDeletingDataset(null)}
           />
-          <div className="relative bg-white rounded-xl shadow-xl max-w-sm w-full mx-4 p-6 flex flex-col items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
-              <span className="material-symbols-outlined text-red-600 text-2xl">warning</span>
+          <div className="relative mx-4 flex w-full max-w-sm flex-col items-center gap-4 rounded-[8px] bg-white p-6 shadow-xl">
+            <div className="flex h-12 w-12 items-center justify-center rounded-[8px] bg-[var(--error)]/10">
+              <span className="material-symbols-outlined text-[var(--error)] text-2xl">
+                warning
+              </span>
             </div>
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-slate-900">Delete Dataset</h3>
-              <p className="text-sm text-slate-600 mt-2">
+              <h3 className="font-display text-lg font-semibold text-[var(--on-surface)]">
+                Delete Dataset
+              </h3>
+              <p className="mt-2 text-sm text-[var(--on-surface-variant)]">
                 Are you sure you want to delete{' '}
-                <span className="font-semibold text-slate-900">{deletingDataset.name}</span>? This
-                action cannot be undone.
+                <span className="font-semibold text-[var(--on-surface)]">
+                  {deletingDataset.name}
+                </span>
+                {'? This action cannot be undone.'}
               </p>
             </div>
             <div className="flex gap-3 w-full pt-2">
               <button
                 onClick={() => setDeletingDataset(null)}
                 disabled={isDeleting}
-                className="flex-1 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-50"
+                className="flex-1 rounded-[4px] border border-[var(--outline-variant)] bg-white px-4 py-2.5 text-sm font-medium text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container-low)] disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
                 disabled={isDeleting}
-                className="flex-1 px-4 py-2.5 text-sm font-bold text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex flex-1 items-center justify-center gap-2 rounded-[4px] bg-[var(--error)] px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[var(--error-foreground)] disabled:opacity-50"
               >
                 {isDeleting ? (
                   <>

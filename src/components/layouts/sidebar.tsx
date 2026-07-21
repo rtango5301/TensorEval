@@ -20,8 +20,8 @@ export function Sidebar() {
     : navItems;
 
   return (
-    <aside className="hidden md:flex w-56 flex-col border-r border-slate-200 bg-white h-screen sticky top-0 flex-shrink-0">
-      <div className="flex flex-col h-full p-4">
+    <aside className="sticky top-0 hidden h-screen w-56 shrink-0 flex-col border-r border-[var(--outline-variant)] bg-white md:flex">
+      <div className="flex h-full flex-col p-4">
         {/* Logo – opens landing page in new tab */}
         <div className="flex flex-col mb-8 px-2 mt-2">
           <a
@@ -31,7 +31,7 @@ export function Sidebar() {
             className="flex items-center gap-2 group"
           >
             <Logo variant="dashboard" size="md" />
-            <span className="material-symbols-outlined text-base text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="material-symbols-outlined text-base text-[var(--outline)] opacity-0 transition-opacity group-hover:opacity-100">
               open_in_new
             </span>
           </a>
@@ -53,8 +53,10 @@ export function Sidebar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors group',
-                  isActive ? 'bg-[#135bec]/10 text-[#135bec]' : 'text-slate-600 hover:bg-slate-100'
+                  'group flex items-center gap-3 rounded-[4px] px-3 py-2.5 transition-colors',
+                  isActive
+                    ? 'bg-[var(--surface-container)] text-[var(--primary)]'
+                    : 'text-[var(--on-surface-variant)] hover:bg-[var(--surface-container-low)]'
                 )}
               >
                 <span className={cn('material-symbols-outlined', isActive && 'filled')}>
@@ -63,7 +65,9 @@ export function Sidebar() {
                 <p
                   className={cn(
                     'text-sm leading-normal',
-                    isActive ? 'font-bold' : 'font-medium group-hover:text-slate-900'
+                    isActive
+                      ? 'font-display font-bold'
+                      : 'font-medium group-hover:text-[var(--on-surface)]'
                   )}
                 >
                   {item.label}

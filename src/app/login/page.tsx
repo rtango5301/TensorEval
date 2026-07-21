@@ -43,10 +43,10 @@ export default function AuthPage() {
 
 function AuthPageSkeleton() {
   return (
-    <div className="min-h-screen bg-[var(--bg-subtle)] flex items-center justify-center p-6">
-      <div className="w-full max-w-[1100px] bg-white rounded-3xl shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 min-h-[680px] animate-pulse">
-        <div className="p-10 lg:p-14 bg-gradient-to-br from-[#1a1f3c] to-[#0d1025]" />
-        <div className="p-10 lg:p-12" />
+    <div className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 py-10 lg:px-10">
+      <div className="grid min-h-[680px] w-full max-w-[1100px] animate-pulse grid-cols-4 overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white lg:grid-cols-12">
+        <div className="col-span-4 bg-[var(--inverse-surface)] p-10 lg:col-span-5 lg:p-14" />
+        <div className="col-span-4 p-10 lg:col-span-7 lg:p-12" />
       </div>
     </div>
   );
@@ -136,34 +136,36 @@ function AuthPageContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-subtle)] flex items-center justify-center p-6">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 py-10 lg:px-10">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-[1100px] bg-white rounded-3xl shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 min-h-[680px]"
+        className="grid min-h-[680px] w-full max-w-[1100px] grid-cols-4 overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white lg:grid-cols-12"
       >
         {/* Left Side - Branding */}
-        <div className="p-10 lg:p-14 bg-gradient-to-br from-[#1a1f3c] to-[#0d1025] flex flex-col justify-center">
+        <div className="col-span-4 flex flex-col justify-center bg-[var(--inverse-surface)] p-10 text-[var(--inverse-on-surface)] lg:col-span-5 lg:p-14">
           {/* Logo */}
           <Link href="/" className="flex items-center mb-10">
             <Logo variant="light" size="md" />
           </Link>
 
           {/* Heading */}
-          <h1 className="text-4xl lg:text-[2.75rem] font-extrabold leading-[1.2] mb-5 tracking-tight text-white">
+          <h1 className="mb-5 font-display text-4xl font-extrabold leading-[1.2] tracking-tight text-[var(--inverse-on-surface)] lg:text-[2.75rem]">
             Ship AI Agents
             <br />
             with{' '}
-            <span className="bg-gradient-to-r from-[#a78bfa] to-[#c4b5fd] bg-clip-text text-transparent italic inline-block pr-2">
+            <span className="inline-block pr-2 italic text-[var(--inverse-on-surface)]">
               Confidence
             </span>
           </h1>
 
           {/* Description */}
-          <p className="text-gray-400 text-lg mb-8">
+          <p className="mb-8 text-lg text-[var(--inverse-on-surface)]/70">
             Ship agent improvements in hours, not weeks. Automated evals. Instant feedback.{' '}
-            <span className="font-semibold text-white whitespace-nowrap">Zero guesswork.</span>
+            <span className="whitespace-nowrap font-semibold text-[var(--inverse-on-surface)]">
+              Zero guesswork.
+            </span>
           </p>
 
           {/* Features */}
@@ -180,24 +182,26 @@ function AuthPageContent() {
                 transition={{ delay: 0.3 + i * 0.1 }}
                 className="flex items-center gap-3"
               >
-                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
-                  <feature.icon className="w-4 h-4 text-[#a78bfa]" />
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[4px] bg-white/10">
+                  <feature.icon className="h-4 w-4 text-[var(--brand-highlight)]" />
                 </div>
-                <span className="text-white font-semibold text-[0.95rem]">{feature.title}</span>
+                <span className="text-[0.95rem] font-semibold text-[var(--inverse-on-surface)]">
+                  {feature.title}
+                </span>
               </motion.div>
             ))}
           </div>
         </div>
 
         {/* Right Side - Auth Form */}
-        <div className="p-10 lg:p-12 flex flex-col justify-center">
+        <div className="col-span-4 flex flex-col justify-center bg-white p-8 sm:p-10 lg:col-span-7 lg:p-12">
           <div className="max-w-[380px] mx-auto w-full">
             {/* Tabs */}
             <div className="flex justify-center mb-8">
               <div className="flex gap-8">
                 <button
                   onClick={() => handleModeChange('signin')}
-                  className={`pb-2 text-lg font-semibold transition-colors relative ${
+                  className={`relative rounded-[4px] pb-2 text-lg font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2 ${
                     mode === 'signin'
                       ? 'text-slate-900 border-b-2 border-[var(--primary)]'
                       : 'text-slate-500 hover:text-slate-700'
@@ -207,7 +211,7 @@ function AuthPageContent() {
                 </button>
                 <button
                   onClick={() => handleModeChange('signup')}
-                  className={`pb-2 text-lg font-semibold transition-colors relative ${
+                  className={`relative rounded-[4px] pb-2 text-lg font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2 ${
                     mode === 'signup'
                       ? 'text-slate-900 border-b-2 border-[var(--primary)]'
                       : 'text-slate-500 hover:text-slate-700'
@@ -228,7 +232,7 @@ function AuthPageContent() {
                 transition={{ duration: 0.2 }}
                 className="text-center mb-8"
               >
-                <h2 className="text-3xl font-bold mb-2">
+                <h2 className="mb-2 font-display text-3xl font-bold">
                   {mode === 'signin' ? 'Welcome back' : 'Create your account'}
                 </h2>
                 <p className="text-[var(--text-secondary)]">
@@ -248,7 +252,7 @@ function AuthPageContent() {
                   exit={{ opacity: 0, height: 0 }}
                   className="mb-4"
                 >
-                  <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+                  <div className="flex items-center gap-2 rounded-[4px] border border-red-200 bg-red-50 p-3 text-sm text-red-700">
                     <AlertCircle className="w-4 h-4 flex-shrink-0" />
                     <span>
                       {/* Strict equality prevents reflecting arbitrary URL params — do not change to {urlError} */}
@@ -269,7 +273,7 @@ function AuthPageContent() {
                   exit={{ opacity: 0, height: 0 }}
                   className="mb-4"
                 >
-                  <div className="flex items-center gap-2 p-3 bg-green-50 border border-green-200 rounded-xl text-green-700 text-sm">
+                  <div className="flex items-center gap-2 rounded-[4px] border border-green-200 bg-green-50 p-3 text-sm text-green-700">
                     <CheckCircle className="w-4 h-4 flex-shrink-0" />
                     <span>{success}</span>
                   </div>
@@ -284,7 +288,7 @@ function AuthPageContent() {
                 whileTap={{ scale: 0.99 }}
                 onClick={() => handleOAuth('google')}
                 disabled={isPending}
-                className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-[var(--border)] rounded-xl font-medium text-[var(--foreground)] hover:bg-[var(--bg-subtle)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex w-full items-center justify-center gap-3 rounded-[4px] border border-[var(--outline-variant)] bg-white px-4 py-3 font-medium text-[var(--foreground)] transition-colors hover:bg-[var(--surface-container-low)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <GoogleIcon />
                 Continue with Google
@@ -321,7 +325,7 @@ function AuthPageContent() {
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       disabled={isPending}
-                      className="w-full pl-12 pr-4 py-3 border border-[var(--border)] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 focus:border-[var(--primary)] transition-all text-[var(--foreground)] placeholder:text-[var(--text-muted)] disabled:opacity-50"
+                      className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white py-3 pl-12 pr-4 text-[var(--foreground)] transition-colors placeholder:text-[var(--outline)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)]/20 disabled:opacity-50"
                     />
                   </div>
                 </motion.div>
@@ -341,7 +345,7 @@ function AuthPageContent() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isPending}
-                  className="w-full pl-12 pr-4 py-3 border border-[var(--border)] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 focus:border-[var(--primary)] transition-all text-[var(--foreground)] placeholder:text-[var(--text-muted)] disabled:opacity-50"
+                  className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white py-3 pl-12 pr-4 text-[var(--foreground)] transition-colors placeholder:text-[var(--outline)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)]/20 disabled:opacity-50"
                 />
               </div>
             </div>
@@ -374,12 +378,12 @@ function AuthPageContent() {
                       handleSubmit();
                     }
                   }}
-                  className="w-full pl-12 pr-12 py-3 border border-[var(--border)] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 focus:border-[var(--primary)] transition-all text-[var(--foreground)] placeholder:text-[var(--text-muted)] disabled:opacity-50"
+                  className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white py-3 pl-12 pr-12 text-[var(--foreground)] transition-colors placeholder:text-[var(--outline)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)]/20 disabled:opacity-50"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--foreground)] transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-[4px] p-1 text-[var(--text-muted)] transition-colors hover:text-[var(--foreground)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)]"
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -435,10 +439,10 @@ function AuthPageContent() {
               whileTap={isFormValid && !isPending ? { scale: 0.99 } : {}}
               onClick={handleSubmit}
               disabled={!isFormValid || isPending}
-              className={`w-full flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-semibold transition-all mb-6 ${
+              className={`mb-6 flex w-full items-center justify-center gap-2 rounded-[4px] px-4 py-3.5 font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2 ${
                 isFormValid && !isPending
-                  ? 'bg-gradient-to-r from-[var(--primary)] to-[var(--primary-light)] text-white shadow-lg shadow-[var(--primary)]/25 hover:shadow-xl hover:shadow-[var(--primary)]/30'
-                  : 'bg-[var(--bg-subtle)] text-[var(--text-muted)] cursor-not-allowed'
+                  ? 'bg-[var(--primary)] text-white hover:bg-[var(--primary-dark)]'
+                  : 'cursor-not-allowed bg-[var(--surface-container-low)] text-[var(--outline)]'
               }`}
             >
               {isPending ? (

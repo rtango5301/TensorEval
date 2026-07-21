@@ -40,11 +40,11 @@ function getTypeBadgeStyles(type: UiDatasetType) {
 function getStatusBadgeStyles(status: UiDatasetStatus) {
   switch (status) {
     case 'ready':
-      return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+      return 'border-[var(--success)]/20 bg-[var(--success)]/10 text-[var(--success-foreground)]';
     case 'processing':
-      return 'bg-amber-100 text-amber-700 border-amber-200';
+      return 'border-[var(--warning)]/20 bg-[var(--warning)]/10 text-[var(--warning-foreground)]';
     case 'error':
-      return 'bg-red-100 text-red-700 border-red-200';
+      return 'border-[var(--error)]/20 bg-[var(--error)]/10 text-[var(--error-foreground)]';
   }
 }
 
@@ -64,23 +64,26 @@ function getCategoryColor(category: string) {
     account: 'bg-blue-100 text-blue-700',
     billing: 'bg-emerald-100 text-emerald-700',
     technical: 'bg-amber-100 text-amber-700',
-    general: 'bg-slate-100 text-slate-700',
+    general: 'bg-[var(--surface-container-low)] text-[var(--on-surface-variant)]',
     safety: 'bg-red-100 text-red-700',
     performance: 'bg-purple-100 text-purple-700',
   };
-  return colors[category.toLowerCase()] || 'bg-slate-100 text-slate-700';
+  return (
+    colors[category.toLowerCase()] ||
+    'bg-[var(--surface-container-low)] text-[var(--on-surface-variant)]'
+  );
 }
 
 // Loading skeletons
 function HeaderSkeleton() {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+    <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-6">
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
         <div>
           <div className="flex items-center gap-3 mb-2">
             <Skeleton className="h-8 w-64" />
-            <Skeleton className="h-6 w-20 rounded-full" />
-            <Skeleton className="h-6 w-16 rounded-full" />
+            <Skeleton className="h-6 w-20" />
+            <Skeleton className="h-6 w-16" />
           </div>
           <Skeleton className="h-4 w-48 mt-2" />
         </div>
@@ -104,7 +107,7 @@ function TableRowSkeleton() {
         <Skeleton className="h-4 w-full max-w-md" />
       </td>
       <td className="px-6 py-4">
-        <Skeleton className="h-6 w-20 rounded-full" />
+        <Skeleton className="h-6 w-20" />
       </td>
       <td className="px-6 py-4">
         <Skeleton className="h-6 w-6" />
@@ -162,21 +165,23 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
   if (error) {
     return (
       <div className="flex flex-col gap-6">
-        <div className="flex items-center gap-2 text-sm text-slate-500">
-          <Link href="/datasets" className="hover:text-[#135bec] transition-colors">
+        <div className="flex items-center gap-2 text-sm text-[var(--on-surface-variant)]">
+          <Link href="/datasets" className="transition-colors hover:text-[var(--primary)]">
             Datasets
           </Link>
           <span className="material-symbols-outlined text-base">chevron_right</span>
-          <span className="text-slate-900 font-medium">Error</span>
+          <span className="font-medium text-[var(--on-surface)]">Error</span>
         </div>
 
-        <div className="bg-red-50 border border-red-200 rounded-xl p-8 text-center">
-          <span className="material-symbols-outlined text-4xl text-red-400 mb-4">error</span>
-          <h2 className="text-lg font-bold text-red-800 mb-2">Failed to load dataset</h2>
-          <p className="text-sm text-red-600 mb-4">{error.message}</p>
+        <div className="rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-8 text-center">
+          <span className="material-symbols-outlined text-4xl text-[var(--error)] mb-4">error</span>
+          <h2 className="font-display mb-2 text-lg font-bold text-[var(--error-foreground)]">
+            Failed to load dataset
+          </h2>
+          <p className="text-sm text-[var(--error-foreground)] mb-4">{error.message}</p>
           <Link
             href="/datasets"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg text-sm font-medium transition-colors"
+            className="inline-flex items-center gap-2 rounded-[4px] bg-[var(--error)]/10 px-4 py-2 text-sm font-medium text-[var(--error-foreground)] transition-colors hover:bg-[var(--error)]/20"
           >
             <span className="material-symbols-outlined text-lg">arrow_back</span>
             Back to Datasets
@@ -190,18 +195,18 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
     <div className="flex flex-col gap-6">
       {/* Processing Status Banner */}
       {uiStatus === 'processing' && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+        <div className="rounded-[8px] border border-[var(--warning)]/20 bg-[var(--warning)]/10 p-4">
           <div className="flex items-center gap-3">
             <div className="flex-shrink-0">
-              <span className="material-symbols-outlined text-amber-600 animate-spin">
+              <span className="material-symbols-outlined text-[var(--warning)] animate-spin">
                 progress_activity
               </span>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-sm font-semibold text-amber-800">
+              <h3 className="font-display text-sm font-semibold text-[var(--warning-foreground)]">
                 Dataset Generation In Progress
               </h3>
-              <p className="text-xs text-amber-600 mt-1">
+              <p className="text-xs text-[var(--warning-foreground)] mt-1">
                 Please wait while we generate your dataset. This may take a few minutes.
               </p>
             </div>
@@ -211,21 +216,23 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
 
       {/* Failed Status Banner */}
       {uiStatus === 'error' && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+        <div className="rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-4">
           <div className="flex items-center gap-3">
             <div className="flex-shrink-0">
-              <span className="material-symbols-outlined text-red-600">error</span>
+              <span className="material-symbols-outlined text-[var(--error)]">error</span>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-sm font-semibold text-red-800">Dataset Generation Failed</h3>
-              <p className="text-xs text-red-600 mt-1">
+              <h3 className="font-display text-sm font-semibold text-[var(--error-foreground)]">
+                Dataset Generation Failed
+              </h3>
+              <p className="text-xs text-[var(--error-foreground)] mt-1">
                 There was an error generating your dataset. Please try again or contact support if
                 the issue persists.
               </p>
             </div>
             <button
               onClick={handleRetry}
-              className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg text-sm font-medium transition-colors"
+              className="flex shrink-0 items-center gap-1.5 rounded-[4px] bg-[var(--error)]/10 px-3 py-1.5 text-sm font-medium text-[var(--error-foreground)] transition-colors hover:bg-[var(--error)]/20"
             >
               <span className="material-symbols-outlined text-base">refresh</span>
               Retry
@@ -235,12 +242,12 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
       )}
 
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-slate-500">
-        <Link href="/datasets" className="hover:text-[#135bec] transition-colors">
+      <div className="flex items-center gap-2 text-sm text-[var(--on-surface-variant)]">
+        <Link href="/datasets" className="transition-colors hover:text-[var(--primary)]">
           Datasets
         </Link>
         <span className="material-symbols-outlined text-base">chevron_right</span>
-        <span className="text-slate-900 font-medium">
+        <span className="font-medium text-[var(--on-surface)]">
           {isLoading ? <Skeleton className="h-4 w-32 inline-block" /> : dataset?.name}
         </span>
       </div>
@@ -249,14 +256,16 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
       {isLoading ? (
         <HeaderSkeleton />
       ) : dataset ? (
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+        <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-6">
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl font-bold text-slate-900">{dataset.name}</h1>
+                <h1 className="font-display text-2xl font-bold text-[var(--on-surface)]">
+                  {dataset.name}
+                </h1>
                 <span
                   className={cn(
-                    'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border',
+                    'inline-flex items-center gap-1 rounded-[4px] border px-2.5 py-0.5 text-xs font-medium',
                     getTypeBadgeStyles(uiType)
                   )}
                 >
@@ -267,26 +276,26 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 </span>
                 <span
                   className={cn(
-                    'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border',
+                    'inline-flex items-center gap-1.5 rounded-[4px] border px-2.5 py-0.5 text-xs font-medium',
                     getStatusBadgeStyles(uiStatus)
                   )}
                 >
                   {uiStatus === 'processing' && (
                     <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--warning)] opacity-75"></span>
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--warning)]"></span>
                     </span>
                   )}
                   {getStatusLabel(uiStatus)}
                 </span>
                 {isPolling && (
-                  <span className="text-xs text-slate-400 flex items-center gap-1">
+                  <span className="flex items-center gap-1 text-xs text-[var(--outline)]">
                     <span className="material-symbols-outlined text-sm animate-spin">sync</span>
                     Updating...
                   </span>
                 )}
               </div>
-              <p className="text-slate-500 text-sm">
+              <p className="text-sm text-[var(--on-surface-variant)]">
                 <span className="font-mono">{id}</span> &bull; Created on{' '}
                 {new Date(dataset.created_at).toLocaleDateString('en-US', {
                   month: 'long',
@@ -295,13 +304,15 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 })}
               </p>
               {dataset.description && (
-                <p className="text-slate-600 text-sm mt-2">{dataset.description}</p>
+                <p className="mt-2 text-sm text-[var(--on-surface-variant)]">
+                  {dataset.description}
+                </p>
               )}
             </div>
             <div className="flex items-center gap-2">
               <Link
                 href={`/evaluations/new?dataset=${id}`}
-                className="flex items-center gap-2 bg-[#135bec] hover:bg-[#135bec]/90 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all shadow-sm shadow-[#135bec]/30"
+                className="flex items-center gap-2 rounded-[4px] bg-[var(--primary)] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
               >
                 <span className="material-symbols-outlined text-lg">science</span>
                 Run Evaluation
@@ -314,16 +325,16 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
               >
                 <button
                   disabled
-                  className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-slate-400 bg-slate-50 border border-slate-200 rounded-lg cursor-not-allowed"
+                  className="flex cursor-not-allowed items-center gap-1.5 rounded-[4px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-3 py-2 text-sm font-medium text-[var(--outline)]"
                 >
                   <span className="material-symbols-outlined text-lg">lock</span>
                   Export
                 </button>
                 {/* Tooltip */}
                 {showExportTooltip && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-2 bg-slate-900 text-white text-xs font-medium rounded-lg whitespace-nowrap z-10 shadow-lg">
+                  <div className="absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 whitespace-nowrap rounded-[8px] bg-[var(--inverse-surface)] px-3 py-2 text-xs font-medium text-[var(--inverse-on-surface)]">
                     Upgrade your membership
-                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 rotate-45" />
+                    <div className="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-[var(--inverse-surface)]" />
                   </div>
                 )}
               </div>
@@ -334,22 +345,24 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+        <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-slate-500">Total Queries</span>
-            <span className="material-symbols-outlined text-[#135bec]">quiz</span>
+            <span className="text-sm font-medium text-[var(--on-surface-variant)]">
+              Total Queries
+            </span>
+            <span className="material-symbols-outlined text-[var(--primary)]">quiz</span>
           </div>
-          <div className="text-2xl font-bold text-slate-900">
+          <div className="font-mono text-2xl font-bold text-[var(--on-surface)]">
             {isLoading ? <Skeleton className="h-8 w-16" /> : dataset?.query_count || 0}
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+        <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-slate-500">Categories</span>
-            <span className="material-symbols-outlined text-[#135bec]">category</span>
+            <span className="text-sm font-medium text-[var(--on-surface-variant)]">Categories</span>
+            <span className="material-symbols-outlined text-[var(--primary)]">category</span>
           </div>
-          <div className="text-2xl font-bold text-slate-900">
+          <div className="font-mono text-2xl font-bold text-[var(--on-surface)]">
             {isLoading ? <Skeleton className="h-8 w-8" /> : categories.length}
           </div>
           {!isLoading && categories.length > 0 && (
@@ -357,7 +370,10 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
               {categories.map((cat) => (
                 <span
                   key={cat}
-                  className={cn('px-2 py-0.5 rounded text-xs font-medium', getCategoryColor(cat))}
+                  className={cn(
+                    'rounded-[4px] px-2 py-0.5 text-xs font-medium',
+                    getCategoryColor(cat)
+                  )}
                 >
                   {cat}
                 </span>
@@ -368,13 +384,13 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
       </div>
 
       {/* Queries Table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between px-6 py-4 border-b border-slate-200 gap-4">
-          <h2 className="text-lg font-bold text-slate-900">Queries</h2>
+      <div className="overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
+        <div className="flex flex-col gap-4 border-b border-[var(--outline-variant)] px-6 py-4 md:flex-row md:items-center md:justify-between">
+          <h2 className="font-display text-lg font-bold text-[var(--on-surface)]">Queries</h2>
           <div className="flex items-center gap-3">
             {/* Search */}
             <div className="relative">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-lg text-[var(--outline)]">
                 search
               </span>
               <input
@@ -382,14 +398,14 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 placeholder="Search queries..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 pr-3 py-2 w-64 border border-slate-200 rounded-lg text-sm placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+                className="w-64 rounded-[4px] border border-[var(--outline-variant)] py-2 pl-9 pr-3 text-sm transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
               />
             </div>
             {/* Category Filter */}
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+              className="rounded-[4px] border border-[var(--outline-variant)] px-3 py-2 text-sm text-[var(--on-surface-variant)] transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
             >
               <option value="all">All Categories</option>
               {categories.map((cat) => (
@@ -404,22 +420,22 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50">
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider w-16">
+              <tr className="border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
+                <th className="w-16 px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   ID
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Query
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider w-32">
+                <th className="w-32 px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Category
                 </th>
-                <th className="px-6 py-3 text-xs font-bold text-slate-500 uppercase tracking-wider w-20">
+                <th className="w-20 px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200">
+            <tbody className="divide-y divide-[var(--outline-variant)]">
               {isLoading ? (
                 <>
                   <TableRowSkeleton />
@@ -432,17 +448,17 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 <tr>
                   <td colSpan={4} className="px-6 py-12 text-center">
                     <div className="flex flex-col items-center gap-2">
-                      <span className="material-symbols-outlined text-4xl text-slate-300">
+                      <span className="material-symbols-outlined text-4xl text-[var(--outline)]">
                         {filteredQueries.length === 0 && dataset?.queries?.length === 0
                           ? 'hourglass_empty'
                           : 'search_off'}
                       </span>
-                      <p className="text-slate-500 text-sm">
+                      <p className="text-sm text-[var(--on-surface-variant)]">
                         {filteredQueries.length === 0 && dataset?.queries?.length === 0
                           ? 'No queries yet'
                           : 'No queries match your filter'}
                       </p>
-                      <p className="text-slate-400 text-xs">
+                      <p className="text-xs text-[var(--outline)]">
                         {filteredQueries.length === 0 && dataset?.queries?.length === 0
                           ? 'Queries will appear here once processing completes'
                           : 'Try adjusting your search or filter'}
@@ -452,17 +468,20 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 </tr>
               ) : (
                 paginatedQueries.map((query) => (
-                  <tr key={query.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-6 py-4 text-sm font-mono text-slate-500">
+                  <tr
+                    key={query.id}
+                    className="transition-colors hover:bg-[var(--surface-container-low)]"
+                  >
+                    <td className="px-6 py-4 font-mono text-sm text-[var(--on-surface-variant)]">
                       {query.query_id.slice(0, 8)}
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-sm text-slate-900 line-clamp-2">{query.query}</p>
+                      <p className="line-clamp-2 text-sm text-[var(--on-surface)]">{query.query}</p>
                     </td>
                     <td className="px-6 py-4">
                       <span
                         className={cn(
-                          'px-2.5 py-0.5 rounded-full text-xs font-medium',
+                          'rounded-[4px] px-2.5 py-0.5 text-xs font-medium',
                           getCategoryColor(query.category)
                         )}
                       >
@@ -472,7 +491,7 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                     <td className="px-6 py-4">
                       <button
                         onClick={() => setSelectedQuery(query)}
-                        className="text-slate-400 hover:text-[#135bec] transition-colors"
+                        className="text-[var(--outline)] transition-colors hover:text-[var(--primary)]"
                       >
                         <span className="material-symbols-outlined text-lg">visibility</span>
                       </button>
@@ -486,8 +505,8 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
 
         {/* Pagination */}
         {!isLoading && filteredQueries.length > 0 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-slate-200 bg-slate-50">
-            <p className="text-sm text-slate-500">
+          <div className="flex items-center justify-between border-t border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-6 py-4">
+            <p className="font-mono text-sm text-[var(--on-surface-variant)]">
               Showing {(currentPage - 1) * queriesPerPage + 1} to{' '}
               {Math.min(currentPage * queriesPerPage, filteredQueries.length)} of{' '}
               {filteredQueries.length} queries
@@ -497,10 +516,10 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
                 className={cn(
-                  'p-2 rounded-lg border transition-colors',
+                  'rounded-[4px] border p-2 transition-colors',
                   currentPage === 1
-                    ? 'border-slate-200 text-slate-300 cursor-not-allowed'
-                    : 'border-slate-200 text-slate-600 hover:bg-slate-100'
+                    ? 'cursor-not-allowed border-[var(--outline-variant)] text-[var(--outline)] opacity-50'
+                    : 'border-[var(--outline-variant)] text-[var(--on-surface-variant)] hover:bg-[var(--surface-container)]'
                 )}
               >
                 <span className="material-symbols-outlined text-lg">chevron_left</span>
@@ -510,10 +529,10 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                   key={page}
                   onClick={() => setCurrentPage(page)}
                   className={cn(
-                    'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
+                    'rounded-[4px] px-3 py-1.5 text-sm font-medium transition-colors',
                     currentPage === page
-                      ? 'bg-[#135bec] text-white'
-                      : 'text-slate-600 hover:bg-slate-100'
+                      ? 'bg-[var(--primary)] text-white'
+                      : 'text-[var(--on-surface-variant)] hover:bg-[var(--surface-container)]'
                   )}
                 >
                   {page}
@@ -523,10 +542,10 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages || totalPages === 0}
                 className={cn(
-                  'p-2 rounded-lg border transition-colors',
+                  'rounded-[4px] border p-2 transition-colors',
                   currentPage === totalPages || totalPages === 0
-                    ? 'border-slate-200 text-slate-300 cursor-not-allowed'
-                    : 'border-slate-200 text-slate-600 hover:bg-slate-100'
+                    ? 'cursor-not-allowed border-[var(--outline-variant)] text-[var(--outline)] opacity-50'
+                    : 'border-[var(--outline-variant)] text-[var(--on-surface-variant)] hover:bg-[var(--surface-container)]'
                 )}
               >
                 <span className="material-symbols-outlined text-lg">chevron_right</span>
@@ -539,15 +558,17 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
       {/* Query Detail Modal */}
       {selectedQuery && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+          <div className="max-h-[80vh] w-full max-w-2xl overflow-hidden rounded-[8px] bg-white shadow-xl">
+            <div className="flex items-center justify-between border-b border-[var(--outline-variant)] px-6 py-4">
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-[#135bec]">quiz</span>
-                <h3 className="text-lg font-bold text-slate-900">Query Details</h3>
+                <span className="material-symbols-outlined text-[var(--primary)]">quiz</span>
+                <h3 className="font-display text-lg font-bold text-[var(--on-surface)]">
+                  Query Details
+                </h3>
               </div>
               <button
                 onClick={() => setSelectedQuery(null)}
-                className="p-1 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors"
+                className="rounded-[4px] p-1 text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container-low)]"
               >
                 <span className="material-symbols-outlined">close</span>
               </button>
@@ -555,19 +576,21 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
             <div className="p-6 overflow-y-auto max-h-[60vh]">
               <div className="flex flex-col gap-4">
                 <div>
-                  <label className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <label className="text-xs font-medium uppercase tracking-wider text-[var(--on-surface-variant)]">
                     Query ID
                   </label>
-                  <p className="text-sm font-mono text-slate-700 mt-1">{selectedQuery.query_id}</p>
+                  <p className="mt-1 font-mono text-sm text-[var(--on-surface-variant)]">
+                    {selectedQuery.query_id}
+                  </p>
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <label className="text-xs font-medium uppercase tracking-wider text-[var(--on-surface-variant)]">
                     Category
                   </label>
                   <div className="mt-1">
                     <span
                       className={cn(
-                        'px-2.5 py-0.5 rounded-full text-xs font-medium',
+                        'rounded-[4px] px-2.5 py-0.5 text-xs font-medium',
                         getCategoryColor(selectedQuery.category)
                       )}
                     >
@@ -576,40 +599,46 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <label className="text-xs font-medium uppercase tracking-wider text-[var(--on-surface-variant)]">
                     Query Text
                   </label>
-                  <div className="mt-1 p-3 bg-slate-50 rounded-lg border border-slate-200">
-                    <p className="text-sm text-slate-900">{selectedQuery.query}</p>
+                  <div className="mt-1 rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-3">
+                    <p className="text-sm text-[var(--on-surface)]">{selectedQuery.query}</p>
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  <label className="text-xs font-medium uppercase tracking-wider text-[var(--on-surface-variant)]">
                     Reference Answer
                   </label>
-                  <div className="mt-1 p-3 bg-slate-50 rounded-lg border border-slate-200">
-                    <p className="text-sm text-slate-900">{selectedQuery.reference_answer}</p>
+                  <div className="mt-1 rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-3">
+                    <p className="text-sm text-[var(--on-surface)]">
+                      {selectedQuery.reference_answer}
+                    </p>
                   </div>
                 </div>
                 {selectedQuery.rubric && selectedQuery.rubric.length > 0 && (
                   <div>
-                    <label className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                    <label className="text-xs font-medium uppercase tracking-wider text-[var(--on-surface-variant)]">
                       Rubric
                     </label>
                     <div className="mt-1 space-y-2">
                       {selectedQuery.rubric.map((item, index) => (
                         <div
                           key={index}
-                          className="p-3 bg-slate-50 rounded-lg border border-slate-200"
+                          className="rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-3"
                         >
                           <div className="flex justify-between items-start">
-                            <span className="text-sm font-medium text-slate-900">{item.name}</span>
-                            <span className="text-xs font-mono text-slate-500">
+                            <span className="text-sm font-medium text-[var(--on-surface)]">
+                              {item.name}
+                            </span>
+                            <span className="font-mono text-xs text-[var(--on-surface-variant)]">
                               Weight: {item.weight}
                             </span>
                           </div>
                           {item.rubric && (
-                            <p className="text-sm text-slate-600 mt-1">{item.rubric}</p>
+                            <p className="mt-1 text-sm text-[var(--on-surface-variant)]">
+                              {item.rubric}
+                            </p>
                           )}
                         </div>
                       ))}
@@ -618,10 +647,10 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 )}
               </div>
             </div>
-            <div className="flex items-center justify-end px-6 py-4 border-t border-slate-200 bg-slate-50">
+            <div className="flex items-center justify-end border-t border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-6 py-4">
               <button
                 onClick={() => setSelectedQuery(null)}
-                className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                className="px-4 py-2 text-sm font-medium text-[var(--on-surface-variant)] transition-colors hover:text-[var(--on-surface)]"
               >
                 Close
               </button>

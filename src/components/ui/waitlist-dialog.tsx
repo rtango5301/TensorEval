@@ -68,7 +68,7 @@ export function WaitlistDialog({ open, onClose }: WaitlistDialogProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[200] bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-[200] bg-black/40"
             onClick={onClose}
           />
 
@@ -81,11 +81,11 @@ export function WaitlistDialog({ open, onClose }: WaitlistDialogProps) {
             className="fixed inset-0 z-[201] flex items-center justify-center p-4"
             onClick={(e) => e.target === e.currentTarget && onClose()}
           >
-            <div className="relative w-full max-w-[420px] bg-white rounded-2xl shadow-2xl shadow-black/10 border border-[var(--border-light)] p-6 sm:p-8">
+            <div className="relative w-full max-w-[420px] rounded-[8px] border border-[var(--outline-variant)] bg-white p-6 shadow-xl sm:p-8">
               {/* Close button */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-[var(--bg-subtle)] transition-colors"
+                className="absolute right-4 top-4 rounded-[4px] p-1.5 transition-colors hover:bg-[var(--surface-container-low)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)]"
                 aria-label="Close dialog"
               >
                 <X className="w-4 h-4 text-[var(--text-muted)]" />
@@ -101,11 +101,11 @@ export function WaitlistDialog({ open, onClose }: WaitlistDialogProps) {
                     className="text-center"
                   >
                     {/* Icon */}
-                    <div className="mx-auto w-12 h-12 rounded-xl bg-[var(--primary)]/10 flex items-center justify-center mb-5">
+                    <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-[8px] bg-[var(--surface-container)]">
                       <Sparkles className="w-5 h-5 text-[var(--primary)]" />
                     </div>
 
-                    <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">
+                    <h3 className="mb-2 font-display text-xl font-bold text-[var(--foreground)]">
                       Join the Waitlist
                     </h3>
                     <p className="text-sm text-[var(--text-secondary)] mb-6">
@@ -120,11 +120,11 @@ export function WaitlistDialog({ open, onClose }: WaitlistDialogProps) {
                         placeholder="you@example.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-4 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--bg-subtle)] text-sm text-[var(--foreground)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
+                        className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-4 py-2.5 text-sm text-[var(--foreground)] transition-colors placeholder:text-[var(--outline)] focus:border-[var(--primary)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)]/20"
                       />
                       <button
                         type="submit"
-                        className="w-full py-2.5 rounded-lg bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white font-semibold text-sm transition-all shadow-sm hover:shadow-md hover:shadow-[var(--primary)]/30"
+                        className="w-full rounded-[4px] bg-[var(--primary)] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--primary-dark)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2"
                       >
                         Join Waitlist
                       </button>
@@ -145,7 +145,7 @@ export function WaitlistDialog({ open, onClose }: WaitlistDialogProps) {
                     <div className="mx-auto w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-4">
                       <CheckCircle2 className="w-6 h-6 text-emerald-500" />
                     </div>
-                    <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">
+                    <h3 className="mb-2 font-display text-xl font-bold text-[var(--foreground)]">
                       You&apos;re on the list!
                     </h3>
                     <p className="text-sm text-[var(--text-secondary)]">

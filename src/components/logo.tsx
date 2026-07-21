@@ -1,4 +1,4 @@
-import { Layers } from 'lucide-react';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 type LogoVariant = 'default' | 'light' | 'dashboard';
@@ -12,32 +12,28 @@ interface LogoProps {
 }
 
 const sizeConfig = {
-  sm: { box: 'w-8 h-8 rounded-lg', icon: 'w-4 h-4', text: 'text-lg' },
-  md: { box: 'w-10 h-10 rounded-xl', icon: 'w-5 h-5', text: 'text-xl' },
+  sm: { mark: 32, text: 'text-lg' },
+  md: { mark: 40, text: 'text-xl' },
 };
 
 export function Logo({ variant = 'default', size = 'sm', showText = true, className }: LogoProps) {
-  const s = sizeConfig[size];
+  const config = sizeConfig[size];
 
   return (
     <div className={cn('flex items-center gap-2.5', className)}>
-      <div
-        className={cn(
-          s.box,
-          'flex items-center justify-center text-white flex-shrink-0',
-          variant === 'dashboard'
-            ? 'bg-[#135bec]'
-            : 'bg-gradient-to-br from-[var(--primary)] to-[var(--primary-light)]'
-        )}
-      >
-        <Layers className={s.icon} />
-      </div>
+      <Image
+        src="/brand/tensoreval-mark.svg"
+        alt={showText ? '' : 'TensorEval'}
+        width={config.mark}
+        height={config.mark}
+        className="shrink-0"
+      />
       {showText && (
         <span
           className={cn(
-            'font-bold',
-            s.text,
-            variant === 'light' ? 'text-white' : variant === 'dashboard' ? 'text-slate-900' : ''
+            'font-display font-bold tracking-[-0.03em]',
+            config.text,
+            variant === 'light' ? 'text-white' : 'text-[var(--on-surface)]'
           )}
         >
           TensorEval

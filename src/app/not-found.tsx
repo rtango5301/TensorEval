@@ -5,12 +5,12 @@ import { motion } from 'framer-motion';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-[var(--background)] flex items-center justify-center px-6">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 py-16 lg:px-10 lg:py-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-center max-w-md"
+        className="w-full max-w-md rounded-[8px] border border-[var(--outline-variant)] bg-white p-8 text-center sm:p-10"
       >
         {/* 404 Number */}
         <motion.div
@@ -19,7 +19,7 @@ export default function NotFound() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mb-8"
         >
-          <span className="text-[120px] md:text-[160px] font-bold leading-none gradient-text">
+          <span className="font-display text-[120px] font-bold leading-none text-[var(--primary)] md:text-[160px]">
             404
           </span>
         </motion.div>
@@ -29,7 +29,7 @@ export default function NotFound() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-2xl md:text-3xl font-semibold text-[var(--foreground)] mb-4"
+          className="mb-4 font-display text-2xl font-semibold text-[var(--foreground)] md:text-3xl"
         >
           Page not found
         </motion.h1>
@@ -51,7 +51,7 @@ export default function NotFound() {
         >
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--primary)] text-white font-medium rounded-lg hover:bg-[var(--primary-dark)] transition-colors"
+            className="inline-flex items-center gap-2 rounded-[4px] bg-[var(--primary)] px-6 py-3 font-medium text-white transition-colors hover:bg-[var(--primary-dark)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

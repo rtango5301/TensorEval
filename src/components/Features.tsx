@@ -64,9 +64,9 @@ export function Features() {
   return (
     <section
       id="features"
-      className="py-14 lg:py-[90px] px-4 sm:px-6 lg:px-8 bg-[var(--background)] scroll-mt-20"
+      className="scroll-mt-20 bg-[var(--background)] px-4 py-16 lg:px-10 lg:py-20"
     >
-      <div className="max-w-[1080px] mx-auto">
+      <div className="mx-auto max-w-[1440px]">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -78,7 +78,7 @@ export function Features() {
           <p className="text-base uppercase tracking-[0.2em] text-[var(--primary)] font-bold mb-4">
             Features
           </p>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 lg:mb-4 tracking-tight">
+          <h2 className="mb-3 font-display text-2xl font-bold tracking-tight md:text-3xl lg:mb-4 lg:text-4xl">
             Beyond testing. Beyond metrics.
           </h2>
           <p className="text-base lg:text-lg text-[var(--text-secondary)]">
@@ -87,9 +87,9 @@ export function Features() {
         </motion.div>
 
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-6 lg:gap-12">
+        <div className="grid grid-cols-4 gap-6 lg:grid-cols-12">
           {/* Feature Cards */}
-          <div className="flex flex-col gap-3">
+          <div className="col-span-4 flex flex-col gap-3 lg:col-span-5">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
@@ -101,16 +101,16 @@ export function Features() {
                   transition={{ delay: index * 0.1 }}
                   onMouseEnter={() => setActiveFeature(index)}
                   onClick={() => setActiveFeature(index)}
-                  className={`p-4 lg:p-5 border rounded-xl cursor-pointer transition-all bg-white ${
+                  className={`cursor-pointer rounded-[8px] border bg-white p-4 transition-colors lg:p-5 ${
                     activeFeature === index
-                      ? 'border-[var(--primary)] shadow-md shadow-[var(--primary)]/10 bg-[var(--primary)]/[0.02]'
-                      : 'border-[var(--border)] hover:border-[var(--primary)] hover:shadow-md hover:shadow-[var(--primary)]/10'
+                      ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                      : 'border-[var(--outline-variant)] hover:border-[var(--primary)]'
                   }`}
                 >
                   <div className="text-2xl mb-3">
                     <Icon className="w-6 h-6 text-[var(--primary)]" />
                   </div>
-                  <h4 className="font-semibold mb-1.5">{feature.title}</h4>
+                  <h4 className="mb-1.5 font-display font-semibold">{feature.title}</h4>
                   <p className="text-sm text-[var(--text-secondary)] line-clamp-2">
                     {feature.description}
                   </p>
@@ -120,7 +120,7 @@ export function Features() {
           </div>
 
           {/* Feature Screens with Navigation Arrows */}
-          <div className="min-h-[400px] lg:min-h-[580px] relative">
+          <div className="relative col-span-4 min-h-[400px] lg:col-span-7 lg:min-h-[580px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeFeature}
@@ -149,7 +149,7 @@ export function Features() {
               className={`absolute left-2 lg:-left-5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 flex items-center justify-center transition-all ${
                 activeFeature === 0
                   ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-white/80'
-                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white shadow-md hover:shadow-lg'
+                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white'
               }`}
               aria-label="Previous feature"
             >
@@ -167,7 +167,7 @@ export function Features() {
               className={`absolute right-2 lg:-right-5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 flex items-center justify-center transition-all ${
                 activeFeature === features.length - 1
                   ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-white/80'
-                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white shadow-md hover:shadow-lg'
+                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white'
               }`}
               aria-label="Next feature"
             >
@@ -318,7 +318,7 @@ function QueryGeneratorFeature() {
     },
     {
       category: 'Code Review',
-      categoryColor: '#8b5cf6',
+      categoryColor: 'var(--brand-secondary)',
       query: 'Analyze function for security vulnerabilities',
     },
     {
@@ -329,7 +329,7 @@ function QueryGeneratorFeature() {
   ];
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg h-[540px] flex flex-col">
+    <div className="flex h-[540px] flex-col overflow-hidden rounded-[8px] border border-gray-200 bg-white">
       <WindowHeader title="Synthetic Query Generation" />
       <div className="h-[calc(100%-44px)] flex bg-gradient-to-b from-[#f8fafc] to-[#f1f5f9] overflow-hidden px-4 py-2">
         {/* Three Column Layout */}
@@ -341,9 +341,9 @@ function QueryGeneratorFeature() {
                 key={agent.name}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.02, boxShadow: '0 8px 25px rgba(0,0,0,0.08)' }}
+                whileHover={{ scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 300, delay: agentIdx * 0.1 }}
-                className="bg-white rounded-xl border border-gray-100 p-2 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+                className="rounded-[8px] border border-gray-100 bg-white p-2"
               >
                 {/* Agent Header */}
                 <div className="flex items-center gap-2 mb-1.5">
@@ -361,7 +361,9 @@ function QueryGeneratorFeature() {
                     <span style={{ color: agent.iconColor }}>{agent.icon}</span>
                   </motion.div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-[11px] font-bold text-gray-900 truncate">{agent.name}</h4>
+                    <h4 className="truncate font-display text-[11px] font-bold text-gray-900">
+                      {agent.name}
+                    </h4>
                     <div className="flex items-center gap-1">
                       <motion.span
                         animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
@@ -399,7 +401,8 @@ function QueryGeneratorFeature() {
               <motion.path
                 d="M 0 5 Q 10 5, 20 30 L 32 71"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -410,7 +413,8 @@ function QueryGeneratorFeature() {
               <motion.path
                 d="M 0 88 L 32 88"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -421,7 +425,8 @@ function QueryGeneratorFeature() {
               <motion.path
                 d="M 0 171 Q 10 171, 20 146 L 32 105"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -431,7 +436,7 @@ function QueryGeneratorFeature() {
               {/* Animated dot for top line */}
               <motion.circle
                 r="3"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [0, 16, 32],
@@ -443,14 +448,14 @@ function QueryGeneratorFeature() {
               {/* Animated dot for middle line */}
               <motion.circle
                 r="3"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 animate={{ cx: [0, 32], cy: [88, 88] }}
                 transition={{ duration: 1.5, repeat: Infinity, delay: 0.5, ease: 'easeInOut' }}
               />
               {/* Animated dot for bottom line */}
               <motion.circle
                 r="3"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [0, 16, 32],
@@ -467,7 +472,8 @@ function QueryGeneratorFeature() {
               <motion.path
                 d="M 0 35 Q 15 35, 25 15 L 32 5"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -478,7 +484,8 @@ function QueryGeneratorFeature() {
               <motion.path
                 d="M 0 88 L 32 88"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -489,7 +496,8 @@ function QueryGeneratorFeature() {
               <motion.path
                 d="M 0 141 Q 15 141, 25 161 L 32 171"
                 fill="none"
-                stroke="#c7d2fe"
+                stroke="var(--brand-highlight)"
+                strokeOpacity="0.25"
                 strokeWidth="2"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0 }}
@@ -499,7 +507,7 @@ function QueryGeneratorFeature() {
               {/* Animated dots on lines */}
               <motion.circle
                 r="2.5"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [0, 16, 32],
@@ -510,7 +518,7 @@ function QueryGeneratorFeature() {
               />
               <motion.circle
                 r="2.5"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [0, 16, 32],
@@ -521,7 +529,7 @@ function QueryGeneratorFeature() {
               />
               <motion.circle
                 r="2.5"
-                fill="#7c3aed"
+                fill="var(--brand-secondary)"
                 initial={{ opacity: 0 }}
                 animate={{
                   cx: [0, 16, 32],
@@ -535,21 +543,12 @@ function QueryGeneratorFeature() {
             {/* Processing Engine Badge with glow */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                boxShadow: [
-                  '0 0 0 0 rgba(124, 58, 237, 0.4)',
-                  '0 0 0 8px rgba(124, 58, 237, 0)',
-                  '0 0 0 0 rgba(124, 58, 237, 0.4)',
-                ],
-              }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{
                 opacity: { duration: 0.3 },
                 y: { duration: 0.3 },
-                boxShadow: { duration: 2, repeat: Infinity },
               }}
-              className="px-3 py-1 bg-[#7c3aed] text-white text-[9px] font-bold uppercase tracking-wider rounded-full mb-2 z-20"
+              className="z-20 mb-2 rounded-full bg-[var(--brand-secondary)] px-3 py-1 text-[9px] font-bold uppercase tracking-wider text-white"
             >
               Processing Engine
             </motion.div>
@@ -566,10 +565,10 @@ function QueryGeneratorFeature() {
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-                  className="w-12 h-12 rounded-full border-2 border-[#c7d2fe] flex items-center justify-center bg-[#f5f3ff]"
+                  className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[var(--brand-highlight)]/30 bg-[var(--surface-container-low)]"
                 >
                   <svg
-                    className="w-6 h-6 text-[#7c3aed]"
+                    className="h-6 w-6 text-[var(--brand-secondary)]"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -594,7 +593,7 @@ function QueryGeneratorFeature() {
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-[11px] font-medium text-gray-600">Synthesis Pipeline</span>
                   <span className="text-[10px] font-semibold">
-                    <span className="text-[#7c3aed]">STEP</span>{' '}
+                    <span className="text-[var(--brand-secondary)]">STEP</span>{' '}
                     <span className="text-gray-400">03/04</span>
                   </span>
                 </div>
@@ -603,7 +602,7 @@ function QueryGeneratorFeature() {
                     initial={{ width: 0 }}
                     animate={{ width: '75%' }}
                     transition={{ duration: 1.5, ease: 'easeOut' }}
-                    className="h-full bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] rounded-full relative"
+                    className="relative h-full rounded-full bg-[var(--brand-highlight)]"
                   >
                     {/* Shimmer effect */}
                     <motion.div
@@ -649,11 +648,10 @@ function QueryGeneratorFeature() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 whileHover={{
                   scale: 1.02,
-                  boxShadow: '0 6px 20px rgba(0,0,0,0.08)',
                   x: -3,
                 }}
                 transition={{ delay: 0.4 + idx * 0.15, type: 'spring', stiffness: 300 }}
-                className="bg-white rounded-xl border border-gray-100 p-2.5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative cursor-pointer"
+                className="relative cursor-pointer rounded-[8px] border border-gray-100 bg-white p-2.5"
               >
                 {/* Category Badge */}
                 <motion.div
@@ -675,7 +673,7 @@ function QueryGeneratorFeature() {
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ delay: 0.8 + idx * 0.15, type: 'spring', stiffness: 500 }}
-                  className="absolute top-2.5 right-2.5 w-4 h-4 rounded-full bg-[#22c55e] flex items-center justify-center shadow-sm"
+                  className="absolute right-2.5 top-2.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#22c55e]"
                 >
                   <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />
                 </motion.div>
@@ -712,7 +710,7 @@ function QueryGeneratorFeature() {
 
 function MetricsDashboardFeature() {
   return (
-    <div className="bg-white border border-[var(--ui-border)] rounded-xl overflow-hidden shadow-lg h-[540px] flex flex-col">
+    <div className="flex h-[540px] flex-col overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
       <WindowHeader title="Performance Comparison" />
       <div className="p-5 flex-1 flex flex-col">
         {/* Legend */}
@@ -783,7 +781,7 @@ function MetricsDashboardFeature() {
 
 function ABTestingFeature() {
   return (
-    <div className="bg-white border border-[var(--ui-border)] rounded-xl overflow-hidden shadow-lg h-[540px] flex flex-col">
+    <div className="flex h-[540px] flex-col overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
       <WindowHeader title="A/B Comparison Scorecard v2.3 vs v2.4" />
       <div className="p-5 flex-1 flex flex-col">
         {/* Comparison Cards */}
@@ -919,7 +917,7 @@ function ABTestingFeature() {
 
 function ExportFeature() {
   return (
-    <div className="bg-white border border-[var(--ui-border)] rounded-xl overflow-hidden shadow-lg h-[540px] flex flex-col">
+    <div className="flex h-[540px] flex-col overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
       <WindowHeader title="EXPORT TRAINING DATA" />
       <div className="p-5 flex-1 flex flex-col">
         <div className="grid grid-cols-[1.1fr_1fr] gap-4 flex-1">
@@ -988,7 +986,7 @@ function ExportFeature() {
             </div>
 
             {/* Generate Button */}
-            <button className="w-full py-2.5 bg-[var(--primary)] text-white rounded-xl font-semibold text-sm flex items-center justify-center gap-2">
+            <button className="flex w-full items-center justify-center gap-2 rounded-[4px] bg-[var(--primary)] py-2.5 text-sm font-semibold text-white">
               <span>✦</span> Generate Export
             </button>
             <p className="text-[10px] text-[var(--text-muted)] text-center mt-1.5">
