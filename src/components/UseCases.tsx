@@ -63,9 +63,9 @@ export function UseCases() {
   return (
     <section
       id="use-cases"
-      className="py-16 lg:py-[100px] px-4 lg:px-6 bg-[var(--bg-subtle)] scroll-mt-20"
+      className="scroll-mt-20 bg-[var(--surface-container-low)] px-4 py-16 lg:px-10 lg:py-20"
     >
-      <div className="max-w-[1200px] mx-auto">
+      <div className="mx-auto max-w-[1440px]">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -77,7 +77,7 @@ export function UseCases() {
           <p className="text-base uppercase tracking-[0.2em] text-[var(--primary)] font-bold mb-4">
             Use Cases
           </p>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 lg:mb-4 tracking-tight">
+          <h2 className="mb-3 font-display text-2xl font-bold tracking-tight md:text-3xl lg:mb-4 lg:text-4xl">
             Evaluate Any Agent, Any Workflow
           </h2>
           <p className="text-base lg:text-lg text-[var(--text-secondary)]">
@@ -86,9 +86,9 @@ export function UseCases() {
         </motion.div>
 
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-6 lg:gap-12 items-start">
+        <div className="grid grid-cols-4 items-start gap-6 lg:grid-cols-12">
           {/* Use Case Cards */}
-          <div className="grid grid-cols-2 gap-3 lg:gap-5">
+          <div className="col-span-4 grid grid-cols-2 gap-3 lg:col-span-5 lg:gap-5">
             {useCases.map((useCase, index) => {
               const Icon = useCase.icon;
               return (
@@ -100,16 +100,18 @@ export function UseCases() {
                   transition={{ delay: index * 0.1 }}
                   onMouseEnter={() => setActiveCase(index)}
                   onClick={() => setActiveCase(index)}
-                  className={`p-4 lg:p-7 border rounded-xl lg:rounded-2xl cursor-pointer transition-all bg-white ${
+                  className={`cursor-pointer rounded-[8px] border bg-white p-4 transition-colors lg:p-7 ${
                     activeCase === index
-                      ? 'border-[var(--primary)] shadow-lg shadow-[var(--primary)]/15'
-                      : 'border-[var(--border)] hover:border-[var(--primary)] hover:shadow-lg hover:shadow-[var(--primary)]/10'
+                      ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                      : 'border-[var(--outline-variant)] hover:border-[var(--primary)]'
                   }`}
                 >
                   <div className="mb-2 lg:mb-4">
                     <Icon className="w-8 h-8 lg:w-10 lg:h-10 text-[var(--primary)]" />
                   </div>
-                  <h4 className="font-bold text-sm lg:text-lg mb-1 lg:mb-2">{useCase.title}</h4>
+                  <h4 className="mb-1 font-display text-sm font-bold lg:mb-2 lg:text-lg">
+                    {useCase.title}
+                  </h4>
                   <p className="text-xs lg:text-[15px] text-[var(--text-secondary)] leading-relaxed">
                     {useCase.description}
                   </p>
@@ -119,7 +121,7 @@ export function UseCases() {
           </div>
 
           {/* Use Case Screens with Navigation Arrows */}
-          <div className="min-h-[400px] lg:min-h-[580px] relative">
+          <div className="relative col-span-4 min-h-[400px] lg:col-span-7 lg:min-h-[580px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeCase}
@@ -148,7 +150,7 @@ export function UseCases() {
               className={`absolute left-2 lg:-left-5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 flex items-center justify-center transition-all ${
                 activeCase === 0
                   ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-white/80'
-                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white shadow-md hover:shadow-lg'
+                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white'
               }`}
               aria-label="Previous use case"
             >
@@ -166,7 +168,7 @@ export function UseCases() {
               className={`absolute right-2 lg:-right-5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 flex items-center justify-center transition-all ${
                 activeCase === useCases.length - 1
                   ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-white/80'
-                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white shadow-md hover:shadow-lg'
+                  : 'border-[var(--primary)] text-[var(--primary)] bg-white hover:bg-[var(--primary)] hover:text-white'
               }`}
               aria-label="Next use case"
             >
@@ -210,7 +212,7 @@ function BrowserAgentScreen() {
   ];
 
   return (
-    <div className="bg-white border border-[var(--ui-border)] rounded-xl overflow-hidden shadow-lg h-[540px] flex flex-col">
+    <div className="flex h-[540px] flex-col overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-2 bg-[var(--ui-header)] border-b border-[var(--ui-border)] flex-shrink-0">
         <div className="flex gap-1.5">
@@ -230,7 +232,7 @@ function BrowserAgentScreen() {
 
       <div className="p-4 flex-1 flex flex-col min-h-0">
         {/* Target Task Header */}
-        <div className="flex items-center justify-between mb-3 p-2.5 bg-gradient-to-r from-gray-50 to-[var(--primary)]/5 rounded-lg border border-gray-100">
+        <div className="mb-3 flex items-center justify-between rounded-[8px] border border-gray-100 bg-[var(--surface-container-low)] p-2.5">
           <div>
             <p className="text-[9px] font-semibold text-[var(--text-muted)] uppercase tracking-wider">
               Target Task
@@ -238,9 +240,8 @@ function BrowserAgentScreen() {
             <p className="text-sm font-medium">&quot;Open Amazon and order MacBook Pro&quot;</p>
           </div>
           <motion.button
-            whileHover={{ boxShadow: '0 6px 20px rgba(34, 197, 94, 0.4)' }}
             whileTap={{ opacity: 0.9 }}
-            className="px-3 py-1.5 bg-[var(--accent-green)] text-white rounded-lg text-[10px] font-semibold flex items-center gap-1 shadow-md shadow-[var(--accent-green)]/30 transition-shadow"
+            className="flex items-center gap-1 rounded-[4px] bg-[var(--accent-green)] px-3 py-1.5 text-[10px] font-semibold text-white"
           >
             <motion.span
               animate={{ x: [0, 2, 0] }}
@@ -327,7 +328,7 @@ function BrowserAgentScreen() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="absolute top-8 right-2 bg-white/95 backdrop-blur rounded-full shadow-lg px-2 py-1 flex items-center gap-1 z-10"
+              className="absolute right-2 top-8 z-10 flex items-center gap-1 rounded-full border border-gray-100 bg-white px-2 py-1"
             >
               <motion.span
                 animate={{ rotate: 360 }}
@@ -344,7 +345,7 @@ function BrowserAgentScreen() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="absolute bottom-1 left-1 bg-white/95 backdrop-blur rounded shadow-md p-1.5 border text-[7px]"
+              className="absolute bottom-1 left-1 rounded border bg-white p-1.5 text-[7px]"
             >
               <p className="font-semibold text-[var(--text-muted)] uppercase mb-1">DOM Actions</p>
               <div className="space-y-0.5">
@@ -567,7 +568,7 @@ function BrowserAgentScreen() {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + idx * 0.05 }}
-              className="bg-white rounded-lg p-1.5 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all text-center"
+              className="rounded-[8px] border border-gray-100 bg-white p-1.5 text-center transition-colors hover:border-gray-200"
             >
               <p className="text-[6px] font-semibold text-[var(--text-muted)] uppercase mb-0.5">
                 {metric.label}
@@ -718,7 +719,7 @@ function DataAgentScreen() {
   ];
 
   return (
-    <div className="bg-white border border-[var(--ui-border)] rounded-xl overflow-hidden shadow-lg h-[540px] flex flex-col">
+    <div className="flex h-[540px] flex-col overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-2 bg-[var(--ui-header)] border-b border-[var(--ui-border)] flex-shrink-0">
         <div className="flex gap-1.5">
@@ -738,7 +739,7 @@ function DataAgentScreen() {
 
       <div className="p-4 flex-1 flex flex-col min-h-0">
         {/* Target Task Header */}
-        <div className="flex items-center justify-between mb-3 p-2.5 bg-gradient-to-r from-gray-50 to-[var(--primary)]/5 rounded-lg border border-gray-100">
+        <div className="mb-3 flex items-center justify-between rounded-[8px] border border-gray-100 bg-[var(--surface-container-low)] p-2.5">
           <div>
             <p className="text-[9px] font-semibold text-[var(--text-muted)] uppercase tracking-wider">
               Input Query
@@ -748,9 +749,8 @@ function DataAgentScreen() {
             </p>
           </div>
           <motion.button
-            whileHover={{ boxShadow: '0 6px 20px rgba(34, 197, 94, 0.4)' }}
             whileTap={{ opacity: 0.9 }}
-            className="px-3 py-1.5 bg-[var(--accent-green)] text-white rounded-lg text-[10px] font-semibold flex items-center gap-1 shadow-md shadow-[var(--accent-green)]/30 transition-shadow"
+            className="flex items-center gap-1 rounded-[4px] bg-[var(--accent-green)] px-3 py-1.5 text-[10px] font-semibold text-white"
           >
             <motion.span
               animate={{ x: [0, 2, 0] }}
@@ -1024,7 +1024,7 @@ function DataAgentScreen() {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + idx * 0.05 }}
-              className="bg-white rounded-lg p-1.5 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all text-center"
+              className="rounded-[8px] border border-gray-100 bg-white p-1.5 text-center transition-colors hover:border-gray-200"
             >
               <p className="text-[6px] font-semibold text-[var(--text-muted)] uppercase mb-0.5">
                 {metric.label}
@@ -1075,7 +1075,7 @@ function SupportAgentScreen() {
   ];
 
   return (
-    <div className="bg-white border border-[var(--ui-border)] rounded-xl overflow-hidden shadow-lg h-[540px] flex flex-col">
+    <div className="flex h-[540px] flex-col overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-2 bg-[var(--ui-header)] border-b border-[var(--ui-border)] flex-shrink-0">
         <div className="flex gap-1.5">
@@ -1095,7 +1095,7 @@ function SupportAgentScreen() {
 
       <div className="p-4 flex-1 flex flex-col min-h-0">
         {/* Target Task Header */}
-        <div className="flex items-center justify-between mb-3 p-2.5 bg-gradient-to-r from-gray-50 to-[var(--primary)]/5 rounded-lg border border-gray-100">
+        <div className="mb-3 flex items-center justify-between rounded-[8px] border border-gray-100 bg-[var(--surface-container-low)] p-2.5">
           <div>
             <p className="text-[9px] font-semibold text-[var(--text-muted)] uppercase tracking-wider">
               Customer Query
@@ -1105,9 +1105,8 @@ function SupportAgentScreen() {
             </p>
           </div>
           <motion.button
-            whileHover={{ boxShadow: '0 6px 20px rgba(34, 197, 94, 0.4)' }}
             whileTap={{ opacity: 0.9 }}
-            className="px-3 py-1.5 bg-[var(--accent-green)] text-white rounded-lg text-[10px] font-semibold flex items-center gap-1 shadow-md shadow-[var(--accent-green)]/30 transition-shadow"
+            className="flex items-center gap-1 rounded-[4px] bg-[var(--accent-green)] px-3 py-1.5 text-[10px] font-semibold text-white"
           >
             <motion.span
               animate={{ x: [0, 2, 0] }}
@@ -1194,7 +1193,7 @@ function SupportAgentScreen() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="absolute top-8 right-2 bg-white/95 backdrop-blur rounded-full shadow-lg px-2 py-1 flex items-center gap-1 z-10"
+              className="absolute right-2 top-8 z-10 flex items-center gap-1 rounded-full border border-gray-100 bg-white px-2 py-1"
             >
               <motion.span
                 animate={{ rotate: 360 }}
@@ -1211,7 +1210,7 @@ function SupportAgentScreen() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="absolute bottom-1 left-1 bg-white/95 backdrop-blur rounded shadow-md p-1.5 border text-[7px]"
+              className="absolute bottom-1 left-1 rounded border bg-white p-1.5 text-[7px]"
             >
               <p className="font-semibold text-[var(--text-muted)] uppercase mb-1">
                 Agent Workflow
@@ -1436,7 +1435,7 @@ function SupportAgentScreen() {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + idx * 0.05 }}
-              className="bg-white rounded-lg p-1.5 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all text-center"
+              className="rounded-[8px] border border-gray-100 bg-white p-1.5 text-center transition-colors hover:border-gray-200"
             >
               <p className="text-[6px] font-semibold text-[var(--text-muted)] uppercase mb-0.5">
                 {metric.label}
@@ -1486,7 +1485,7 @@ function ContentAgentScreen() {
   ];
 
   return (
-    <div className="bg-white border border-[var(--ui-border)] rounded-xl overflow-hidden shadow-lg h-[540px] flex flex-col">
+    <div className="flex h-[540px] flex-col overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-2 bg-[var(--ui-header)] border-b border-[var(--ui-border)] flex-shrink-0">
         <div className="flex gap-1.5">
@@ -1506,7 +1505,7 @@ function ContentAgentScreen() {
 
       <div className="p-4 flex-1 flex flex-col min-h-0">
         {/* Target Task Header */}
-        <div className="flex items-center justify-between mb-3 p-2.5 bg-gradient-to-r from-gray-50 to-[var(--primary)]/5 rounded-lg border border-gray-100">
+        <div className="mb-3 flex items-center justify-between rounded-[8px] border border-gray-100 bg-[var(--surface-container-low)] p-2.5">
           <div>
             <p className="text-[9px] font-semibold text-[var(--text-muted)] uppercase tracking-wider">
               Target Task
@@ -1516,9 +1515,8 @@ function ContentAgentScreen() {
             </p>
           </div>
           <motion.button
-            whileHover={{ boxShadow: '0 6px 20px rgba(34, 197, 94, 0.4)' }}
             whileTap={{ opacity: 0.9 }}
-            className="px-3 py-1.5 bg-[var(--accent-green)] text-white rounded-lg text-[10px] font-semibold flex items-center gap-1 shadow-md shadow-[var(--accent-green)]/30 transition-shadow"
+            className="flex items-center gap-1 rounded-[4px] bg-[var(--accent-green)] px-3 py-1.5 text-[10px] font-semibold text-white"
           >
             <motion.span
               animate={{ x: [0, 2, 0] }}
@@ -1573,7 +1571,7 @@ function ContentAgentScreen() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.3 }}
-                  className="inline-flex items-center gap-1 bg-[var(--accent-green)] text-white px-2 py-1 rounded text-[8px] font-semibold shadow-lg"
+                  className="inline-flex items-center gap-1 rounded-[4px] bg-[var(--accent-green)] px-2 py-1 text-[8px] font-semibold text-white"
                 >
                   <motion.span
                     animate={{ scale: [1, 1.1, 1] }}
@@ -1598,7 +1596,7 @@ function ContentAgentScreen() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="absolute top-8 right-2 bg-white/95 backdrop-blur rounded-full shadow-lg px-2 py-1 flex items-center gap-1 z-10"
+              className="absolute right-2 top-8 z-10 flex items-center gap-1 rounded-full border border-gray-100 bg-white px-2 py-1"
             >
               <motion.span
                 animate={{ rotate: 360 }}
@@ -1615,7 +1613,7 @@ function ContentAgentScreen() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="absolute bottom-1 left-1 bg-white/95 backdrop-blur rounded shadow-md p-1.5 border text-[7px]"
+              className="absolute bottom-1 left-1 rounded border bg-white p-1.5 text-[7px]"
             >
               <p className="font-semibold text-[var(--text-muted)] uppercase mb-1">
                 Design Pipeline
@@ -1840,7 +1838,7 @@ function ContentAgentScreen() {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + idx * 0.05 }}
-              className="bg-white rounded-lg p-1.5 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all text-center"
+              className="rounded-[8px] border border-gray-100 bg-white p-1.5 text-center transition-colors hover:border-gray-200"
             >
               <p className="text-[6px] font-semibold text-[var(--text-muted)] uppercase mb-0.5">
                 {metric.label}

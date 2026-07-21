@@ -83,8 +83,8 @@ export default function ResetPasswordPage() {
   // Loading state while checking session
   if (isValidSession === null) {
     return (
-      <div className="min-h-screen bg-[var(--bg-subtle)] flex items-center justify-center p-6">
-        <div className="w-full max-w-[440px] bg-white rounded-3xl shadow-xl p-10 text-center">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 py-10 lg:px-10">
+        <div className="w-full max-w-[440px] rounded-[8px] border border-[var(--outline-variant)] bg-white p-8 text-center sm:p-10">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
@@ -99,12 +99,12 @@ export default function ResetPasswordPage() {
   // Invalid session - no valid reset token
   if (!isValidSession) {
     return (
-      <div className="min-h-screen bg-[var(--bg-subtle)] flex items-center justify-center p-6">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 py-10 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-[440px] bg-white rounded-3xl shadow-xl p-10"
+          className="w-full max-w-[440px] rounded-[8px] border border-[var(--outline-variant)] bg-white p-8 sm:p-10"
         >
           {/* Logo */}
           <Link href="/" className="flex items-center mb-8 justify-center">
@@ -115,13 +115,13 @@ export default function ResetPasswordPage() {
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <AlertCircle className="w-8 h-8 text-red-500" />
             </div>
-            <h1 className="text-2xl font-bold mb-2">Invalid or Expired Link</h1>
+            <h1 className="mb-2 font-display text-2xl font-bold">Invalid or Expired Link</h1>
             <p className="text-[var(--text-secondary)] mb-6">
               This password reset link is invalid or has expired. Please request a new one.
             </p>
             <Link
               href="/login/forgot-password"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold bg-gradient-to-r from-[var(--primary)] to-[var(--primary-light)] text-white shadow-lg shadow-[var(--primary)]/25 hover:shadow-xl hover:shadow-[var(--primary)]/30 transition-all"
+              className="inline-flex items-center justify-center rounded-[4px] bg-[var(--primary)] px-6 py-3 font-semibold text-white transition-colors hover:bg-[var(--primary-dark)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2"
             >
               Request New Link
             </Link>
@@ -132,12 +132,12 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg-subtle)] flex items-center justify-center p-6">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 py-10 lg:px-10">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-[440px] bg-white rounded-3xl shadow-xl p-10"
+        className="w-full max-w-[440px] rounded-[8px] border border-[var(--outline-variant)] bg-white p-8 sm:p-10"
       >
         {/* Logo */}
         <Link href="/" className="flex items-center mb-8 justify-center">
@@ -146,7 +146,7 @@ export default function ResetPasswordPage() {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold mb-2">Reset your password</h1>
+          <h1 className="mb-2 font-display text-2xl font-bold">Reset your password</h1>
           <p className="text-[var(--text-secondary)]">Enter your new password below.</p>
         </div>
 
@@ -157,7 +157,7 @@ export default function ResetPasswordPage() {
             animate={{ opacity: 1, height: 'auto' }}
             className="mb-4"
           >
-            <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+            <div className="flex items-center gap-2 rounded-[4px] border border-red-200 bg-red-50 p-3 text-sm text-red-700">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
               <span>{error}</span>
             </div>
@@ -171,7 +171,7 @@ export default function ResetPasswordPage() {
             animate={{ opacity: 1, height: 'auto' }}
             className="mb-4"
           >
-            <div className="flex items-center gap-2 p-3 bg-green-50 border border-green-200 rounded-xl text-green-700 text-sm">
+            <div className="flex items-center gap-2 rounded-[4px] border border-green-200 bg-green-50 p-3 text-sm text-green-700">
               <CheckCircle className="w-4 h-4 flex-shrink-0" />
               <span>{success}</span>
             </div>
@@ -191,12 +191,12 @@ export default function ResetPasswordPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={isPending || !!success}
-              className="w-full pl-12 pr-12 py-3 border border-[var(--border)] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 focus:border-[var(--primary)] transition-all text-[var(--foreground)] placeholder:text-[var(--text-muted)] disabled:opacity-50"
+              className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white py-3 pl-12 pr-12 text-[var(--foreground)] transition-colors placeholder:text-[var(--outline)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)]/20 disabled:opacity-50"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--foreground)] transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-[4px] p-1 text-[var(--text-muted)] transition-colors hover:text-[var(--foreground)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)]"
             >
               {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>
@@ -249,12 +249,12 @@ export default function ResetPasswordPage() {
                   handleSubmit();
                 }
               }}
-              className="w-full pl-12 pr-12 py-3 border border-[var(--border)] rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/20 focus:border-[var(--primary)] transition-all text-[var(--foreground)] placeholder:text-[var(--text-muted)] disabled:opacity-50"
+              className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white py-3 pl-12 pr-12 text-[var(--foreground)] transition-colors placeholder:text-[var(--outline)] focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)]/20 disabled:opacity-50"
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--foreground)] transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-[4px] p-1 text-[var(--text-muted)] transition-colors hover:text-[var(--foreground)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)]"
             >
               {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>
@@ -276,10 +276,10 @@ export default function ResetPasswordPage() {
           whileTap={isFormValid && !isPending && !success ? { scale: 0.99 } : {}}
           onClick={handleSubmit}
           disabled={!isFormValid || isPending || !!success}
-          className={`w-full flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-semibold transition-all ${
+          className={`flex w-full items-center justify-center gap-2 rounded-[4px] px-4 py-3.5 font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2 ${
             isFormValid && !isPending && !success
-              ? 'bg-gradient-to-r from-[var(--primary)] to-[var(--primary-light)] text-white shadow-lg shadow-[var(--primary)]/25 hover:shadow-xl hover:shadow-[var(--primary)]/30'
-              : 'bg-[var(--bg-subtle)] text-[var(--text-muted)] cursor-not-allowed'
+              ? 'bg-[var(--primary)] text-white hover:bg-[var(--primary-dark)]'
+              : 'cursor-not-allowed bg-[var(--surface-container-low)] text-[var(--outline)]'
           }`}
         >
           {isPending ? (

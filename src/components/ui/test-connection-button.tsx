@@ -50,11 +50,11 @@ function IdleButton({
       disabled={disabled}
       className={cn(
         'inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200',
-        'border border-slate-200 bg-white text-slate-600 shadow-sm',
-        'hover:border-[#135bec] hover:text-[#135bec] hover:bg-[#135bec]/5 hover:shadow-md',
+        'border border-[var(--outline-variant)] bg-white text-[var(--on-surface-variant)]',
+        'hover:border-[var(--primary)] hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)]',
         'active:scale-[0.97]',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-1',
-        'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-slate-200 disabled:hover:text-slate-600 disabled:hover:bg-white disabled:hover:shadow-sm disabled:active:scale-100',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-1',
+        'disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-[var(--outline-variant)] disabled:hover:bg-white disabled:hover:text-[var(--on-surface-variant)] disabled:active:scale-100',
         className
       )}
     >
@@ -69,14 +69,14 @@ function LoadingBadge({ className }: { className?: string }) {
     <span
       className={cn(
         'inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-md',
-        'border border-[#135bec]/30 bg-[#135bec]/5 text-[#135bec]',
+        'border border-[var(--primary)]/30 bg-[var(--surface-container-low)] text-[var(--primary)]',
         className
       )}
     >
       <span className="flex items-center gap-0.5">
-        <span className="h-1 w-1 rounded-full bg-[#135bec] animate-[pulse-dot_1.4s_ease-in-out_infinite]" />
-        <span className="h-1 w-1 rounded-full bg-[#135bec] animate-[pulse-dot_1.4s_ease-in-out_0.2s_infinite]" />
-        <span className="h-1 w-1 rounded-full bg-[#135bec] animate-[pulse-dot_1.4s_ease-in-out_0.4s_infinite]" />
+        <span className="h-1 w-1 rounded-full bg-[var(--primary)] animate-[pulse-dot_1.4s_ease-in-out_infinite]" />
+        <span className="h-1 w-1 rounded-full bg-[var(--primary)] animate-[pulse-dot_1.4s_ease-in-out_0.2s_infinite]" />
+        <span className="h-1 w-1 rounded-full bg-[var(--primary)] animate-[pulse-dot_1.4s_ease-in-out_0.4s_infinite]" />
       </span>
       Testing connection...
     </span>
@@ -99,10 +99,10 @@ function RetryButton({
       disabled={disabled}
       className={cn(
         'inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md transition-all duration-200',
-        'border border-slate-200 bg-white text-slate-600 shadow-sm',
-        'hover:border-[#135bec] hover:text-[#135bec] hover:bg-[#135bec]/5 hover:shadow-md',
+        'border border-[var(--outline-variant)] bg-white text-[var(--on-surface-variant)]',
+        'hover:border-[var(--primary)] hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)]',
         'active:scale-[0.97]',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-1'
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-1'
       )}
       title="Retry connection test"
     >
@@ -341,7 +341,7 @@ function McpTestConnectionButton({
               <span
                 key={tool.name}
                 title={tool.description}
-                className="inline-flex items-center gap-1 px-2 py-0.5 rounded border border-slate-200 bg-white text-slate-600 text-[11px]"
+                className="inline-flex items-center gap-1 rounded border border-[var(--outline-variant)] bg-white px-2 py-0.5 text-[11px] text-[var(--on-surface-variant)]"
               >
                 <span className="material-symbols-outlined" style={{ fontSize: '12px' }}>
                   build
@@ -350,7 +350,7 @@ function McpTestConnectionButton({
               </span>
             ))}
             {overflowCount > 0 && (
-              <span className="inline-flex items-center px-2 py-0.5 text-slate-400 text-[11px]">
+              <span className="inline-flex items-center px-2 py-0.5 text-[11px] text-[var(--outline)]">
                 +{overflowCount} more
               </span>
             )}

@@ -406,10 +406,10 @@ function ServerCard({ server, isSelected, isDisabled, onToggle }: ServerCardProp
       whileTap={{ scale: isDisabled && !isSelected ? 1 : 0.98 }}
       className={cn(
         'group relative flex w-full items-center gap-3 rounded-lg border p-3 text-left transition-all duration-200',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-2',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2',
         isSelected
-          ? 'border-[#135bec] bg-[#135bec]/5 shadow-sm'
-          : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
+          ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+          : 'border-[var(--outline-variant)] bg-white hover:border-[var(--outline)] hover:bg-[var(--surface-container-low)]',
         isDisabled && !isSelected && 'cursor-not-allowed opacity-50'
       )}
       aria-pressed={isSelected}
@@ -419,7 +419,9 @@ function ServerCard({ server, isSelected, isDisabled, onToggle }: ServerCardProp
       <div
         className={cn(
           'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors',
-          isSelected ? 'bg-[#135bec]/10 text-[#135bec]' : 'bg-slate-100 text-slate-600'
+          isSelected
+            ? 'bg-[var(--surface-container)] text-[var(--primary)]'
+            : 'bg-[var(--surface-container-low)] text-[var(--on-surface-variant)]'
         )}
       >
         <MaterialIcon name={server.icon} className="text-xl" />
@@ -430,19 +432,21 @@ function ServerCard({ server, isSelected, isDisabled, onToggle }: ServerCardProp
         <p
           className={cn(
             'truncate text-sm font-medium',
-            isSelected ? 'text-[#135bec]' : 'text-slate-900'
+            isSelected ? 'text-[var(--primary)]' : 'text-[var(--on-surface)]'
           )}
         >
           {server.name}
         </p>
-        <p className="truncate text-xs text-slate-500">{server.description}</p>
+        <p className="truncate text-xs text-[var(--on-surface-variant)]">{server.description}</p>
       </div>
 
       {/* Selection indicator */}
       <div
         className={cn(
           'flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 transition-all',
-          isSelected ? 'border-[#135bec] bg-[#135bec]' : 'border-slate-300 bg-white'
+          isSelected
+            ? 'border-[var(--primary)] bg-[var(--primary)]'
+            : 'border-[var(--outline)] bg-white'
         )}
       >
         {isSelected && <MaterialIcon name="check" className="text-sm text-white" />}
@@ -476,11 +480,11 @@ function CategorySection({
     <section id={`category-${category}`} className="scroll-mt-4">
       {/* Category header */}
       <div className="mb-3 flex items-center gap-2">
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-100">
-          <MaterialIcon name={meta.icon} className="text-base text-slate-600" />
+        <div className="flex h-7 w-7 items-center justify-center rounded-[4px] bg-[var(--surface-container-low)]">
+          <MaterialIcon name={meta.icon} className="text-base text-[var(--on-surface-variant)]" />
         </div>
-        <h3 className="text-sm font-semibold text-slate-900">{meta.label}</h3>
-        <span className="text-xs text-slate-400">({servers.length})</span>
+        <h3 className="text-sm font-semibold text-[var(--on-surface)]">{meta.label}</h3>
+        <span className="text-xs text-[var(--outline)]">({servers.length})</span>
       </div>
 
       {/* Server grid */}
@@ -636,27 +640,30 @@ export function MCPMarketplaceModal({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-            className="relative flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl bg-[#f6f6f8] shadow-2xl"
+            className="relative flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-[8px] bg-[var(--background)] shadow-2xl"
             role="dialog"
             aria-modal="true"
             aria-labelledby="mcp-modal-title"
           >
             {/* Fixed Header */}
-            <div className="flex-shrink-0 border-b border-slate-200 bg-white px-6 py-4">
+            <div className="flex-shrink-0 border-b border-[var(--outline-variant)] bg-white px-6 py-4">
               {/* Title row */}
               <div className="mb-4 flex items-center justify-between">
                 <div>
-                  <h2 id="mcp-modal-title" className="text-lg font-bold text-slate-900">
+                  <h2
+                    id="mcp-modal-title"
+                    className="font-display text-lg font-bold text-[var(--on-surface)]"
+                  >
                     MCP Marketplace
                   </h2>
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-[var(--on-surface-variant)]">
                     Select up to {maxSelections} servers to connect
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-2"
+                  className="flex h-8 w-8 items-center justify-center rounded-[4px] text-[var(--outline)] transition-colors hover:bg-[var(--surface-container-low)] hover:text-[var(--on-surface-variant)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2"
                   aria-label="Close modal"
                 >
                   <MaterialIcon name="close" className="text-xl" />
@@ -667,7 +674,7 @@ export function MCPMarketplaceModal({
               <div className="relative">
                 <MaterialIcon
                   name="search"
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-xl text-slate-400"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-xl text-[var(--outline)]"
                 />
                 <input
                   ref={searchInputRef}
@@ -675,13 +682,13 @@ export function MCPMarketplaceModal({
                   placeholder="Search servers..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-10 w-full rounded-lg border border-slate-200 bg-slate-50 pl-10 pr-4 text-sm text-slate-900 placeholder-slate-400 transition-colors focus:border-[#135bec] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#135bec]/20"
+                  className="h-10 w-full rounded-[4px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] pl-10 pr-4 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-[var(--primary)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)]/20"
                 />
                 {searchQuery && (
                   <button
                     type="button"
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--outline)] hover:text-[var(--on-surface-variant)]"
                     aria-label="Clear search"
                   >
                     <MaterialIcon name="close" className="text-lg" />
@@ -708,18 +715,18 @@ export function MCPMarketplaceModal({
                         element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                       }}
                       className={cn(
-                        'inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium transition-colors',
-                        'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-2',
+                        'inline-flex items-center gap-1 rounded-[4px] px-2.5 py-1 text-xs font-medium transition-colors',
+                        'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2',
                         hasServers
                           ? selectedInCategory > 0
-                            ? 'bg-[#135bec]/10 text-[#135bec]'
-                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                          : 'cursor-not-allowed bg-slate-50 text-slate-300'
+                            ? 'bg-[var(--surface-container)] text-[var(--primary)]'
+                            : 'bg-[var(--surface-container-low)] text-[var(--on-surface-variant)] hover:bg-[var(--surface-container)]'
+                          : 'cursor-not-allowed bg-[var(--surface-container-low)] text-[var(--outline-variant)]'
                       )}
                     >
                       {meta.label}
                       {selectedInCategory > 0 && (
-                        <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#135bec] text-[10px] text-white">
+                        <span className="flex h-4 w-4 items-center justify-center rounded-[4px] bg-[var(--primary)] text-[10px] text-white">
                           {selectedInCategory}
                         </span>
                       )}
@@ -733,11 +740,13 @@ export function MCPMarketplaceModal({
             <div className="flex-1 overflow-y-auto px-6 py-4">
               {activeCategories.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
-                    <MaterialIcon name="search_off" className="text-2xl text-slate-400" />
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-[4px] bg-[var(--surface-container-low)]">
+                    <MaterialIcon name="search_off" className="text-2xl text-[var(--outline)]" />
                   </div>
-                  <p className="text-sm font-medium text-slate-900">No servers found</p>
-                  <p className="text-xs text-slate-500">Try adjusting your search query</p>
+                  <p className="text-sm font-medium text-[var(--on-surface)]">No servers found</p>
+                  <p className="text-xs text-[var(--on-surface-variant)]">
+                    Try adjusting your search query
+                  </p>
                 </div>
               ) : (
                 <div className="space-y-6">
@@ -756,7 +765,7 @@ export function MCPMarketplaceModal({
             </div>
 
             {/* Fixed Footer */}
-            <div className="flex-shrink-0 border-t border-slate-200 bg-white px-6 py-4">
+            <div className="flex-shrink-0 border-t border-[var(--outline-variant)] bg-white px-6 py-4">
               <div className="flex items-center justify-between">
                 {/* Selection count */}
                 <div className="flex items-center gap-2">
@@ -767,7 +776,7 @@ export function MCPMarketplaceModal({
                       return (
                         <div
                           key={serverId}
-                          className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-[#135bec]/10 text-[#135bec]"
+                          className="flex h-7 w-7 items-center justify-center rounded-[4px] border-2 border-white bg-[var(--surface-container)] text-[var(--primary)]"
                           title={server.name}
                         >
                           <MaterialIcon name={server.icon} className="text-sm" />
@@ -775,16 +784,18 @@ export function MCPMarketplaceModal({
                       );
                     })}
                   </div>
-                  <span className="text-sm text-slate-600">
+                  <span className="text-sm text-[var(--on-surface-variant)]">
                     <span
                       className={cn(
                         'font-semibold',
-                        localSelection.length > 0 ? 'text-[#135bec]' : 'text-slate-400'
+                        localSelection.length > 0
+                          ? 'text-[var(--primary)]'
+                          : 'text-[var(--outline)]'
                       )}
                     >
                       {localSelection.length}
                     </span>
-                    <span className="text-slate-400"> / {maxSelections} selected</span>
+                    <span className="text-[var(--outline)]"> / {maxSelections} selected</span>
                   </span>
                 </div>
 
@@ -793,14 +804,14 @@ export function MCPMarketplaceModal({
                   <button
                     type="button"
                     onClick={onClose}
-                    className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-2"
+                    className="rounded-[4px] px-4 py-2 text-sm font-medium text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container-low)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2"
                   >
                     Cancel
                   </button>
                   <button
                     type="button"
                     onClick={handleConfirm}
-                    className="inline-flex items-center gap-2 rounded-lg bg-[#135bec] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#1050d0] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-2"
+                    className="inline-flex items-center gap-2 rounded-[4px] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--brand-primary-hover)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2"
                   >
                     <MaterialIcon name="check" className="text-lg" />
                     Confirm Selection

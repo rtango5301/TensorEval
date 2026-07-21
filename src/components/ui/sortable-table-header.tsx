@@ -98,11 +98,11 @@ export function SortableTableHeader({
       tabIndex={0}
       className={cn(
         // Base styles matching existing th pattern
-        'px-6 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider',
+        'px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-[var(--on-surface-variant)]',
         // Interactive styles
         'cursor-pointer select-none transition-colors',
-        'hover:bg-slate-100',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-inset',
+        'hover:bg-[var(--surface-container-low)]',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-inset',
         // Group class enables group-hover on child elements (placeholder arrow)
         'group',
         className
@@ -114,7 +114,7 @@ export function SortableTableHeader({
           className={cn(
             'inline-flex transition-colors',
             // Icon is muted when inactive, primary blue when active
-            isActive ? 'text-[#135bec]' : 'text-slate-400'
+            isActive ? 'text-[var(--primary)]' : 'text-[var(--outline)]'
           )}
         >
           {direction === 'asc' ? (

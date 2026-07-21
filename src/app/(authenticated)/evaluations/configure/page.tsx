@@ -34,15 +34,19 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     if (this.state.hasError) {
       return (
         <div className="flex flex-col items-center justify-center min-h-[400px] p-8">
-          <div className="bg-red-50 border border-red-200 rounded-xl p-6 max-w-md text-center">
-            <span className="material-symbols-outlined text-red-500 text-4xl mb-4">error</span>
-            <h3 className="text-lg font-bold text-red-700 mb-2">Something went wrong</h3>
-            <p className="text-sm text-red-600 mb-4">
+          <div className="max-w-md rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-6 text-center">
+            <span className="material-symbols-outlined mb-4 text-4xl text-[var(--error)]">
+              error
+            </span>
+            <h3 className="mb-2 font-display text-lg font-bold text-[var(--error-foreground)]">
+              Something went wrong
+            </h3>
+            <p className="mb-4 text-sm text-[var(--error-foreground)]">
               {this.state.error?.message || 'An unexpected error occurred'}
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
+              className="rounded-[4px] bg-[var(--error)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--error-foreground)]"
             >
               Reload Page
             </button>
@@ -175,15 +179,17 @@ function ConfigureEvaluationContent() {
     <div className="flex flex-col gap-6 max-w-4xl">
       {/* Header */}
       <div className="flex flex-col gap-1">
-        <div className="flex items-center gap-2 text-sm text-slate-500 mb-2">
-          <Link href="/evaluations" className="hover:text-[#135bec] transition-colors">
+        <div className="mb-2 flex items-center gap-2 text-sm text-[var(--on-surface-variant)]">
+          <Link href="/evaluations" className="transition-colors hover:text-[var(--primary)]">
             Evaluations
           </Link>
           <span className="material-symbols-outlined text-base">chevron_right</span>
-          <span className="text-slate-900 font-medium">Configure Evaluation</span>
+          <span className="font-medium text-[var(--on-surface)]">Configure Evaluation</span>
         </div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Configure Evaluation</h1>
-        <p className="text-slate-500 text-sm">
+        <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--on-surface)]">
+          Configure Evaluation
+        </h1>
+        <p className="text-sm text-[var(--on-surface-variant)]">
           Set up your evaluation parameters and run tests on your agent.
         </p>
       </div>
@@ -191,74 +197,84 @@ function ConfigureEvaluationContent() {
       {/* Progress Steps */}
       <div className="flex items-center gap-2 py-4">
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center size-8 rounded-full bg-[#135bec] text-white text-sm font-bold">
+          <div className="flex size-8 items-center justify-center rounded-[4px] bg-[var(--success)] text-sm font-bold text-white">
             <span className="material-symbols-outlined text-lg">check</span>
           </div>
-          <span className="text-sm font-medium text-[#135bec]">Select Agent</span>
+          <span className="text-sm font-medium text-[var(--success-foreground)]">Select Agent</span>
         </div>
-        <div className="flex-1 h-px bg-[#135bec] mx-2"></div>
+        <div className="mx-2 h-px flex-1 bg-[var(--success)]"></div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center size-8 rounded-full bg-[#135bec] text-white text-sm font-bold">
+          <div className="flex size-8 items-center justify-center rounded-[4px] bg-[var(--primary)] text-sm font-bold text-white">
             2
           </div>
-          <span className="text-sm font-medium text-slate-900">Configure</span>
+          <span className="text-sm font-medium text-[var(--on-surface)]">Configure</span>
         </div>
-        <div className="flex-1 h-px bg-slate-200 mx-2"></div>
+        <div className="mx-2 h-px flex-1 bg-[var(--surface-container)]"></div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center justify-center size-8 rounded-full bg-slate-200 text-slate-500 text-sm font-bold">
+          <div className="flex size-8 items-center justify-center rounded-[4px] bg-[var(--surface-container)] text-sm font-bold text-[var(--on-surface-variant)]">
             3
           </div>
-          <span className="text-sm text-slate-500">Run</span>
+          <span className="text-sm text-[var(--on-surface-variant)]">Run</span>
         </div>
       </div>
 
       {/* ============================================= */}
       {/* SECTION 1: Selected Agent Card */}
       {/* ============================================= */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+      <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="size-10 rounded-lg bg-[#135bec]/10 flex items-center justify-center">
-            <span className="material-symbols-outlined text-[#135bec]">smart_toy</span>
+          <div className="flex size-10 items-center justify-center rounded-[8px] bg-[var(--surface-container-low)]">
+            <span className="material-symbols-outlined text-[var(--primary)]">smart_toy</span>
           </div>
           <div className="flex-1">
-            <h2 className="text-lg font-bold text-slate-900">Selected Agent</h2>
-            <p className="text-sm text-slate-500">The agent that will be evaluated</p>
+            <h2 className="font-display text-lg font-bold text-[var(--on-surface)]">
+              Selected Agent
+            </h2>
+            <p className="text-sm text-[var(--on-surface-variant)]">
+              The agent that will be evaluated
+            </p>
           </div>
         </div>
 
         {selectedAgent ? (
-          <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-200">
+          <div className="flex items-center justify-between rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-4">
             <div className="flex items-center gap-4">
-              <div className="size-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-2xl shadow-sm">
+              <div className="flex size-12 items-center justify-center rounded-[8px] border border-[var(--outline-variant)] bg-white text-2xl">
                 {selectedAgent.emoji}
               </div>
               <div>
-                <h3 className="text-base font-bold text-slate-900">{selectedAgent.name}</h3>
+                <h3 className="font-display text-base font-bold text-[var(--on-surface)]">
+                  {selectedAgent.name}
+                </h3>
                 <div className="flex items-center gap-3 mt-1">
                   <span
-                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                    className={`inline-flex items-center gap-1 rounded-[4px] px-2 py-0.5 text-xs font-medium ${
                       selectedAgent.status === 'Active'
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-red-100 text-red-700'
+                        ? 'bg-[var(--success)]/10 text-[var(--success-foreground)]'
+                        : 'bg-[var(--error)]/10 text-[var(--error-foreground)]'
                     }`}
                   >
                     <span
-                      className={`size-1.5 rounded-full ${selectedAgent.status === 'Active' ? 'bg-green-500' : 'bg-red-500'}`}
+                      className={`size-1.5 rounded-[2px] ${selectedAgent.status === 'Active' ? 'bg-[var(--success)]' : 'bg-[var(--error)]'}`}
                     ></span>
                     {selectedAgent.status}
                   </span>
-                  <span className="text-sm text-slate-500">
+                  <span className="text-sm text-[var(--on-surface-variant)]">
                     Accuracy:{' '}
-                    <span className="font-semibold text-slate-700">{selectedAgent.accuracy}%</span>
+                    <span className="font-mono font-semibold text-[var(--on-surface-variant)]">
+                      {selectedAgent.accuracy}%
+                    </span>
                   </span>
-                  <span className="text-sm text-slate-500">{selectedAgent.category}</span>
+                  <span className="text-sm text-[var(--on-surface-variant)]">
+                    {selectedAgent.category}
+                  </span>
                 </div>
               </div>
             </div>
             <button
               type="button"
               onClick={() => setShowAgentSelector(true)}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#135bec] border border-[#135bec] rounded-lg hover:bg-[#135bec]/5 transition-colors"
+              className="flex items-center gap-2 rounded-[4px] border border-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary)] transition-colors hover:bg-[var(--surface-container-low)]"
             >
               <span className="material-symbols-outlined text-lg">swap_horiz</span>
               Change
@@ -268,12 +284,14 @@ function ConfigureEvaluationContent() {
           <button
             type="button"
             onClick={() => setShowAgentSelector(true)}
-            className="w-full p-6 border-2 border-dashed border-slate-300 rounded-lg hover:border-[#135bec] hover:bg-[#135bec]/5 transition-all text-center"
+            className="w-full rounded-[4px] border-2 border-dashed border-[var(--outline)] p-6 text-center transition-colors hover:border-[var(--primary)] hover:bg-[var(--surface-container-low)]"
           >
-            <span className="material-symbols-outlined text-3xl text-slate-400 mb-2">
+            <span className="material-symbols-outlined mb-2 text-3xl text-[var(--outline)]">
               add_circle
             </span>
-            <p className="text-sm font-medium text-slate-600">Click to select an agent</p>
+            <p className="text-sm font-medium text-[var(--on-surface-variant)]">
+              Click to select an agent
+            </p>
           </button>
         )}
       </div>
@@ -281,25 +299,31 @@ function ConfigureEvaluationContent() {
       {/* ============================================= */}
       {/* SECTION 2: Model Configuration */}
       {/* ============================================= */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+      <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="size-10 rounded-lg bg-purple-100 flex items-center justify-center">
-            <span className="material-symbols-outlined text-purple-600">psychology</span>
+          <div className="flex size-10 items-center justify-center rounded-[8px] bg-[var(--brand-secondary)]/10">
+            <span className="material-symbols-outlined text-[var(--brand-secondary)]">
+              psychology
+            </span>
           </div>
           <div>
-            <h2 className="text-lg font-bold text-slate-900">Model Configuration</h2>
-            <p className="text-sm text-slate-500">Configure the LLM settings for this evaluation</p>
+            <h2 className="font-display text-lg font-bold text-[var(--on-surface)]">
+              Model Configuration
+            </h2>
+            <p className="text-sm text-[var(--on-surface-variant)]">
+              Configure the LLM settings for this evaluation
+            </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Model Selection */}
           <div>
-            <label className="block text-sm font-bold text-slate-900 mb-2">Model</label>
+            <label className="mb-2 block text-sm font-bold text-[var(--on-surface)]">Model</label>
             <select
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value)}
-              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:ring-2 focus:ring-[#135bec] focus:border-[#135bec] transition-all cursor-pointer"
+              className="w-full cursor-pointer rounded-[4px] border border-[var(--outline-variant)] bg-white px-4 py-3 text-sm text-[var(--on-surface)] transition-colors focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--brand-highlight)]"
             >
               {modelOptions.map((model) => (
                 <option key={model.id} value={model.id}>
@@ -311,9 +335,11 @@ function ConfigureEvaluationContent() {
 
           {/* Temperature Slider */}
           <div>
-            <label className="block text-sm font-bold text-slate-900 mb-2">
+            <label className="mb-2 block text-sm font-bold text-[var(--on-surface)]">
               Temperature:{' '}
-              <span className="font-normal text-[#135bec]">{temperature.toFixed(1)}</span>
+              <span className="font-mono font-normal text-[var(--primary)]">
+                {temperature.toFixed(1)}
+              </span>
             </label>
             <input
               type="range"
@@ -322,9 +348,9 @@ function ConfigureEvaluationContent() {
               step="0.1"
               value={temperature}
               onChange={(e) => setTemperature(parseFloat(e.target.value))}
-              className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#135bec]"
+              className="h-2 w-full cursor-pointer appearance-none rounded-[4px] bg-[var(--surface-container)] accent-[var(--primary)]"
             />
-            <div className="flex justify-between text-xs text-slate-400 mt-1">
+            <div className="mt-1 flex justify-between font-mono text-xs text-[var(--outline)]">
               <span>0.0</span>
               <span>1.0</span>
               <span>2.0</span>
@@ -333,14 +359,16 @@ function ConfigureEvaluationContent() {
 
           {/* Max Tokens */}
           <div>
-            <label className="block text-sm font-bold text-slate-900 mb-2">Max Tokens</label>
+            <label className="mb-2 block text-sm font-bold text-[var(--on-surface)]">
+              Max Tokens
+            </label>
             <input
               type="number"
               value={maxTokens}
               onChange={(e) => setMaxTokens(safeParseInt(e.target.value, 2048, 1, 8192))}
               min="1"
               max="8192"
-              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:ring-2 focus:ring-[#135bec] focus:border-[#135bec] transition-all"
+              className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white px-4 py-3 font-mono text-sm text-[var(--on-surface)] transition-colors focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--brand-highlight)]"
             />
           </div>
         </div>
@@ -349,26 +377,32 @@ function ConfigureEvaluationContent() {
       {/* ============================================= */}
       {/* SECTION 3: Query Configuration */}
       {/* ============================================= */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+      <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="size-10 rounded-lg bg-orange-100 flex items-center justify-center">
-            <span className="material-symbols-outlined text-orange-600">quiz</span>
+          <div className="flex size-10 items-center justify-center rounded-[8px] bg-[var(--surface-container-low)]">
+            <span className="material-symbols-outlined text-[var(--primary)]">quiz</span>
           </div>
           <div>
-            <h2 className="text-lg font-bold text-slate-900">Query Configuration</h2>
-            <p className="text-sm text-slate-500">Define which queries to run in this evaluation</p>
+            <h2 className="font-display text-lg font-bold text-[var(--on-surface)]">
+              Query Configuration
+            </h2>
+            <p className="text-sm text-[var(--on-surface-variant)]">
+              Define which queries to run in this evaluation
+            </p>
           </div>
         </div>
 
         {/* Query Source Radio Buttons */}
         <div className="mb-6">
-          <label className="block text-sm font-bold text-slate-900 mb-3">Query Source</label>
+          <label className="mb-3 block text-sm font-bold text-[var(--on-surface)]">
+            Query Source
+          </label>
           <div className="space-y-3">
             <label
-              className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+              className={`flex cursor-pointer items-center gap-3 rounded-[4px] border-2 p-4 transition-colors ${
                 querySource === 'test-suite'
-                  ? 'border-[#135bec] bg-[#135bec]/5'
-                  : 'border-slate-200 hover:border-slate-300'
+                  ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                  : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
               }`}
             >
               <input
@@ -381,25 +415,31 @@ function ConfigureEvaluationContent() {
               />
               <div
                 className={`size-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                  querySource === 'test-suite' ? 'border-[#135bec]' : 'border-slate-300'
+                  querySource === 'test-suite'
+                    ? 'border-[var(--primary)]'
+                    : 'border-[var(--outline)]'
                 }`}
               >
                 {querySource === 'test-suite' && (
-                  <div className="size-2.5 rounded-full bg-[#135bec]"></div>
+                  <div className="size-2.5 rounded-full bg-[var(--primary)]"></div>
                 )}
               </div>
               <div className="flex-1">
-                <span className="text-sm font-medium text-slate-900">Agent&apos;s Test Suite</span>
-                <span className="text-sm text-slate-500 ml-2">(50 queries)</span>
+                <span className="text-sm font-medium text-[var(--on-surface)]">
+                  Agent&apos;s Test Suite
+                </span>
+                <span className="ml-2 font-mono text-sm text-[var(--on-surface-variant)]">
+                  (50 queries)
+                </span>
               </div>
-              <span className="material-symbols-outlined text-slate-400">folder</span>
+              <span className="material-symbols-outlined text-[var(--outline)]">folder</span>
             </label>
 
             <label
-              className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+              className={`flex cursor-pointer items-center gap-3 rounded-[4px] border-2 p-4 transition-colors ${
                 querySource === 'custom-range'
-                  ? 'border-[#135bec] bg-[#135bec]/5'
-                  : 'border-slate-200 hover:border-slate-300'
+                  ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                  : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
               }`}
             >
               <input
@@ -412,24 +452,26 @@ function ConfigureEvaluationContent() {
               />
               <div
                 className={`size-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                  querySource === 'custom-range' ? 'border-[#135bec]' : 'border-slate-300'
+                  querySource === 'custom-range'
+                    ? 'border-[var(--primary)]'
+                    : 'border-[var(--outline)]'
                 }`}
               >
                 {querySource === 'custom-range' && (
-                  <div className="size-2.5 rounded-full bg-[#135bec]"></div>
+                  <div className="size-2.5 rounded-full bg-[var(--primary)]"></div>
                 )}
               </div>
               <div className="flex-1">
-                <span className="text-sm font-medium text-slate-900">Custom Range</span>
+                <span className="text-sm font-medium text-[var(--on-surface)]">Custom Range</span>
               </div>
-              <span className="material-symbols-outlined text-slate-400">tune</span>
+              <span className="material-symbols-outlined text-[var(--outline)]">tune</span>
             </label>
 
             <label
-              className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+              className={`flex cursor-pointer items-center gap-3 rounded-[4px] border-2 p-4 transition-colors ${
                 querySource === 'upload-csv'
-                  ? 'border-[#135bec] bg-[#135bec]/5'
-                  : 'border-slate-200 hover:border-slate-300'
+                  ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                  : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
               }`}
             >
               <input
@@ -442,43 +484,49 @@ function ConfigureEvaluationContent() {
               />
               <div
                 className={`size-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                  querySource === 'upload-csv' ? 'border-[#135bec]' : 'border-slate-300'
+                  querySource === 'upload-csv'
+                    ? 'border-[var(--primary)]'
+                    : 'border-[var(--outline)]'
                 }`}
               >
                 {querySource === 'upload-csv' && (
-                  <div className="size-2.5 rounded-full bg-[#135bec]"></div>
+                  <div className="size-2.5 rounded-full bg-[var(--primary)]"></div>
                 )}
               </div>
               <div className="flex-1">
-                <span className="text-sm font-medium text-slate-900">Upload CSV</span>
+                <span className="text-sm font-medium text-[var(--on-surface)]">Upload CSV</span>
               </div>
-              <span className="material-symbols-outlined text-slate-400">upload_file</span>
+              <span className="material-symbols-outlined text-[var(--outline)]">upload_file</span>
             </label>
           </div>
         </div>
 
         {/* Custom Range Inputs (conditional) */}
         {querySource === 'custom-range' && (
-          <div className="mb-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
+          <div className="mb-6 rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-bold text-slate-900 mb-2">Start Index</label>
+                <label className="mb-2 block text-sm font-bold text-[var(--on-surface)]">
+                  Start Index
+                </label>
                 <input
                   type="number"
                   value={customStartIndex}
                   onChange={(e) => setCustomStartIndex(safeParseInt(e.target.value, 1, 1))}
                   min="1"
-                  className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:ring-2 focus:ring-[#135bec] focus:border-[#135bec] transition-all"
+                  className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white px-4 py-3 font-mono text-sm text-[var(--on-surface)] transition-colors focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-slate-900 mb-2">End Index</label>
+                <label className="mb-2 block text-sm font-bold text-[var(--on-surface)]">
+                  End Index
+                </label>
                 <input
                   type="number"
                   value={customEndIndex}
                   onChange={(e) => setCustomEndIndex(safeParseInt(e.target.value, 25, 1))}
                   min="1"
-                  className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg text-slate-900 text-sm focus:ring-2 focus:ring-[#135bec] focus:border-[#135bec] transition-all"
+                  className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white px-4 py-3 font-mono text-sm text-[var(--on-surface)] transition-colors focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
               </div>
             </div>
@@ -489,13 +537,15 @@ function ConfigureEvaluationContent() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Batch Size Stepper */}
           <div>
-            <label className="block text-sm font-bold text-slate-900 mb-2">Batch Size</label>
+            <label className="mb-2 block text-sm font-bold text-[var(--on-surface)]">
+              Batch Size
+            </label>
             <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={decrementBatchSize}
                 disabled={batchSize <= 1}
-                className="flex items-center justify-center size-10 rounded-lg border-2 border-slate-200 bg-white hover:border-[#135bec] hover:bg-[#135bec]/5 text-slate-600 hover:text-[#135bec] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-slate-200 disabled:hover:bg-white disabled:hover:text-slate-600"
+                className="flex size-10 items-center justify-center rounded-[4px] border-2 border-[var(--outline-variant)] bg-white text-[var(--on-surface-variant)] transition-colors hover:border-[var(--primary)] hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[var(--outline-variant)] disabled:hover:bg-white disabled:hover:text-[var(--on-surface-variant)]"
               >
                 <span className="material-symbols-outlined text-xl">remove</span>
               </button>
@@ -508,30 +558,34 @@ function ConfigureEvaluationContent() {
                   }
                   min="1"
                   max="20"
-                  className="w-full px-4 py-2.5 bg-white border-2 border-slate-200 rounded-lg text-slate-900 text-lg font-bold text-center focus:ring-2 focus:ring-[#135bec] focus:border-[#135bec] transition-all"
+                  className="w-full rounded-[4px] border-2 border-[var(--outline-variant)] bg-white px-4 py-2.5 text-center font-mono text-lg font-bold text-[var(--on-surface)] transition-colors focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
               </div>
               <button
                 type="button"
                 onClick={incrementBatchSize}
                 disabled={batchSize >= 20}
-                className="flex items-center justify-center size-10 rounded-lg border-2 border-slate-200 bg-white hover:border-[#135bec] hover:bg-[#135bec]/5 text-slate-600 hover:text-[#135bec] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-slate-200 disabled:hover:bg-white disabled:hover:text-slate-600"
+                className="flex size-10 items-center justify-center rounded-[4px] border-2 border-[var(--outline-variant)] bg-white text-[var(--on-surface-variant)] transition-colors hover:border-[var(--primary)] hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[var(--outline-variant)] disabled:hover:bg-white disabled:hover:text-[var(--on-surface-variant)]"
               >
                 <span className="material-symbols-outlined text-xl">add</span>
               </button>
             </div>
-            <p className="text-xs text-slate-500 mt-1">Range: 1-20 queries per batch</p>
+            <p className="mt-1 font-mono text-xs text-[var(--on-surface-variant)]">
+              Range: 1-20 queries per batch
+            </p>
           </div>
 
           {/* Parallel Workers Stepper */}
           <div>
-            <label className="block text-sm font-bold text-slate-900 mb-2">Parallel Workers</label>
+            <label className="mb-2 block text-sm font-bold text-[var(--on-surface)]">
+              Parallel Workers
+            </label>
             <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={decrementWorkers}
                 disabled={parallelWorkers <= 1}
-                className="flex items-center justify-center size-10 rounded-lg border-2 border-slate-200 bg-white hover:border-[#135bec] hover:bg-[#135bec]/5 text-slate-600 hover:text-[#135bec] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-slate-200 disabled:hover:bg-white disabled:hover:text-slate-600"
+                className="flex size-10 items-center justify-center rounded-[4px] border-2 border-[var(--outline-variant)] bg-white text-[var(--on-surface-variant)] transition-colors hover:border-[var(--primary)] hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[var(--outline-variant)] disabled:hover:bg-white disabled:hover:text-[var(--on-surface-variant)]"
               >
                 <span className="material-symbols-outlined text-xl">remove</span>
               </button>
@@ -544,19 +598,21 @@ function ConfigureEvaluationContent() {
                   }
                   min="1"
                   max="10"
-                  className="w-full px-4 py-2.5 bg-white border-2 border-slate-200 rounded-lg text-slate-900 text-lg font-bold text-center focus:ring-2 focus:ring-[#135bec] focus:border-[#135bec] transition-all"
+                  className="w-full rounded-[4px] border-2 border-[var(--outline-variant)] bg-white px-4 py-2.5 text-center font-mono text-lg font-bold text-[var(--on-surface)] transition-colors focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
               </div>
               <button
                 type="button"
                 onClick={incrementWorkers}
                 disabled={parallelWorkers >= 10}
-                className="flex items-center justify-center size-10 rounded-lg border-2 border-slate-200 bg-white hover:border-[#135bec] hover:bg-[#135bec]/5 text-slate-600 hover:text-[#135bec] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-slate-200 disabled:hover:bg-white disabled:hover:text-slate-600"
+                className="flex size-10 items-center justify-center rounded-[4px] border-2 border-[var(--outline-variant)] bg-white text-[var(--on-surface-variant)] transition-colors hover:border-[var(--primary)] hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[var(--outline-variant)] disabled:hover:bg-white disabled:hover:text-[var(--on-surface-variant)]"
               >
                 <span className="material-symbols-outlined text-xl">add</span>
               </button>
             </div>
-            <p className="text-xs text-slate-500 mt-1">Range: 1-10 concurrent workers</p>
+            <p className="mt-1 font-mono text-xs text-[var(--on-surface-variant)]">
+              Range: 1-10 concurrent workers
+            </p>
           </div>
         </div>
       </div>
@@ -564,24 +620,28 @@ function ConfigureEvaluationContent() {
       {/* ============================================= */}
       {/* SECTION 4: Evaluation Criteria */}
       {/* ============================================= */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+      <div className="rounded-[8px] border border-[var(--outline-variant)] bg-white p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="size-10 rounded-lg bg-green-100 flex items-center justify-center">
-            <span className="material-symbols-outlined text-green-600">checklist</span>
+          <div className="flex size-10 items-center justify-center rounded-[8px] bg-[var(--success)]/10">
+            <span className="material-symbols-outlined text-[var(--success)]">checklist</span>
           </div>
           <div>
-            <h2 className="text-lg font-bold text-slate-900">Evaluation Criteria</h2>
-            <p className="text-sm text-slate-500">Select which criteria to evaluate</p>
+            <h2 className="font-display text-lg font-bold text-[var(--on-surface)]">
+              Evaluation Criteria
+            </h2>
+            <p className="text-sm text-[var(--on-surface-variant)]">
+              Select which criteria to evaluate
+            </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Accuracy Check */}
           <label
-            className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+            className={`flex cursor-pointer items-center gap-3 rounded-[4px] border-2 p-4 transition-colors ${
               accuracyCheck
-                ? 'border-[#135bec] bg-[#135bec]/5'
-                : 'border-slate-200 hover:border-slate-300'
+                ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
             }`}
           >
             <input
@@ -591,8 +651,10 @@ function ConfigureEvaluationContent() {
               className="sr-only"
             />
             <div
-              className={`size-5 rounded border-2 flex items-center justify-center transition-colors shrink-0 ${
-                accuracyCheck ? 'border-[#135bec] bg-[#135bec]' : 'border-slate-300'
+              className={`flex size-5 shrink-0 items-center justify-center rounded-[4px] border-2 transition-colors ${
+                accuracyCheck
+                  ? 'border-[var(--primary)] bg-[var(--primary)]'
+                  : 'border-[var(--outline)]'
               }`}
             >
               {accuracyCheck && (
@@ -600,17 +662,19 @@ function ConfigureEvaluationContent() {
               )}
             </div>
             <div className="flex-1">
-              <span className="text-sm font-medium text-slate-900">Accuracy Check</span>
-              <p className="text-xs text-slate-500">Validate response correctness</p>
+              <span className="text-sm font-medium text-[var(--on-surface)]">Accuracy Check</span>
+              <p className="text-xs text-[var(--on-surface-variant)]">
+                Validate response correctness
+              </p>
             </div>
           </label>
 
           {/* Latency Threshold */}
           <label
-            className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+            className={`flex cursor-pointer items-center gap-3 rounded-[4px] border-2 p-4 transition-colors ${
               latencyThreshold
-                ? 'border-[#135bec] bg-[#135bec]/5'
-                : 'border-slate-200 hover:border-slate-300'
+                ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
             }`}
           >
             <input
@@ -620,8 +684,10 @@ function ConfigureEvaluationContent() {
               className="sr-only"
             />
             <div
-              className={`size-5 rounded border-2 flex items-center justify-center transition-colors shrink-0 ${
-                latencyThreshold ? 'border-[#135bec] bg-[#135bec]' : 'border-slate-300'
+              className={`flex size-5 shrink-0 items-center justify-center rounded-[4px] border-2 transition-colors ${
+                latencyThreshold
+                  ? 'border-[var(--primary)] bg-[var(--primary)]'
+                  : 'border-[var(--outline)]'
               }`}
             >
               {latencyThreshold && (
@@ -630,8 +696,10 @@ function ConfigureEvaluationContent() {
             </div>
             <div className="flex-1 flex items-center gap-2">
               <div>
-                <span className="text-sm font-medium text-slate-900">Latency Threshold</span>
-                <p className="text-xs text-slate-500">Max response time</p>
+                <span className="text-sm font-medium text-[var(--on-surface)]">
+                  Latency Threshold
+                </span>
+                <p className="text-xs text-[var(--on-surface-variant)]">Max response time</p>
               </div>
               {latencyThreshold && (
                 <input
@@ -639,19 +707,21 @@ function ConfigureEvaluationContent() {
                   value={latencyMs}
                   onChange={(e) => setLatencyMs(safeParseInt(e.target.value, 2000, 100))}
                   onClick={(e) => e.stopPropagation()}
-                  className="w-20 px-2 py-1 bg-white border border-slate-200 rounded text-sm text-slate-900 text-center focus:ring-2 focus:ring-[#135bec] focus:border-[#135bec] ml-auto"
+                  className="ml-auto w-20 rounded-[4px] border border-[var(--outline-variant)] bg-white px-2 py-1 text-center font-mono text-sm text-[var(--on-surface)] focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
               )}
             </div>
-            {latencyThreshold && <span className="text-xs text-slate-500">ms</span>}
+            {latencyThreshold && (
+              <span className="font-mono text-xs text-[var(--on-surface-variant)]">ms</span>
+            )}
           </label>
 
           {/* Security Scan */}
           <label
-            className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+            className={`flex cursor-pointer items-center gap-3 rounded-[4px] border-2 p-4 transition-colors ${
               securityScan
-                ? 'border-[#135bec] bg-[#135bec]/5'
-                : 'border-slate-200 hover:border-slate-300'
+                ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
             }`}
           >
             <input
@@ -661,8 +731,10 @@ function ConfigureEvaluationContent() {
               className="sr-only"
             />
             <div
-              className={`size-5 rounded border-2 flex items-center justify-center transition-colors shrink-0 ${
-                securityScan ? 'border-[#135bec] bg-[#135bec]' : 'border-slate-300'
+              className={`flex size-5 shrink-0 items-center justify-center rounded-[4px] border-2 transition-colors ${
+                securityScan
+                  ? 'border-[var(--primary)] bg-[var(--primary)]'
+                  : 'border-[var(--outline)]'
               }`}
             >
               {securityScan && (
@@ -670,17 +742,17 @@ function ConfigureEvaluationContent() {
               )}
             </div>
             <div className="flex-1">
-              <span className="text-sm font-medium text-slate-900">Security Scan</span>
-              <p className="text-xs text-slate-500">Check for vulnerabilities</p>
+              <span className="text-sm font-medium text-[var(--on-surface)]">Security Scan</span>
+              <p className="text-xs text-[var(--on-surface-variant)]">Check for vulnerabilities</p>
             </div>
           </label>
 
           {/* Semantic Similarity */}
           <label
-            className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+            className={`flex cursor-pointer items-center gap-3 rounded-[4px] border-2 p-4 transition-colors ${
               semanticSimilarity
-                ? 'border-[#135bec] bg-[#135bec]/5'
-                : 'border-slate-200 hover:border-slate-300'
+                ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
             }`}
           >
             <input
@@ -690,8 +762,10 @@ function ConfigureEvaluationContent() {
               className="sr-only"
             />
             <div
-              className={`size-5 rounded border-2 flex items-center justify-center transition-colors shrink-0 ${
-                semanticSimilarity ? 'border-[#135bec] bg-[#135bec]' : 'border-slate-300'
+              className={`flex size-5 shrink-0 items-center justify-center rounded-[4px] border-2 transition-colors ${
+                semanticSimilarity
+                  ? 'border-[var(--primary)] bg-[var(--primary)]'
+                  : 'border-[var(--outline)]'
               }`}
             >
               {semanticSimilarity && (
@@ -699,17 +773,21 @@ function ConfigureEvaluationContent() {
               )}
             </div>
             <div className="flex-1">
-              <span className="text-sm font-medium text-slate-900">Semantic Similarity</span>
-              <p className="text-xs text-slate-500">Compare meaning with expected</p>
+              <span className="text-sm font-medium text-[var(--on-surface)]">
+                Semantic Similarity
+              </span>
+              <p className="text-xs text-[var(--on-surface-variant)]">
+                Compare meaning with expected
+              </p>
             </div>
           </label>
 
           {/* Format Validation */}
           <label
-            className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+            className={`flex cursor-pointer items-center gap-3 rounded-[4px] border-2 p-4 transition-colors ${
               formatValidation
-                ? 'border-[#135bec] bg-[#135bec]/5'
-                : 'border-slate-200 hover:border-slate-300'
+                ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
             }`}
           >
             <input
@@ -719,8 +797,10 @@ function ConfigureEvaluationContent() {
               className="sr-only"
             />
             <div
-              className={`size-5 rounded border-2 flex items-center justify-center transition-colors shrink-0 ${
-                formatValidation ? 'border-[#135bec] bg-[#135bec]' : 'border-slate-300'
+              className={`flex size-5 shrink-0 items-center justify-center rounded-[4px] border-2 transition-colors ${
+                formatValidation
+                  ? 'border-[var(--primary)] bg-[var(--primary)]'
+                  : 'border-[var(--outline)]'
               }`}
             >
               {formatValidation && (
@@ -728,17 +808,19 @@ function ConfigureEvaluationContent() {
               )}
             </div>
             <div className="flex-1">
-              <span className="text-sm font-medium text-slate-900">Format Validation</span>
-              <p className="text-xs text-slate-500">Verify output structure</p>
+              <span className="text-sm font-medium text-[var(--on-surface)]">
+                Format Validation
+              </span>
+              <p className="text-xs text-[var(--on-surface-variant)]">Verify output structure</p>
             </div>
           </label>
 
           {/* Custom Rubric */}
           <label
-            className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+            className={`flex cursor-pointer items-center gap-3 rounded-[4px] border-2 p-4 transition-colors ${
               customRubric
-                ? 'border-[#135bec] bg-[#135bec]/5'
-                : 'border-slate-200 hover:border-slate-300'
+                ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
             }`}
           >
             <input
@@ -748,8 +830,10 @@ function ConfigureEvaluationContent() {
               className="sr-only"
             />
             <div
-              className={`size-5 rounded border-2 flex items-center justify-center transition-colors shrink-0 ${
-                customRubric ? 'border-[#135bec] bg-[#135bec]' : 'border-slate-300'
+              className={`flex size-5 shrink-0 items-center justify-center rounded-[4px] border-2 transition-colors ${
+                customRubric
+                  ? 'border-[var(--primary)] bg-[var(--primary)]'
+                  : 'border-[var(--outline)]'
               }`}
             >
               {customRubric && (
@@ -757,8 +841,10 @@ function ConfigureEvaluationContent() {
               )}
             </div>
             <div className="flex-1">
-              <span className="text-sm font-medium text-slate-900">Custom Rubric</span>
-              <p className="text-xs text-slate-500">Use custom scoring criteria</p>
+              <span className="text-sm font-medium text-[var(--on-surface)]">Custom Rubric</span>
+              <p className="text-xs text-[var(--on-surface-variant)]">
+                Use custom scoring criteria
+              </p>
             </div>
           </label>
         </div>
@@ -770,7 +856,7 @@ function ConfigureEvaluationContent() {
       <div className="flex items-center justify-between py-4">
         <Link
           href="/evaluations"
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+          className="flex items-center gap-2 rounded-[4px] px-4 py-2 text-sm font-medium text-[var(--on-surface-variant)] transition-colors hover:text-[var(--on-surface)]"
         >
           Cancel
         </Link>
@@ -778,10 +864,10 @@ function ConfigureEvaluationContent() {
           type="button"
           onClick={handleStartEvaluation}
           disabled={!selectedAgent}
-          className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-bold text-sm transition-all ${
+          className={`flex items-center gap-2 rounded-[4px] px-6 py-2.5 text-sm font-bold transition-colors ${
             selectedAgent
-              ? 'bg-[#135bec] hover:bg-[#135bec]/90 text-white shadow-sm shadow-[#135bec]/30'
-              : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+              ? 'bg-[var(--primary)] text-white hover:bg-[var(--brand-primary-hover)]'
+              : 'cursor-not-allowed bg-[var(--surface-container)] text-[var(--outline)]'
           }`}
         >
           Start Evaluation
@@ -794,13 +880,15 @@ function ConfigureEvaluationContent() {
       {/* ============================================= */}
       {showAgentSelector && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg">
-            <div className="flex items-center justify-between p-6 border-b border-slate-200">
-              <h3 className="text-lg font-bold text-slate-900">Select Agent</h3>
+          <div className="w-full max-w-lg rounded-[8px] bg-white shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[var(--outline-variant)] p-6">
+              <h3 className="font-display text-lg font-bold text-[var(--on-surface)]">
+                Select Agent
+              </h3>
               <button
                 type="button"
                 onClick={() => setShowAgentSelector(false)}
-                className="text-slate-400 hover:text-slate-600 transition-colors"
+                className="rounded-[4px] text-[var(--outline)] transition-colors hover:text-[var(--on-surface-variant)]"
               >
                 <span className="material-symbols-outlined">close</span>
               </button>
@@ -814,41 +902,47 @@ function ConfigureEvaluationContent() {
                     setSelectedAgentId(agent.id);
                     setShowAgentSelector(false);
                   }}
-                  className={`w-full flex items-center gap-4 p-4 rounded-lg border-2 text-left transition-all ${
+                  className={`flex w-full items-center gap-4 rounded-[4px] border-2 p-4 text-left transition-colors ${
                     selectedAgentId === agent.id
-                      ? 'border-[#135bec] bg-[#135bec]/5'
-                      : 'border-slate-200 hover:border-slate-300'
+                      ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                      : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
                   }`}
                 >
-                  <div className="size-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-2xl">
+                  <div className="flex size-12 items-center justify-center rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] text-2xl">
                     {agent.emoji}
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-sm font-bold text-slate-900">{agent.name}</h4>
+                    <h4 className="font-display text-sm font-bold text-[var(--on-surface)]">
+                      {agent.name}
+                    </h4>
                     <div className="flex items-center gap-2 mt-1">
                       <span
-                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                        className={`inline-flex items-center gap-1 rounded-[4px] px-2 py-0.5 text-xs font-medium ${
                           agent.status === 'Active'
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-red-100 text-red-700'
+                            ? 'bg-[var(--success)]/10 text-[var(--success-foreground)]'
+                            : 'bg-[var(--error)]/10 text-[var(--error-foreground)]'
                         }`}
                       >
                         {agent.status}
                       </span>
-                      <span className="text-xs text-slate-500">Accuracy: {agent.accuracy}%</span>
+                      <span className="font-mono text-xs text-[var(--on-surface-variant)]">
+                        Accuracy: {agent.accuracy}%
+                      </span>
                     </div>
                   </div>
                   {selectedAgentId === agent.id && (
-                    <span className="material-symbols-outlined text-[#135bec]">check_circle</span>
+                    <span className="material-symbols-outlined text-[var(--primary)]">
+                      check_circle
+                    </span>
                   )}
                 </button>
               ))}
             </div>
-            <div className="flex items-center justify-end p-6 border-t border-slate-200 bg-slate-50 rounded-b-xl">
+            <div className="flex items-center justify-end rounded-b-[8px] border-t border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-6">
               <button
                 type="button"
                 onClick={() => setShowAgentSelector(false)}
-                className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                className="rounded-[4px] px-4 py-2 text-sm font-medium text-[var(--on-surface-variant)] transition-colors hover:text-[var(--on-surface)]"
               >
                 Cancel
               </button>
@@ -866,7 +960,7 @@ export default function ConfigureEvaluationPage() {
       <Suspense
         fallback={
           <div className="flex items-center justify-center min-h-[400px]">
-            <div className="animate-spin size-8 border-2 border-slate-200 border-t-[#135bec] rounded-full"></div>
+            <div className="size-8 animate-spin rounded-[4px] border-2 border-[var(--surface-container)] border-t-[var(--primary)]"></div>
           </div>
         }
       >

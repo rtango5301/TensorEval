@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AuthProfileDropdown } from '@/components/ui/auth-profile-dropdown';
 import { useUser } from '@/contexts/user-context';
-import { useCalendly } from '@/hooks/use-calendly';
 
 /**
  * Derives page title from the current pathname
@@ -26,31 +25,26 @@ export function AuthenticatedHeader() {
   const pathname = usePathname();
   const user = useUser();
   const pageTitle = getPageTitle(pathname);
-  const { openCalendly } = useCalendly();
 
   return (
-    <header className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-2 h-14 shrink-0 z-20 sticky top-0">
-      <div className="flex items-center gap-4">
-        <button className="md:hidden text-slate-500 hover:text-slate-700">
+    <header className="sticky top-0 z-20 flex h-14 min-w-0 shrink-0 items-center justify-between gap-2 border-b border-[var(--outline-variant)] bg-white px-4 sm:px-6">
+      <div className="flex min-w-0 items-center gap-2 sm:gap-4">
+        <button className="text-[var(--on-surface-variant)] hover:text-[var(--on-surface)] md:hidden">
           <span className="material-symbols-outlined">menu</span>
         </button>
-        <h2 className="text-slate-900 text-base font-bold leading-tight">{pageTitle}</h2>
+        <h2 className="truncate font-display text-base font-bold leading-tight text-[var(--on-surface)]">
+          {pageTitle}
+        </h2>
       </div>
 
-      <div className="flex items-center gap-3">
-        <button
-          onClick={openCalendly}
-          className="px-4 py-2 bg-white border border-[#135bec] text-[#135bec] hover:bg-[#135bec]/5 rounded-lg text-sm font-bold transition-colors"
-        >
-          Schedule a call
-        </button>
+      <div className="flex shrink-0 items-center gap-2 sm:gap-3">
         <Link
           href="/dashboard/settings"
-          className="flex items-center justify-center size-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+          className="flex size-8 items-center justify-center rounded-[4px] bg-[var(--surface-container-low)] text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container)]"
         >
           <span className="material-symbols-outlined text-[18px]">settings</span>
         </Link>
-        <button className="flex items-center justify-center size-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors">
+        <button className="flex size-8 items-center justify-center rounded-[4px] bg-[var(--surface-container-low)] text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container)]">
           <span className="material-symbols-outlined text-[18px]">help</span>
         </button>
         <AuthProfileDropdown user={user} />

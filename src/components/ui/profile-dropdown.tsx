@@ -65,7 +65,7 @@ export function ProfileDropdown({ user, onLogout }: ProfileDropdownProps) {
       {/* Avatar Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center size-8 rounded-full overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#135bec] focus:ring-offset-2 transition-all"
+        className="flex size-8 items-center justify-center overflow-hidden rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)] focus:ring-offset-2"
         aria-expanded={isOpen}
         aria-haspopup="true"
         aria-label="Open profile menu"
@@ -79,7 +79,7 @@ export function ProfileDropdown({ user, onLogout }: ProfileDropdownProps) {
             className="size-8 rounded-full object-cover"
           />
         ) : (
-          <div className="size-8 rounded-full bg-[#135bec] flex items-center justify-center text-white text-xs font-semibold">
+          <div className="flex size-8 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-semibold text-white">
             {getInitials(user.name)}
           </div>
         )}
@@ -88,15 +88,17 @@ export function ProfileDropdown({ user, onLogout }: ProfileDropdownProps) {
       {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className="absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-50"
+          className="absolute right-0 top-full z-50 mt-2 w-56 rounded-[8px] border border-[var(--outline-variant)] bg-white py-1 shadow-lg"
           role="menu"
           aria-orientation="vertical"
         >
           {/* User Info Header */}
-          <div className="px-3 py-2 border-b border-slate-200">
-            <p className="text-sm font-medium text-slate-900 truncate">{user.name}</p>
-            {user.email && <p className="text-xs text-slate-500 truncate">{user.email}</p>}
-            <p className="text-xs text-slate-400 mt-0.5">{user.role}</p>
+          <div className="border-b border-[var(--outline-variant)] px-3 py-2">
+            <p className="truncate text-sm font-medium text-[var(--on-surface)]">{user.name}</p>
+            {user.email && (
+              <p className="truncate text-xs text-[var(--on-surface-variant)]">{user.email}</p>
+            )}
+            <p className="mt-0.5 text-xs text-[var(--outline)]">{user.role}</p>
           </div>
 
           {/* Menu Items */}
@@ -105,7 +107,7 @@ export function ProfileDropdown({ user, onLogout }: ProfileDropdownProps) {
               href="/dashboard/settings"
               onClick={() => setIsOpen(false)}
               className={cn(
-                'flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50',
+                'flex items-center gap-2 px-3 py-2 text-sm text-[var(--on-surface-variant)] hover:bg-[var(--surface-container-low)]',
                 'transition-colors'
               )}
               role="menuitem"
@@ -116,7 +118,7 @@ export function ProfileDropdown({ user, onLogout }: ProfileDropdownProps) {
           </div>
 
           {/* Divider */}
-          <div className="border-t border-slate-200 my-1" />
+          <div className="my-1 border-t border-[var(--outline-variant)]" />
 
           {/* Logout */}
           <button

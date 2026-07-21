@@ -48,21 +48,21 @@ export function Pricing() {
   return (
     <section
       id="pricing"
-      className="py-16 lg:py-[100px] px-4 lg:px-6 bg-[var(--background)] scroll-mt-20"
+      className="scroll-mt-20 bg-[var(--background)] px-4 py-16 lg:px-10 lg:py-20"
     >
-      <div className="max-w-[1200px] mx-auto">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-4 gap-4 lg:grid-cols-12 lg:gap-6">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-8 lg:mb-12"
+          className="col-span-4 mb-8 text-center lg:col-span-12 lg:mb-12"
         >
           <p className="text-base uppercase tracking-[0.2em] text-[var(--primary)] font-bold mb-4">
             Pricing
           </p>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 lg:mb-4 tracking-tight">
+          <h2 className="mb-3 font-display text-2xl font-bold tracking-tight md:text-3xl lg:mb-4 lg:text-4xl">
             Simple, transparent pricing
           </h2>
           <p className="text-base lg:text-lg text-[var(--text-secondary)] max-w-[600px] mx-auto">
@@ -71,7 +71,7 @@ export function Pricing() {
         </motion.div>
 
         {/* Pricing Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 max-w-[700px] mx-auto">
+        <div className="col-span-4 mx-auto grid w-full max-w-[700px] grid-cols-1 gap-4 md:grid-cols-2 lg:col-span-8 lg:col-start-3 lg:gap-6">
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={plan.tier}
@@ -79,11 +79,10 @@ export function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
-              className={`relative bg-white border rounded-2xl p-5 lg:p-8 transition-all duration-300 flex flex-col h-full ${
+              className={`relative flex h-full flex-col rounded-[8px] border bg-white p-5 transition-colors lg:p-8 ${
                 plan.featured
-                  ? 'border-[var(--primary)] shadow-lg shadow-[var(--primary)]/15'
-                  : 'border-[var(--border)] hover:border-[var(--primary)] hover:shadow-lg hover:shadow-[var(--primary)]/15'
+                  ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
+                  : 'border-[var(--outline-variant)] hover:border-[var(--primary)]'
               }`}
             >
               {plan.featured && (
@@ -123,10 +122,10 @@ export function Pricing() {
                     openCalendly();
                   }
                 }}
-                className={`w-full py-2.5 rounded-lg font-semibold text-sm transition-all ${
+                className={`w-full rounded-[4px] py-2.5 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2 ${
                   plan.featured
-                    ? 'bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-white shadow-sm hover:shadow-md hover:shadow-[var(--primary)]/30'
-                    : 'bg-white hover:bg-[var(--primary)] text-[var(--foreground)] hover:text-white border border-[var(--border)] hover:border-[var(--primary)] hover:shadow-md hover:shadow-[var(--primary)]/30'
+                    ? 'bg-[var(--primary)] text-white hover:bg-[var(--primary-dark)]'
+                    : 'border border-[var(--primary)] bg-white text-[var(--primary)] hover:bg-[var(--surface-container-low)]'
                 }`}
               >
                 {plan.cta}

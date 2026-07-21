@@ -109,7 +109,7 @@ export function SlideOverPanel({
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
               style={{ width: panelWidth }}
               className={cn(
-                'relative flex h-full flex-col bg-white shadow-xl rounded-l-xl',
+                'relative flex h-full flex-col rounded-l-[8px] bg-white shadow-xl',
                 className
               )}
               role="dialog"
@@ -119,14 +119,20 @@ export function SlideOverPanel({
               tabIndex={-1}
             >
               {/* Sticky header */}
-              <div className="sticky top-0 z-10 flex flex-col border-b border-slate-200 bg-white px-6 py-4 rounded-tl-xl">
+              <div className="sticky top-0 z-10 flex flex-col rounded-tl-[8px] border-b border-[var(--outline-variant)] bg-white px-6 py-4">
                 <div className="flex items-start justify-between">
                   <div className="flex flex-col gap-1">
-                    <h2 id="slide-over-title" className="text-lg font-bold text-slate-900">
+                    <h2
+                      id="slide-over-title"
+                      className="font-display text-lg font-bold text-[var(--on-surface)]"
+                    >
                       {title}
                     </h2>
                     {description && (
-                      <p id="slide-over-description" className="text-sm text-slate-500">
+                      <p
+                        id="slide-over-description"
+                        className="text-sm text-[var(--on-surface-variant)]"
+                      >
                         {description}
                       </p>
                     )}
@@ -134,7 +140,7 @@ export function SlideOverPanel({
                   <button
                     type="button"
                     onClick={onClose}
-                    className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors focus:outline-none focus:ring-2 focus:ring-[#135bec] focus:ring-offset-2"
+                    className="flex h-8 w-8 items-center justify-center rounded-[4px] text-[var(--outline)] transition-colors hover:bg-[var(--surface-container-low)] hover:text-[var(--on-surface-variant)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)] focus:ring-offset-2"
                     aria-label="Close panel"
                   >
                     <X className="h-5 w-5" />

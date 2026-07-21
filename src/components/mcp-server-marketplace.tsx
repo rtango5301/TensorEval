@@ -98,11 +98,11 @@ function CategoryChip({ category, isActive, onClick }: CategoryChipProps) {
       type="button"
       onClick={onClick}
       className={cn(
-        'px-4 py-1.5 rounded-full text-sm font-medium transition-all',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-2',
+        'rounded-[4px] px-4 py-1.5 text-sm font-medium transition-all',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2',
         isActive
-          ? 'bg-[#135bec] text-white shadow-sm'
-          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          ? 'bg-[var(--primary)] text-white'
+          : 'bg-[var(--surface-container-low)] text-[var(--on-surface-variant)] hover:bg-[var(--surface-container)]'
       )}
     >
       {CATEGORY_LABELS[category]}
@@ -126,10 +126,10 @@ function ServerCard({ server, isSelected, isDisabled, onToggle }: ServerCardProp
       aria-pressed={isSelected}
       className={cn(
         'relative flex flex-col gap-3 rounded-xl p-4 text-left transition-all',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#135bec] focus-visible:ring-offset-2',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-offset-2',
         isSelected
-          ? 'border-2 border-[#135bec] bg-[#135bec]/5'
-          : 'border border-slate-200 bg-white hover:border-[#135bec]/50 hover:bg-[#135bec]/5',
+          ? 'border-2 border-[var(--primary)] bg-[var(--surface-container-low)]'
+          : 'border border-[var(--outline-variant)] bg-white hover:border-[var(--primary)]/50 hover:bg-[var(--surface-container-low)]',
         isDisabled && !isSelected && 'cursor-not-allowed opacity-50'
       )}
     >
@@ -138,7 +138,9 @@ function ServerCard({ server, isSelected, isDisabled, onToggle }: ServerCardProp
         <div
           className={cn(
             'flex size-5 items-center justify-center rounded-full border-2 transition-all',
-            isSelected ? 'border-[#135bec] bg-[#135bec]' : 'border-slate-300 bg-white'
+            isSelected
+              ? 'border-[var(--primary)] bg-[var(--primary)]'
+              : 'border-[var(--outline)] bg-white'
           )}
         >
           {isSelected && (
@@ -148,11 +150,11 @@ function ServerCard({ server, isSelected, isDisabled, onToggle }: ServerCardProp
       </div>
 
       {/* Icon */}
-      <div className="flex size-10 items-center justify-center rounded-lg bg-slate-100">
+      <div className="flex size-10 items-center justify-center rounded-[4px] bg-[var(--surface-container-low)]">
         <span
           className={cn(
             'material-symbols-outlined text-2xl transition-colors',
-            isSelected ? 'text-[#135bec]' : 'text-slate-500'
+            isSelected ? 'text-[var(--primary)]' : 'text-[var(--on-surface-variant)]'
           )}
         >
           {server.icon}
@@ -161,15 +163,17 @@ function ServerCard({ server, isSelected, isDisabled, onToggle }: ServerCardProp
 
       {/* Content */}
       <div className="flex flex-col gap-1.5 pr-6">
-        <h3 className="font-semibold text-slate-900">{server.name}</h3>
-        <p className="text-sm leading-relaxed text-slate-500">{server.description}</p>
+        <h3 className="font-semibold text-[var(--on-surface)]">{server.name}</h3>
+        <p className="text-sm leading-relaxed text-[var(--on-surface-variant)]">
+          {server.description}
+        </p>
       </div>
 
       {/* Category badge */}
       <div className="mt-auto pt-1">
         <span
           className={cn(
-            'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium',
+            'inline-flex items-center rounded-[4px] px-2.5 py-0.5 text-xs font-medium',
             server.category === 'file-system' && 'bg-amber-100 text-amber-700',
             server.category === 'database' && 'bg-emerald-100 text-emerald-700',
             server.category === 'api' && 'bg-blue-100 text-blue-700',
@@ -230,7 +234,7 @@ export function MCPServerMarketplace({
     <div className="flex flex-col gap-5">
       {/* Search input */}
       <div className="relative">
-        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-xl text-slate-400">
+        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-xl text-[var(--outline)]">
           search
         </span>
         <input
@@ -239,10 +243,10 @@ export function MCPServerMarketplace({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className={cn(
-            'w-full rounded-lg border border-slate-200 bg-white py-2.5 pl-10 pr-4',
-            'text-sm text-slate-900 placeholder:text-slate-400',
+            'w-full rounded-[4px] border border-[var(--outline-variant)] bg-white py-2.5 pl-10 pr-4',
+            'text-sm text-[var(--on-surface)] placeholder:text-[var(--outline)]',
             'transition-all outline-none',
-            'focus:border-[#135bec] focus:ring-2 focus:ring-[#135bec]/20'
+            'focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--brand-highlight)]/20'
           )}
         />
       </div>
@@ -261,7 +265,7 @@ export function MCPServerMarketplace({
 
       {/* Selection counter */}
       {maxSelections !== undefined && (
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-[var(--on-surface-variant)]">
           {selectedServers.length} of {maxSelections} servers selected
         </p>
       )}
@@ -281,11 +285,15 @@ export function MCPServerMarketplace({
 
       {/* Empty state */}
       {filteredServers.length === 0 && (
-        <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-slate-300 bg-slate-50 py-12">
-          <span className="material-symbols-outlined text-4xl text-slate-400">search_off</span>
+        <div className="flex flex-col items-center justify-center gap-3 rounded-[8px] border border-dashed border-[var(--outline)] bg-[var(--surface-container-low)] py-12">
+          <span className="material-symbols-outlined text-4xl text-[var(--outline)]">
+            search_off
+          </span>
           <div className="text-center">
-            <p className="font-medium text-slate-700">No servers found</p>
-            <p className="text-sm text-slate-500">Try adjusting your search or filter criteria</p>
+            <p className="font-medium text-[var(--on-surface-variant)]">No servers found</p>
+            <p className="text-sm text-[var(--on-surface-variant)]">
+              Try adjusting your search or filter criteria
+            </p>
           </div>
         </div>
       )}

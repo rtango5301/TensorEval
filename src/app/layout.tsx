@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, IBM_Plex_Mono, Space_Grotesk } from 'next/font/google';
+import { Geist_Mono, Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { ToastProvider } from '@/components/ui/toast-context';
 import { Toast } from '@/components/ui/toast';
@@ -11,8 +11,8 @@ const inter = Inter({
   display: 'swap',
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
-  variable: '--font-ibm-plex-mono',
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
   subsets: ['latin'],
   weight: ['400', '500', '600'],
   display: 'swap',
@@ -21,12 +21,12 @@ const ibmPlexMono = IBM_Plex_Mono({
 const spaceGrotesk = Space_Grotesk({
   variable: '--font-space-grotesk',
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'TensorEval - CI/CD for AI Agents',
+  title: 'TensorEval — CI/CD for Agentic Workflows',
   description:
     'The CI/CD platform built for deterministic AI evaluation. Catch regressions, latency spikes, and hallucinations before they reach production.',
   metadataBase: new URL('https://tensoreval.com'),
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'TensorEval' }],
   openGraph: {
-    title: 'TensorEval - CI/CD for AI Agents',
+    title: 'TensorEval — CI/CD for Agentic Workflows',
     description:
       'The CI/CD platform built for deterministic AI evaluation. Catch regressions, latency spikes, and hallucinations before they reach production.',
     type: 'website',
@@ -48,19 +48,26 @@ export const metadata: Metadata = {
     siteName: 'TensorEval',
     images: [
       {
-        url: '/og-image.svg',
-        width: 1200,
-        height: 630,
-        alt: 'TensorEval - CI/CD for AI Agents',
+        url: '/og-image.png',
+        width: 1376,
+        height: 768,
+        alt: 'TensorEval — CI/CD for Agentic Workflows',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TensorEval - CI/CD for AI Agents',
+    title: 'TensorEval — CI/CD for Agentic Workflows',
     description:
       'The CI/CD platform built for deterministic AI evaluation. Catch regressions, latency spikes, and hallucinations before they reach production.',
-    images: ['/og-image.svg'],
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1376,
+        height: 768,
+        alt: 'TensorEval — CI/CD for Agentic Workflows',
+      },
+    ],
   },
   icons: {
     icon: '/icon.png',
@@ -91,7 +98,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        className={`${inter.variable} ${geistMono.variable} ${spaceGrotesk.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
         <PostHogProvider>

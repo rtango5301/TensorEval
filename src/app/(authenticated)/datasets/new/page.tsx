@@ -234,18 +234,20 @@ export default function NewDatasetPage() {
   return (
     <div className="flex flex-col gap-6">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-slate-500">
-        <Link href="/datasets" className="hover:text-[#135bec] transition-colors">
+      <div className="flex items-center gap-2 text-sm text-[var(--on-surface-variant)]">
+        <Link href="/datasets" className="transition-colors hover:text-[var(--primary)]">
           Datasets
         </Link>
         <span className="material-symbols-outlined text-base">chevron_right</span>
-        <span className="text-slate-900 font-medium">Create New</span>
+        <span className="font-medium text-[var(--on-surface)]">Create New</span>
       </div>
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Create New Dataset</h1>
-        <p className="text-slate-500 text-sm mt-1">
+        <h1 className="font-display text-3xl font-bold tracking-tight text-[var(--on-surface)]">
+          Create New Dataset
+        </h1>
+        <p className="mt-1 text-sm text-[var(--on-surface-variant)]">
           Upload an existing dataset or generate one using AI.
         </p>
       </div>
@@ -262,11 +264,13 @@ export default function NewDatasetPage() {
 
       {/* API Error Banner */}
       {createError && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
-          <span className="material-symbols-outlined text-red-500">error</span>
+        <div className="flex items-center gap-3 rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-4">
+          <span className="material-symbols-outlined text-[var(--error)]">error</span>
           <div className="flex-1">
-            <p className="text-sm font-medium text-red-800">Failed to create dataset</p>
-            <p className="text-sm text-red-600">{createError.message}</p>
+            <p className="text-sm font-medium text-[var(--error-foreground)]">
+              Failed to create dataset
+            </p>
+            <p className="text-sm text-[var(--error-foreground)]">{createError.message}</p>
           </div>
         </div>
       )}
@@ -274,15 +278,19 @@ export default function NewDatasetPage() {
       {/* Stacked Panels with OrDivider */}
       <div className="flex flex-col gap-6">
         {/* Panel A: Upload Dataset */}
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-200 bg-slate-50">
+        <div className="overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
+          <div className="border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-6 py-4">
             <div className="flex items-center gap-3">
-              <div className="size-10 rounded-lg bg-blue-100 flex items-center justify-center">
+              <div className="flex size-10 items-center justify-center rounded-[8px] bg-blue-100">
                 <span className="material-symbols-outlined text-blue-600">upload_file</span>
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900">Upload Dataset</h2>
-                <p className="text-sm text-slate-500">Upload a CSV or JSON file</p>
+                <h2 className="font-display text-lg font-bold text-[var(--on-surface)]">
+                  Upload Dataset
+                </h2>
+                <p className="text-sm text-[var(--on-surface-variant)]">
+                  Upload a CSV or JSON file
+                </p>
               </div>
             </div>
           </div>
@@ -290,7 +298,7 @@ export default function NewDatasetPage() {
           <div className="p-6 flex flex-col gap-5">
             {/* Dataset Name */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
                 Dataset Name
               </label>
               <input
@@ -298,21 +306,21 @@ export default function NewDatasetPage() {
                 value={uploadDatasetName}
                 onChange={(e) => setUploadDatasetName(e.target.value)}
                 placeholder="Enter dataset name..."
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+                className="w-full rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
               />
             </div>
 
             {/* Dataset Description */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                Description <span className="text-slate-400 font-normal">(Optional)</span>
+              <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
+                Description <span className="font-normal text-[var(--outline)]">(Optional)</span>
               </label>
               <textarea
                 value={uploadDescription}
                 onChange={(e) => setUploadDescription(e.target.value)}
                 placeholder="Describe the purpose of this dataset..."
                 rows={2}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all resize-none"
+                className="w-full resize-none rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
               />
             </div>
 
@@ -322,49 +330,51 @@ export default function NewDatasetPage() {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               className={cn(
-                'border-2 border-dashed rounded-xl p-8 text-center transition-colors',
+                'rounded-[8px] border-2 border-dashed p-8 text-center transition-colors',
                 isDragging
-                  ? 'border-[#135bec] bg-[#135bec]/5'
+                  ? 'border-[var(--primary)] bg-[var(--surface-container-low)]'
                   : uploadFile
-                    ? 'border-emerald-300 bg-emerald-50'
-                    : 'border-slate-200 hover:border-slate-300'
+                    ? 'border-[var(--success)]/20 bg-[var(--success)]/10'
+                    : 'border-[var(--outline-variant)] hover:border-[var(--outline)]'
               )}
             >
               {uploadFile ? (
                 <div className="flex flex-col items-center gap-3">
-                  <div className="size-12 rounded-full bg-emerald-100 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-emerald-600 text-2xl">
+                  <div className="flex size-12 items-center justify-center rounded-[8px] bg-[var(--success)]/10">
+                    <span className="material-symbols-outlined text-[var(--success)] text-2xl">
                       check_circle
                     </span>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-slate-900">{uploadFile.name}</p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-sm font-medium text-[var(--on-surface)]">
+                      {uploadFile.name}
+                    </p>
+                    <p className="text-xs text-[var(--on-surface-variant)]">
                       {(uploadFile.size / 1024).toFixed(1)} KB
                     </p>
                   </div>
                   <button
                     onClick={() => setUploadFile(null)}
-                    className="text-sm text-slate-500 hover:text-red-600 transition-colors"
+                    className="text-sm text-[var(--on-surface-variant)] transition-colors hover:text-[var(--error)]"
                   >
                     Remove file
                   </button>
                 </div>
               ) : (
                 <div className="flex flex-col items-center gap-3">
-                  <div className="size-12 rounded-full bg-slate-100 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-slate-400 text-2xl">
+                  <div className="flex size-12 items-center justify-center rounded-[8px] bg-[var(--surface-container-low)]">
+                    <span className="material-symbols-outlined text-2xl text-[var(--outline)]">
                       cloud_upload
                     </span>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-slate-700">
+                    <p className="text-sm font-medium text-[var(--on-surface-variant)]">
                       Drag and drop your file here
                     </p>
-                    <p className="text-xs text-slate-500 mt-1">or</p>
+                    <p className="mt-1 text-xs text-[var(--on-surface-variant)]">or</p>
                   </div>
                   <label className="cursor-pointer">
-                    <span className="text-sm font-medium text-[#135bec] hover:underline">
+                    <span className="text-sm font-medium text-[var(--primary)] hover:underline">
                       Browse files
                     </span>
                     <input
@@ -374,46 +384,48 @@ export default function NewDatasetPage() {
                       className="hidden"
                     />
                   </label>
-                  <p className="text-xs text-slate-400">Supports CSV and JSON files</p>
+                  <p className="text-xs text-[var(--outline)]">Supports CSV and JSON files</p>
                 </div>
               )}
             </div>
 
             {/* Upload Error */}
             {uploadError && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-center gap-2">
-                <span className="material-symbols-outlined text-red-500 text-lg">error</span>
-                <p className="text-sm text-red-600">{uploadError}</p>
+              <div className="flex items-center gap-2 rounded-[8px] border border-[var(--error)]/20 bg-[var(--error)]/10 p-3">
+                <span className="material-symbols-outlined text-[var(--error)] text-lg">error</span>
+                <p className="text-sm text-[var(--error-foreground)]">{uploadError}</p>
               </div>
             )}
 
             {/* Schema Preview */}
             {uploadFile && (
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="mb-2 block text-sm font-medium text-[var(--on-surface-variant)]">
                   Schema Preview
                 </label>
-                <div className="bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                <div className="overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-slate-200">
-                        <th className="px-3 py-2 text-left text-xs font-medium text-slate-500 uppercase">
+                      <tr className="border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)]">
+                        <th className="px-3 py-2 text-left text-xs font-medium uppercase text-[var(--on-surface-variant)]">
                           Field
                         </th>
-                        <th className="px-3 py-2 text-left text-xs font-medium text-slate-500 uppercase">
+                        <th className="px-3 py-2 text-left text-xs font-medium uppercase text-[var(--on-surface-variant)]">
                           Type
                         </th>
-                        <th className="px-3 py-2 text-left text-xs font-medium text-slate-500 uppercase">
+                        <th className="px-3 py-2 text-left text-xs font-medium uppercase text-[var(--on-surface-variant)]">
                           Example
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-200">
+                    <tbody className="divide-y divide-[var(--outline-variant)] bg-white">
                       {schemaPreview.map((row) => (
                         <tr key={row.field}>
-                          <td className="px-3 py-2 font-mono text-slate-700">{row.field}</td>
-                          <td className="px-3 py-2 text-slate-500">{row.type}</td>
-                          <td className="px-3 py-2 text-slate-500 truncate max-w-[150px]">
+                          <td className="px-3 py-2 font-mono text-[var(--on-surface-variant)]">
+                            {row.field}
+                          </td>
+                          <td className="px-3 py-2 text-[var(--on-surface-variant)]">{row.type}</td>
+                          <td className="max-w-[150px] truncate px-3 py-2 text-[var(--on-surface-variant)]">
                             {row.example}
                           </td>
                         </tr>
@@ -429,10 +441,10 @@ export default function NewDatasetPage() {
               onClick={handleUploadSubmit}
               disabled={!uploadFile || !uploadDatasetName || isCreating || !canCreateDataset}
               className={cn(
-                'w-full py-2.5 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2',
+                'flex w-full items-center justify-center gap-2 rounded-[4px] py-2.5 text-sm font-bold transition-colors',
                 uploadFile && uploadDatasetName && !isCreating && canCreateDataset
-                  ? 'bg-[#135bec] text-white hover:bg-[#135bec]/90 shadow-sm shadow-[#135bec]/30'
-                  : 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                  ? 'bg-[var(--primary)] text-white hover:bg-[var(--brand-primary-hover)]'
+                  : 'cursor-not-allowed bg-[var(--surface-container-low)] text-[var(--outline)]'
               )}
             >
               {isCreating ? (
@@ -453,15 +465,21 @@ export default function NewDatasetPage() {
         <OrDivider className="my-2" />
 
         {/* Panel B: Generate Dataset */}
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-200 bg-slate-50">
+        <div className="overflow-hidden rounded-[8px] border border-[var(--outline-variant)] bg-white">
+          <div className="border-b border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-6 py-4">
             <div className="flex items-center gap-3">
-              <div className="size-10 rounded-lg bg-[#135bec]/10 flex items-center justify-center">
-                <span className="material-symbols-outlined text-[#135bec]">auto_awesome</span>
+              <div className="flex size-10 items-center justify-center rounded-[8px] bg-[var(--surface-container)]">
+                <span className="material-symbols-outlined text-[var(--brand-secondary)]">
+                  auto_awesome
+                </span>
               </div>
               <div>
-                <h2 className="text-lg font-bold text-slate-900">Generate Dataset</h2>
-                <p className="text-sm text-slate-500">Use AI to create test cases</p>
+                <h2 className="font-display text-lg font-bold text-[var(--on-surface)]">
+                  Generate Dataset
+                </h2>
+                <p className="text-sm text-[var(--on-surface-variant)]">
+                  Use AI to create test cases
+                </p>
               </div>
             </div>
           </div>
@@ -469,7 +487,7 @@ export default function NewDatasetPage() {
           <div className="p-6 flex flex-col gap-5">
             {/* Dataset Name */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
                 Dataset Name
               </label>
               <input
@@ -477,46 +495,49 @@ export default function NewDatasetPage() {
                 value={generateDatasetName}
                 onChange={(e) => setGenerateDatasetName(e.target.value)}
                 placeholder="e.g., Customer Support Test Cases"
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+                className="w-full rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
               />
             </div>
 
             {/* Dataset Description */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                Dataset Description <span className="text-slate-400 font-normal">(Optional)</span>
+              <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
+                Dataset Description{' '}
+                <span className="font-normal text-[var(--outline)]">(Optional)</span>
               </label>
               <textarea
                 value={generateDatasetDescription}
                 onChange={(e) => setGenerateDatasetDescription(e.target.value)}
                 placeholder="Describe the purpose of this dataset..."
                 rows={2}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all resize-none"
+                className="w-full resize-none rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
               />
             </div>
 
             {/* Divider */}
-            <div className="border-t border-slate-200 pt-2">
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+            <div className="border-t border-[var(--outline-variant)] pt-2">
+              <p className="text-xs font-medium uppercase tracking-wider text-[var(--on-surface-variant)]">
                 Agent Information
               </p>
             </div>
 
             {/* Agent Name */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">Agent Name</label>
+              <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
+                Agent Name
+              </label>
               <input
                 type="text"
                 value={agentName}
                 onChange={(e) => setAgentName(e.target.value)}
                 placeholder="e.g., Customer Support Bot"
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+                className="w-full rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
               />
             </div>
 
             {/* Agent Description */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
                 Agent Description
               </label>
               <textarea
@@ -524,26 +545,27 @@ export default function NewDatasetPage() {
                 onChange={(e) => setAgentDescription(e.target.value)}
                 placeholder="Describe what the agent does, its capabilities, and expected behavior..."
                 rows={4}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all resize-none"
+                className="w-full resize-none rounded-[4px] border border-[var(--outline-variant)] px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
               />
             </div>
 
             {/* MCP Server Marketplace */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                MCP Servers <span className="text-slate-400 font-normal">(Optional, max 3)</span>
+              <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
+                MCP Servers{' '}
+                <span className="font-normal text-[var(--outline)]">(Optional, max 3)</span>
               </label>
 
               {/* Browse MCP Servers Button */}
               <button
                 type="button"
                 onClick={() => setIsMcpModalOpen(true)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-700 hover:border-[#135bec] hover:text-[#135bec] transition-all focus:outline-none focus:ring-2 focus:ring-[#135bec] focus:ring-offset-2"
+                className="inline-flex items-center gap-2 rounded-[4px] border border-[var(--outline-variant)] bg-white px-4 py-2.5 text-sm font-medium text-[var(--on-surface-variant)] transition-colors hover:border-[var(--primary)] hover:text-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)] focus:ring-offset-2"
               >
                 <span className="material-symbols-outlined text-lg">storefront</span>
                 Browse MCP Servers
                 {selectedMCPServers.length > 0 && (
-                  <span className="ml-1 inline-flex items-center justify-center h-5 w-5 rounded-full bg-[#135bec] text-xs font-bold text-white">
+                  <span className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-[4px] bg-[var(--primary)] text-xs font-bold text-white">
                     {selectedMCPServers.length}
                   </span>
                 )}
@@ -558,14 +580,14 @@ export default function NewDatasetPage() {
                     return (
                       <div
                         key={serverId}
-                        className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1.5 rounded-full text-xs font-medium bg-[#135bec]/10 text-[#135bec] border border-[#135bec]/20"
+                        className="inline-flex items-center gap-1.5 rounded-[4px] border border-[var(--primary)]/20 bg-[var(--surface-container)] py-1.5 pl-2.5 pr-1.5 text-xs font-medium text-[var(--primary)]"
                       >
                         <span className="material-symbols-outlined text-sm">{server.icon}</span>
                         {server.name}
                         <button
                           type="button"
                           onClick={() => removeSelectedServer(serverId)}
-                          className="ml-0.5 inline-flex items-center justify-center h-4 w-4 rounded-full hover:bg-[#135bec]/20 transition-colors"
+                          className="ml-0.5 inline-flex h-4 w-4 items-center justify-center rounded-[4px] transition-colors hover:bg-[var(--surface-container-high)]"
                           aria-label={`Remove ${server.name}`}
                         >
                           <span className="material-symbols-outlined text-xs">close</span>
@@ -576,7 +598,7 @@ export default function NewDatasetPage() {
                 </div>
               )}
 
-              <p className="text-xs text-slate-500 mt-1.5">
+              <p className="mt-1.5 text-xs text-[var(--on-surface-variant)]">
                 Connect to MCP servers for context-aware test generation
               </p>
             </div>
@@ -594,14 +616,15 @@ export default function NewDatasetPage() {
 
             {/* Custom MCP Server */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-3">
-                Custom MCP Server <span className="text-slate-400 font-normal">(Optional)</span>
+              <label className="mb-3 block text-sm font-semibold text-[var(--on-surface-variant)]">
+                Custom MCP Server{' '}
+                <span className="font-normal text-[var(--outline)]">(Optional)</span>
               </label>
-              <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 space-y-4">
+              <div className="space-y-4 rounded-[8px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] p-4">
                 <div>
                   <label
                     htmlFor="dataset-custom-mcp-name"
-                    className="block text-sm font-medium text-slate-600 mb-1.5"
+                    className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]"
                   >
                     MCP Name
                   </label>
@@ -613,13 +636,13 @@ export default function NewDatasetPage() {
                       setCustomMcpServer({ ...customMcpServer, name: e.target.value })
                     }
                     placeholder="e.g., Internal Pricing API"
-                    className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all bg-white"
+                    className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="dataset-custom-mcp-description"
-                    className="block text-sm font-medium text-slate-600 mb-1.5"
+                    className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]"
                   >
                     MCP Description
                   </label>
@@ -631,13 +654,13 @@ export default function NewDatasetPage() {
                       setCustomMcpServer({ ...customMcpServer, description: e.target.value })
                     }
                     placeholder="Describe what this MCP server does..."
-                    className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all bg-white"
+                    className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="dataset-custom-mcp-url"
-                    className="block text-sm font-medium text-slate-600 mb-1.5"
+                    className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]"
                   >
                     MCP URL
                   </label>
@@ -649,7 +672,7 @@ export default function NewDatasetPage() {
                       setCustomMcpServer({ ...customMcpServer, url: e.target.value })
                     }
                     placeholder="https://your-mcp-server.com"
-                    className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all bg-white"
+                    className="w-full rounded-[4px] border border-[var(--outline-variant)] bg-white px-3 py-2.5 text-sm text-[var(--on-surface)] transition-colors placeholder:text-[var(--outline)] focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                   />
                   <div className="mt-2">
                     <TestConnectionButton
@@ -663,7 +686,7 @@ export default function NewDatasetPage() {
 
             {/* Query Count */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              <label className="mb-1.5 block text-sm font-medium text-[var(--on-surface-variant)]">
                 Number of Queries
               </label>
               <div className="flex items-center gap-4">
@@ -691,7 +714,7 @@ export default function NewDatasetPage() {
                       setShowQueryCapMessage(false);
                     }
                   }}
-                  className="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#135bec]"
+                  className="h-2 flex-1 cursor-pointer appearance-none rounded-[4px] bg-[var(--surface-container)] accent-[var(--primary)]"
                   style={{ transition: 'all 0.3s ease' }}
                 />
                 <input
@@ -715,29 +738,29 @@ export default function NewDatasetPage() {
                       setShowQueryCapMessage(false);
                     }
                   }}
-                  className="w-20 px-3 py-2 bg-slate-100 border border-slate-200 rounded-lg text-center text-sm font-bold text-slate-900 focus:ring-2 focus:ring-[#135bec] focus:border-transparent transition-all"
+                  className="w-20 rounded-[4px] border border-[var(--outline-variant)] bg-[var(--surface-container-low)] px-3 py-2 text-center font-mono text-sm font-bold text-[var(--on-surface)] transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--brand-highlight)]"
                 />
               </div>
               {showQueryCapMessage ? (
-                <p className="text-xs text-amber-600 mt-1.5">
+                <p className="text-xs text-[var(--warning)] mt-1.5">
                   Free plan is limited to 20 queries per dataset. Upgrade for more.
                 </p>
               ) : (
-                <p className="text-xs text-slate-500 mt-1.5">
+                <p className="mt-1.5 text-xs text-[var(--on-surface-variant)]">
                   3–20 queries per dataset on the free plan
                 </p>
               )}
             </div>
 
             {/* Info Box */}
-            <div className="bg-[#135bec]/5 rounded-lg p-4 border border-[#135bec]/20">
+            <div className="rounded-[8px] border border-[var(--primary)]/20 bg-[var(--surface-container-low)] p-4">
               <div className="flex gap-3">
-                <span className="material-symbols-outlined text-[#135bec] text-lg shrink-0">
+                <span className="material-symbols-outlined shrink-0 text-lg text-[var(--primary)]">
                   info
                 </span>
-                <div className="text-sm text-slate-800">
+                <div className="text-sm text-[var(--on-surface)]">
                   <p className="font-medium mb-1">AI-Powered Generation</p>
-                  <p className="text-[#135bec]">
+                  <p className="text-[var(--on-surface-variant)]">
                     We&apos;ll analyze your agent description and generate diverse, realistic test
                     cases including edge cases and adversarial prompts.
                   </p>
@@ -756,14 +779,14 @@ export default function NewDatasetPage() {
                 !canCreateDataset
               }
               className={cn(
-                'w-full py-2.5 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2',
+                'flex w-full items-center justify-center gap-2 rounded-[4px] py-2.5 text-sm font-bold transition-colors',
                 generateDatasetName &&
                   agentName &&
                   agentDescription &&
                   !isCreating &&
                   canCreateDataset
-                  ? 'bg-[#135bec] text-white hover:bg-[#135bec]/90 shadow-sm shadow-[#135bec]/30'
-                  : 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                  ? 'bg-[var(--primary)] text-white hover:bg-[var(--brand-primary-hover)]'
+                  : 'cursor-not-allowed bg-[var(--surface-container-low)] text-[var(--outline)]'
               )}
             >
               {isCreating ? (

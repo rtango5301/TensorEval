@@ -88,7 +88,7 @@ export function LandingProfileDropdown({ user }: LandingProfileDropdownProps) {
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           'flex items-center justify-center size-9 rounded-full overflow-hidden',
-          'focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-2',
+          'focus:outline-none focus:ring-2 focus:ring-[var(--brand-highlight)] focus:ring-offset-2',
           'transition-all border-2 border-transparent hover:border-[var(--primary)]/20'
         )}
         aria-expanded={isOpen}
@@ -118,7 +118,7 @@ export function LandingProfileDropdown({ user }: LandingProfileDropdownProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.96 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 top-full mt-2 w-60 bg-white rounded-xl shadow-xl border border-[var(--border-light)] py-1 z-50"
+            className="absolute right-0 top-full z-50 mt-2 w-60 rounded-[8px] border border-[var(--outline-variant)] bg-white py-1 shadow-xl"
             role="menu"
             aria-orientation="vertical"
           >
@@ -137,7 +137,7 @@ export function LandingProfileDropdown({ user }: LandingProfileDropdownProps) {
               <Link
                 href="/dashboard"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--foreground)] hover:bg-[var(--bg-subtle)] focus:outline-none focus-visible:bg-[var(--bg-subtle)] focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-inset transition-colors"
+                className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--foreground)] transition-colors hover:bg-[var(--surface-container-low)] focus:outline-none focus-visible:bg-[var(--surface-container-low)] focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-inset"
                 role="menuitem"
               >
                 <LayoutDashboard className="w-4 h-4 text-[var(--text-secondary)]" />
@@ -146,7 +146,7 @@ export function LandingProfileDropdown({ user }: LandingProfileDropdownProps) {
               <Link
                 href="/dashboard/settings"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--foreground)] hover:bg-[var(--bg-subtle)] focus:outline-none focus-visible:bg-[var(--bg-subtle)] focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-inset transition-colors"
+                className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--foreground)] transition-colors hover:bg-[var(--surface-container-low)] focus:outline-none focus-visible:bg-[var(--surface-container-low)] focus-visible:ring-2 focus-visible:ring-[var(--brand-highlight)] focus-visible:ring-inset"
                 role="menuitem"
               >
                 <Settings className="w-4 h-4 text-[var(--text-secondary)]" />
