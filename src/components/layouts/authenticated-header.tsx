@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AuthProfileDropdown } from '@/components/ui/auth-profile-dropdown';
 import { useUser } from '@/contexts/user-context';
-import { useCalendly } from '@/hooks/use-calendly';
 
 /**
  * Derives page title from the current pathname
@@ -26,7 +25,6 @@ export function AuthenticatedHeader() {
   const pathname = usePathname();
   const user = useUser();
   const pageTitle = getPageTitle(pathname);
-  const { openCalendly } = useCalendly();
 
   return (
     <header className="sticky top-0 z-20 flex h-14 min-w-0 shrink-0 items-center justify-between gap-2 border-b border-[var(--outline-variant)] bg-white px-4 sm:px-6">
@@ -40,12 +38,6 @@ export function AuthenticatedHeader() {
       </div>
 
       <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-        <button
-          onClick={openCalendly}
-          className="hidden rounded-[4px] border border-[var(--primary)] bg-white px-4 py-2 text-sm font-bold text-[var(--primary)] transition-colors hover:bg-[var(--surface-container-low)] sm:block"
-        >
-          Schedule a call
-        </button>
         <Link
           href="/dashboard/settings"
           className="flex size-8 items-center justify-center rounded-[4px] bg-[var(--surface-container-low)] text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container)]"
