@@ -14,7 +14,7 @@ import { clearTokenCache } from '@/lib/api/client';
 import { useCalendly } from '@/hooks/use-calendly';
 
 const navLinks = [
-  { href: '#', label: 'Docs' },
+  { href: '#', label: 'About' },
   { href: '#demo', label: 'Demo' },
   { href: '#workflow', label: 'Workflow' },
   { href: '#features', label: 'Features' },
